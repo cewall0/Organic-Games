@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct Organic_GamesApp: App {
+    
+    @State private var tiles = GameViewModel(gameType: .game1)
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SplashScreenView()
+                .environment(tiles)
         }
     }
 }
