@@ -7,4 +7,5 @@ enum GameType {
     case game2
     case game3
     case game4
+    case game5
 }

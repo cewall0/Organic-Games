@@ -53,6 +53,15 @@ final class GameViewModel {
                 let sp3TileNames = Array(repeating: "G4_sp3", count: 8)
                 let allTileNames = atomTileNames + sp1TileNames + sp2TileNames + sp3TileNames
                 tiles = allTileNames.map { Tile(name: $0) }.shuffled()
+                
+            case .game5:
+                let tileNamesAC = (1...13).map { ["G5_\($0)A", "G5_\($0)C"] }
+                let tileNamesBD = (1...5).map { ["G5_\($0)B", "G5_\($0)D"] }
+                let allTiles = tileNamesAC + tileNamesBD
+                let shuffledPairs = allTiles.shuffled()
+                let tileStrings = shuffledPairs.flatMap { $0 }
+                tiles = tileStrings.map { Tile(name: $0) }
+                
             }
             selectedTiles = []
             tilePositions = [:]
@@ -280,7 +289,30 @@ final class GameViewModel {
                         self.selectedTiles.removeAll()
                     }
                 }
-            }
+            } // end if game 4
+            else if gameType == .game5 {
+                let isMatch: Bool
+                if tile1.number == tile2.number {
+                    isMatch = ((tile1.letter == "A" || tile1.letter == "B") && (tile2.letter == "C" || tile2.letter == "D")) ||
+                    ((tile2.letter == "A" || tile2.letter == "B") && (tile1.letter == "C" || tile1.letter == "D"))
+                } else {
+                    isMatch = false
+                }
+                
+                if isMatch {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        self.tiles.removeAll { $0.id == tile1.id || $0.id == tile2.id }
+                        self.selectedTiles.removeAll()
+                        if self.tiles.isEmpty {
+                            self.gameCompleted = true
+                        }
+                    }
+                } else {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        self.selectedTiles.removeAll()
+                    }
+                }
+            } // end if game 5
         } // end if
     } // end checkMatch function
 }

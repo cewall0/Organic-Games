@@ -73,6 +73,15 @@ struct GameChoiceView: View {
                 }, label: {
                     Text("Hybridization")
                 })
+                Text("")
+                Button(action: {
+                    reset()
+                    viewModel.gameType = .game5
+                    viewModel.resetGame(for: .game5)
+                    path.append(GameType.game5)
+                }, label: {
+                    Text("Alkyl groups")
+                })
                 Spacer()
             }
             .navigationDestination(for: GameType.self) { gameType in

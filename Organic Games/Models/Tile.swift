@@ -25,7 +25,7 @@ struct Tile: Identifiable {
         if name.hasPrefix("G4_Atom") || name.hasPrefix("G4_sp") {
             return ""
         }
-        return String(name.suffix(1))
+        return String(name.suffix(1)) // get the last letter if not Game 3 or game 4
     }
     
     var imageName: String {
