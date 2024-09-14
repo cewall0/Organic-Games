@@ -100,7 +100,7 @@ final class GameViewModel {
                     // Debugging output
                     print("aaLetter1: \(aaLetter1), aaLetter2: \(aaLetter2)")
                     
-                    let tileNames = (1...5).map { ["G6_\($0)_\(aaLetter1)", "G6_\($0)_\(aaLetter2)"] }
+                    let tileNames = (1...20).map { ["G6_\($0)_\(aaLetter1)", "G6_\($0)_\(aaLetter2)"] }
                     let shuffledPairs = tileNames.shuffled()
                     let tileStrings = shuffledPairs.flatMap { $0 }
                     print("Tile Names: \(tileStrings)")
@@ -220,6 +220,7 @@ final class GameViewModel {
         // Pair remaining tiles
         let remainingTiles = tiles.filter { tilePositions[$0.id] != nil }
         var pairs: [(Tile, Tile)] = []
+    
         
         for index in stride(from: 0, to: remainingTiles.count, by: 2) {
             if index + 1 < remainingTiles.count {
@@ -365,7 +366,7 @@ final class GameViewModel {
             } // end if game 5
             else if gameType == .game6 {
                 let isMatch: Bool
-                if tile1.number == tile2.number {
+                if tile1.number == tile2.number && tile1.letter != tile2.letter {
                     isMatch = true
                 } else {
                     isMatch = false

@@ -101,8 +101,8 @@ struct TileView: View {
     var body: some View {
         // Define the base size for non-game6
         let baseSize: CGFloat = (UIDevice.current.userInterfaceIdiom == .pad) ? 200 : 100
-        // Increase size by 200% if gameType is .game6
-        let tileSize: CGFloat = gameType == .game6 ? baseSize * 1.5 : baseSize
+        // Increase size by 150% if gameType is .game6
+        let tileSize: CGFloat = (gameType == .game6 && tile.imageName.hasSuffix("A")) ? baseSize * 1.5 : baseSize
         
         Image(tile.imageName) // Use imageName to get the correct image
             .resizable()
