@@ -1,10 +1,3 @@
-//
-//  GameView.swift
-//  Organic Games
-//
-//  Created by Chad Wallace on 8/8/24.
-//
-
 import SwiftUI
 
 struct GameView: View {
@@ -22,7 +15,7 @@ struct GameView: View {
         ZStack {
             ForEach(viewModel.tiles) { tile in
                 if let position = viewModel.tilePositions[tile.id], let rotation = viewModel.tileRotations[tile.id] {
-                    TileView(tile: tile, isSelected: viewModel.selectedTiles.contains(where: { $0.id == tile.id }))
+                    TileView(tile: tile, isSelected: viewModel.selectedTiles.contains(where: { $0.id == tile.id }), gameType: gameType)
                         .rotationEffect(.degrees(rotation))
                         .position(position)
                         .onTapGesture {
@@ -98,25 +91,30 @@ struct GameView: View {
             viewModel.gameCompleted = false
         }
     }
+}
+
+struct TileView: View {
+    let tile: Tile
+    let isSelected: Bool
+    let gameType: GameType
     
-    struct TileView: View {
-        var tile: Tile
-        var isSelected: Bool
+    var body: some View {
+        // Define the base size for non-game6
+        let baseSize: CGFloat = (UIDevice.current.userInterfaceIdiom == .pad) ? 200 : 100
+        // Increase size by 200% if gameType is .game6
+        let tileSize: CGFloat = gameType == .game6 ? baseSize * 1.5 : baseSize
         
-        var body: some View {
-            
-            let tileSize: CGFloat = (UIDevice.current.userInterfaceIdiom == .pad) ? 200 : 100
-            Image(tile.imageName) // Use imageName to get the correct image
-                .resizable()
-                .aspectRatio(1, contentMode: .fit)
-                .frame(width: tileSize, height: tileSize)
-                .background(isSelected ? Color.yellow.opacity(0.3) : Color.clear)
-                .cornerRadius(10)
-                .shadow(radius: 5)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(isSelected ? Color.yellow : Color.clear, lineWidth: 3)
-                )
-        }
+        Image(tile.imageName) // Use imageName to get the correct image
+            .resizable()
+            .aspectRatio(1, contentMode: .fit)
+            .frame(width: tileSize, height: tileSize)
+            .background(isSelected ? Color.yellow.opacity(0.3) : Color.clear)
+            .cornerRadius(10)
+            .shadow(radius: 5)
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(isSelected ? Color.yellow : Color.clear, lineWidth: 3)
+            )
     }
 }
+

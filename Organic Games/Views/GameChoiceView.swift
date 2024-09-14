@@ -82,11 +82,33 @@ struct GameChoiceView: View {
                 }, label: {
                     Text("Alkyl groups")
                 })
+                
+                Text("")
+                Button(action: {
+                    reset() // Reset navigation stack if needed
+                    viewModel.gameType = .game6 // Set the game type to game6 (Amino Acids)
+                    path.append(GameType.game6) // Navigate to AminoAcidChoiceView
+                }, label: {
+                    Text("Amino Acids")
+                })
+                
                 Spacer()
             }
             .navigationDestination(for: GameType.self) { gameType in
-                GameView(path: $path, gameType: gameType)
+                switch gameType {
+                case .game6:
+                    // This will navigate to AminoAcidChoiceView to make selections
+                    AminoAcidChoiceView(path: $path)
+                case .game6Started:
+                    // This will navigate to GameView for Game 6 after selections are made
+                    GameView(path: $path, gameType: .game6)
+                default:
+                    // All other games navigate to GameView as usual
+                    GameView(path: $path, gameType: gameType)
+                }
             }
+
+
         }
     }
 }

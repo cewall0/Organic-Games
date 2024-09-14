@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B546F4B2C94DB9E00861005 /* AminoAcidChoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B546F4A2C94DB9E00861005 /* AminoAcidChoiceView.swift */; };
 		0B743B422C65BEB50036DF60 /* Organic_GamesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B743B412C65BEB50036DF60 /* Organic_GamesApp.swift */; };
 		0B743B462C65BEC00036DF60 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B743B452C65BEC00036DF60 /* Assets.xcassets */; };
 		0B743B492C65BEC00036DF60 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B743B482C65BEC00036DF60 /* Preview Assets.xcassets */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0B546F4A2C94DB9E00861005 /* AminoAcidChoiceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AminoAcidChoiceView.swift; sourceTree = "<group>"; };
 		0B743B3E2C65BEB50036DF60 /* Organic Games.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Organic Games.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B743B412C65BEB50036DF60 /* Organic_GamesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Organic_GamesApp.swift; sourceTree = "<group>"; };
 		0B743B452C65BEC00036DF60 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				0B743B582C65BFDE0036DF60 /* SplashScreenView.swift */,
 				0B743B5A2C65BFEB0036DF60 /* GameChoiceView.swift */,
 				0B743B5C2C65BFFD0036DF60 /* GameView.swift */,
+				0B546F4A2C94DB9E00861005 /* AminoAcidChoiceView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -185,6 +188,7 @@
 				0B743B5B2C65BFEB0036DF60 /* GameChoiceView.swift in Sources */,
 				0B743B5D2C65BFFD0036DF60 /* GameView.swift in Sources */,
 				0B743B592C65BFDE0036DF60 /* SplashScreenView.swift in Sources */,
+				0B546F4B2C94DB9E00861005 /* AminoAcidChoiceView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
