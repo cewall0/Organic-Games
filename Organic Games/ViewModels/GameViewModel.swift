@@ -71,7 +71,6 @@ final class GameViewModel {
                 // Validate aminoAcidSelections length and content
                 if aminoAcidSelections.count > 0 {
                     if aminoAcidSelections.contains("Chemical Structure") {
-                        print("aaLetter1 = A")
                         aaLetter1 = "A"
                     }
                     
@@ -97,13 +96,9 @@ final class GameViewModel {
                         }
                     }
                     
-                    // Debugging output
-                    print("aaLetter1: \(aaLetter1), aaLetter2: \(aaLetter2)")
-                    
                     let tileNames = (1...20).map { ["G6_\($0)_\(aaLetter1)", "G6_\($0)_\(aaLetter2)"] }
                     let shuffledPairs = tileNames.shuffled()
                     let tileStrings = shuffledPairs.flatMap { $0 }
-                    print("Tile Names: \(tileStrings)")
 
                     tiles = tileStrings.map { Tile(name: $0) }
                 }
