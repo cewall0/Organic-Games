@@ -3,6 +3,8 @@ import SwiftUI
 struct GameView: View {
     @Environment(GameViewModel.self) private var viewModel
     @Binding var path: NavigationPath
+    @State private var showFireworks = false // State to control fireworks animation
+    @State private var pulseAnimation = false // State to control pulsing animation for text
     
     var gameType: GameType // GameType to determine the type of game
 
@@ -31,54 +33,68 @@ struct GameView: View {
                         .fontWeight(.bold)
                         .foregroundColor(.blue)
                         .padding()
+                        .scaleEffect(pulseAnimation ? 1.1 : 1.0) // Pulsing effect
+                        .animation(Animation.easeInOut(duration: 0.8).repeatForever(autoreverses: true), value: pulseAnimation) // Continuous pulse
+                        .onAppear {
+                            pulseAnimation = true // Start pulsing text animation
+                        }
                     
-                    Text(" ")
+                    Text(" ") // Spacer
                     Button("Play Again") {
-                        
                         viewModel.gameCompleted = false
                         viewModel.resetGame(for: gameType)
-                        
+                        showFireworks = false // Reset fireworks state
+                        pulseAnimation = false // Stop pulsing
                     }
                     .padding()
                     .background(.blue)
                     .foregroundColor(.white)
                     .cornerRadius(10)
-                    
-                    Text(" ")
-                    
+                    .shadow(color: .gray, radius: 4, x: 0, y: 2)
+
+                    Text(" ") // Spacer
                     Button("Choose different game") {
-                        
                         viewModel.gameCompleted = false
                         resetPath()
-                        
+                        showFireworks = false // Reset fireworks state
+                        pulseAnimation = false // Stop pulsing
                     }
                     .padding()
-                    .background(.brown)
+                    .background(.teal)
                     .foregroundColor(.white)
                     .cornerRadius(10)
-                    
-                    Text(" ")
-                    Text(" ")
+                    .shadow(color: .gray, radius: 4, x: 0, y: 2)
+
+                    Text(" ") // Spacer
+                    Text(" ") // Spacer
                 }
                 .background(Color.white.opacity(0.8))
                 .cornerRadius(20)
                 .shadow(radius: 10)
-                
+                .onAppear {
+                    withAnimation {
+                        showFireworks = true // Trigger fireworks animation
+                    }
+                }
             } else {
                 VStack {
                     Spacer()
                     HStack {
-                        
                         Button("Scramble Remaining Tiles") {
                             viewModel.scrambleRemainingTiles()
                         }
                         .padding()
-                        .background(.brown)
+                        .background(.teal)
                         .foregroundColor(.white)
                         .cornerRadius(10)
+                        .shadow(color: .gray, radius: 4, x: 0, y: 2)
                     }
                     .padding()
                 }
+            }
+            
+            if showFireworks {
+                FireworksView() // Display the fireworks animation
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -92,6 +108,40 @@ struct GameView: View {
         }
     }
 }
+
+struct FireworksView: View {
+    @State private var fireworkOffsets: [CGSize] = Array(repeating: .zero, count: 10)
+    @State private var fireworkScales: [CGFloat] = Array(repeating: 0.1, count: 10)
+    @State private var fireworkOpacities: [Double] = Array(repeating: 1.0, count: 10)
+    
+    var body: some View {
+        ZStack {
+            ForEach(0..<10) { i in
+                Circle()
+                    .fill(fireworkColor(for: i))
+                    .frame(width: 50, height: 50)
+                    .scaleEffect(fireworkScales[i])
+                    .opacity(fireworkOpacities[i])
+                    .offset(fireworkOffsets[i])
+                    .onAppear {
+                        withAnimation(Animation.easeOut(duration: 1.0).delay(Double(i) * 0.1)) {
+                            let randomX = CGFloat.random(in: -250...250) // Random X position
+                            let randomY = CGFloat.random(in: -400...250) // Random Y position
+                            fireworkOffsets[i] = CGSize(width: randomX, height: randomY)
+                            fireworkScales[i] = 2.0
+                            fireworkOpacities[i] = 0.0
+                        }
+                    }
+            }
+        }
+    }
+    
+    private func fireworkColor(for index: Int) -> Color {
+        let colors: [Color] = [.red, .yellow, .blue, .green, .orange, .pink, .purple, .cyan, .white, .indigo]
+        return colors[index % colors.count] // Return color in rotation
+    }
+}
+
 
 struct TileView: View {
     let tile: Tile

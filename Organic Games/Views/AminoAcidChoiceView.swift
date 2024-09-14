@@ -53,6 +53,9 @@ struct AminoAcidChoiceView: View {
                      .background(selectedOptions.count == 2 ? Color.blue : Color.gray)
                      .foregroundColor(.white)
                      .cornerRadius(10)
+                     .shadow(color: .gray, radius: 4, x: 0, y: 2)
+
+            
                  }
                  .padding()
     }

@@ -29,7 +29,7 @@ final class GameViewModel {
     func resetGame(for gameType: GameType) {
         switch gameType {
         case .game1:
-            let tileNames = (1...20).map { ["G1_Tile\($0)A", "G1_Tile\($0)B"] }
+            let tileNames = (1...2).map { ["G1_Tile\($0)A", "G1_Tile\($0)B"] }
             let shuffledPairs = tileNames.shuffled()
             let tileStrings = shuffledPairs.flatMap { $0 }
             tiles = tileStrings.map { Tile(name: $0) }
