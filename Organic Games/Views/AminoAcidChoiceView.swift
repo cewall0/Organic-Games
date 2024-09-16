@@ -20,6 +20,7 @@ struct AminoAcidChoiceView: View {
             Text("Select Two Options")
                 .font(.headline)
                 .padding()
+            
 
             List(options, id: \.self) { option in
                 HStack {
