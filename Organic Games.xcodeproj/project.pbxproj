@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B09C6702CA48128003ADC3C /* BannerAdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF98BB2CA369D1003EEF9E /* BannerAdView.swift */; };
+		0B09C6712CA48145003ADC3C /* AdUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF98BA2CA369D1003EEF9E /* AdUnit.swift */; };
+		0B09C6722CA4814B003ADC3C /* AdSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF98BC2CA369D1003EEF9E /* AdSettings.swift */; };
 		0B546F4B2C94DB9E00861005 /* AminoAcidChoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B546F4A2C94DB9E00861005 /* AminoAcidChoiceView.swift */; };
 		0B743B422C65BEB50036DF60 /* Organic_GamesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B743B412C65BEB50036DF60 /* Organic_GamesApp.swift */; };
 		0B743B462C65BEC00036DF60 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B743B452C65BEC00036DF60 /* Assets.xcassets */; };
@@ -17,6 +20,7 @@
 		0B743B592C65BFDE0036DF60 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B743B582C65BFDE0036DF60 /* SplashScreenView.swift */; };
 		0B743B5B2C65BFEB0036DF60 /* GameChoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B743B5A2C65BFEB0036DF60 /* GameChoiceView.swift */; };
 		0B743B5D2C65BFFD0036DF60 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B743B5C2C65BFFD0036DF60 /* GameView.swift */; };
+		0BBF98C42CA39942003EEF9E /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 0BBF98C32CA39942003EEF9E /* GoogleMobileAds */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +35,10 @@
 		0B743B582C65BFDE0036DF60 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		0B743B5A2C65BFEB0036DF60 /* GameChoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameChoiceView.swift; sourceTree = "<group>"; };
 		0B743B5C2C65BFFD0036DF60 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
-		0BBC4F7F2C65CFB300040C70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0BBF98BA2CA369D1003EEF9E /* AdUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdUnit.swift; sourceTree = "<group>"; };
+		0BBF98BB2CA369D1003EEF9E /* BannerAdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerAdView.swift; sourceTree = "<group>"; };
+		0BBF98BC2CA369D1003EEF9E /* AdSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdSettings.swift; sourceTree = "<group>"; };
+		0BBF98C52CA39A32003EEF9E /* Organic-Games-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Organic-Games-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BBF98C42CA39942003EEF9E /* GoogleMobileAds in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,13 +72,14 @@
 		0B743B402C65BEB50036DF60 /* Organic Games */ = {
 			isa = PBXGroup;
 			children = (
+				0BBF98C52CA39A32003EEF9E /* Organic-Games-Info.plist */,
+				0B743B412C65BEB50036DF60 /* Organic_GamesApp.swift */,
+				0BBF98BD2CA369D1003EEF9E /* Ad */,
 				0B743B512C65BEF10036DF60 /* Views */,
 				0B743B502C65BEE70036DF60 /* ViewModels */,
 				0B743B4F2C65BED30036DF60 /* Models */,
-				0B743B412C65BEB50036DF60 /* Organic_GamesApp.swift */,
 				0B743B452C65BEC00036DF60 /* Assets.xcassets */,
 				0B743B472C65BEC00036DF60 /* Preview Content */,
-				0BBC4F7F2C65CFB300040C70 /* Info.plist */,
 			);
 			path = "Organic Games";
 			sourceTree = "<group>";
@@ -109,6 +118,16 @@
 				0B546F4A2C94DB9E00861005 /* AminoAcidChoiceView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		0BBF98BD2CA369D1003EEF9E /* Ad */ = {
+			isa = PBXGroup;
+			children = (
+				0BBF98BA2CA369D1003EEF9E /* AdUnit.swift */,
+				0BBF98BB2CA369D1003EEF9E /* BannerAdView.swift */,
+				0BBF98BC2CA369D1003EEF9E /* AdSettings.swift */,
+			);
+			path = Ad;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -155,6 +174,9 @@
 				Base,
 			);
 			mainGroup = 0B743B352C65BEB50036DF60;
+			packageReferences = (
+				0BBF98C22CA39942003EEF9E /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+			);
 			productRefGroup = 0B743B3F2C65BEB50036DF60 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -185,8 +207,11 @@
 				0B743B532C65BF180036DF60 /* GameType.swift in Sources */,
 				0B743B572C65BFC30036DF60 /* GameViewModel.swift in Sources */,
 				0B743B552C65BF2F0036DF60 /* Tile.swift in Sources */,
+				0B09C6712CA48145003ADC3C /* AdUnit.swift in Sources */,
 				0B743B5B2C65BFEB0036DF60 /* GameChoiceView.swift in Sources */,
 				0B743B5D2C65BFFD0036DF60 /* GameView.swift in Sources */,
+				0B09C6722CA4814B003ADC3C /* AdSettings.swift in Sources */,
+				0B09C6702CA48128003ADC3C /* BannerAdView.swift in Sources */,
 				0B743B592C65BFDE0036DF60 /* SplashScreenView.swift in Sources */,
 				0B546F4B2C94DB9E00861005 /* AminoAcidChoiceView.swift in Sources */,
 			);
@@ -329,6 +354,7 @@
 				INFOPLIST_FILE = "Organic Games/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Organic Games";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.educational-games";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "We need this permission to serve personalized ads and to block irrelevant ads.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -362,6 +388,7 @@
 				INFOPLIST_FILE = "Organic Games/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Organic Games";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.educational-games";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "We need this permission to serve personalized ads and to block irrelevant ads.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -402,6 +429,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0BBF98C22CA39942003EEF9E /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.10.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0BBF98C32CA39942003EEF9E /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0BBF98C22CA39942003EEF9E /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0B743B362C65BEB50036DF60 /* Project object */;
 }

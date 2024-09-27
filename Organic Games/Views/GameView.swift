@@ -1,4 +1,6 @@
 import SwiftUI
+import Foundation
+import AVFoundation
 
 struct GameView: View {
     @Environment(GameViewModel.self) private var viewModel
@@ -7,81 +9,58 @@ struct GameView: View {
     @State private var pulseAnimation = false // State to control pulsing animation for text
     
     var gameType: GameType // GameType to determine the type of game
-
+    
     func resetPath() {
         self.path = NavigationPath()
         viewModel.gameCompleted = false
     }
-
+    
     var body: some View {
-        ZStack {
-            ForEach(viewModel.tiles) { tile in
-                if let position = viewModel.tilePositions[tile.id], let rotation = viewModel.tileRotations[tile.id] {
-                    TileView(tile: tile, isSelected: viewModel.selectedTiles.contains(where: { $0.id == tile.id }), gameType: gameType)
-                        .rotationEffect(.degrees(rotation))
-                        .position(position)
-                        .onTapGesture {
-                            viewModel.selectTile(tile)
+        VStack {
+            ZStack {
+                GeometryReader { geometry in
+                    ForEach(viewModel.tiles) { tile in
+                        if let position = viewModel.tilePositions[tile.id], let rotation = viewModel.tileRotations[tile.id] {
+                            TileView(tile: tile, isSelected: viewModel.selectedTiles.contains(where: { $0.id == tile.id }), gameType: gameType)
+                                .rotationEffect(.degrees(rotation))
+                                .position(x: position.x, y: min(position.y, geometry.size.height * 0.85)) // Increase tile area height to 85%
+                                .onTapGesture {
+                                    viewModel.selectTile(tile)
+                                }
                         }
+                    }
                 }
-            }
-            
-            if viewModel.gameCompleted {
-                VStack {
-                    Text("Congratulations!")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .foregroundColor(.blue)
+                
+                if viewModel.gameCompleted {
+                    VStack {
+                        Text("Congratulations!")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                            .foregroundColor(.blue)
+                            .padding()
+                            .scaleEffect(pulseAnimation ? 1.1 : 1.0) // Pulsing effect
+                            .animation(Animation.easeInOut(duration: 0.8).repeatForever(autoreverses: true), value: pulseAnimation)
+                            .onAppear {
+                                pulseAnimation = true
+                            }
+                        
+                        Button("Play Again") {
+                            viewModel.gameCompleted = false
+                            viewModel.resetGame(for: gameType)
+                            showFireworks = false
+                            pulseAnimation = false
+                        }
                         .padding()
-                        .scaleEffect(pulseAnimation ? 1.1 : 1.0) // Pulsing effect
-                        .animation(Animation.easeInOut(duration: 0.8).repeatForever(autoreverses: true), value: pulseAnimation) // Continuous pulse
-                        .onAppear {
-                            pulseAnimation = true // Start pulsing text animation
-                        }
-                    
-                    Text(" ") // Spacer
-                    Button("Play Again") {
-                        viewModel.gameCompleted = false
-                        viewModel.resetGame(for: gameType)
-                        showFireworks = false // Reset fireworks state
-                        pulseAnimation = false // Stop pulsing
-                    }
-                    .padding()
-                    .background(.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-                    .shadow(color: .gray, radius: 4, x: 0, y: 2)
-
-                    Text(" ") // Spacer
-                    Button("Choose different game") {
-                        viewModel.gameCompleted = false
-                        resetPath()
-                        showFireworks = false // Reset fireworks state
-                        pulseAnimation = false // Stop pulsing
-                    }
-                    .padding()
-                    .background(.teal)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-                    .shadow(color: .gray, radius: 4, x: 0, y: 2)
-
-                    Text(" ") // Spacer
-                    Text(" ") // Spacer
-                }
-                .background(Color.white.opacity(0.8))
-                .cornerRadius(20)
-                .shadow(radius: 10)
-                .onAppear {
-                    withAnimation {
-                        showFireworks = true // Trigger fireworks animation
-                    }
-                }
-            } else {
-                VStack {
-                    Spacer()
-                    HStack {
-                        Button("Scramble Remaining Tiles") {
-                            viewModel.scrambleRemainingTiles()
+                        .background(.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .shadow(color: .gray, radius: 4, x: 0, y: 2)
+                        
+                        Button("Choose different game") {
+                            viewModel.gameCompleted = false
+                            resetPath()
+                            showFireworks = false
+                            pulseAnimation = false
                         }
                         .padding()
                         .background(.teal)
@@ -89,19 +68,39 @@ struct GameView: View {
                         .cornerRadius(10)
                         .shadow(color: .gray, radius: 4, x: 0, y: 2)
                     }
-                    .padding()
+                    .background(Color.white.opacity(0.8))
+                    .cornerRadius(20)
+                    .shadow(radius: 10)
+                    .onAppear {
+                        withAnimation {
+                            showFireworks = true
+                        }
+                    }
                 }
             }
             
-            if showFireworks {
-                FireworksView() // Display the fireworks animation
+            Spacer(minLength: 10) // Reduce the size of the spacer
+            
+            HStack {
+                Button("Scramble Remaining Tiles") {
+                    viewModel.scrambleRemainingTiles()
+                }
+                .padding()
+                .background(.teal)
+                .foregroundColor(.white)
+                .cornerRadius(10)
+                .shadow(color: .gray, radius: 4, x: 0, y: 2)
             }
+            .padding(.bottom, 10) // Less padding to bring the button closer
+            
+            BannerAdView(adFormat: UIDevice.current.userInterfaceIdiom == .pad ? .leaderboard : .standardBanner, onShow: { print("Show Banner") })
+                .padding(.bottom, 10) // Adjust the padding to reduce the extra space
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.white)
         .edgesIgnoringSafeArea(.all)
         .onAppear {
-            viewModel.resetGame(for: gameType) // Pass gameType to initialize the game
+            viewModel.resetGame(for: gameType)
         }
         .onDisappear {
             viewModel.gameCompleted = false

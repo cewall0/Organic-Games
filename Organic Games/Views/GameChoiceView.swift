@@ -93,6 +93,9 @@ struct GameChoiceView: View {
                 })
                 
                 Spacer()
+                
+                BannerAdView(adFormat: UIDevice.current.userInterfaceIdiom == .pad ? .leaderboard : .standardBanner, onShow: { print("Show Banner") })
+
             }
             .navigationDestination(for: GameType.self) { gameType in
                 switch gameType {
