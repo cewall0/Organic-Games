@@ -10,4 +10,5 @@ enum GameType {
     case game5
     case game6
     case game6Started // New case for Game 6 after selections are made.
+    case game7
 }

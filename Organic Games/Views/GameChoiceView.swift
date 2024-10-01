@@ -92,6 +92,14 @@ struct GameChoiceView: View {
                     Text("Amino Acids")
                 })
                 
+                Text("")
+                Button(action: {
+                    reset() // Reset navigation stack if needed
+                    path.append(GameType.game7) // Navigate to RSGameView
+                }, label: {
+                    Text("R & S Stereochemistry")
+                })
+                
                 Spacer()
                 
                 BannerAdView(adFormat: UIDevice.current.userInterfaceIdiom == .pad ? .leaderboard : .standardBanner, onShow: { print("Show Banner") })
@@ -105,6 +113,9 @@ struct GameChoiceView: View {
                 case .game6Started:
                     // This will navigate to GameView for Game 6 after selections are made
                     GameView(path: $path, gameType: .game6)
+                case .game7:
+                    // This will navigate to RSGameView
+                    RSGameView(path: $path)
                 default:
                     // All other games navigate to GameView as usual
                     GameView(path: $path, gameType: gameType)

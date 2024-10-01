@@ -94,7 +94,7 @@ struct GameView: View {
             .padding(.bottom, 10) // Less padding to bring the button closer
             
             BannerAdView(adFormat: UIDevice.current.userInterfaceIdiom == .pad ? .leaderboard : .standardBanner, onShow: { print("Show Banner") })
-                .padding(.bottom, 10) // Adjust the padding to reduce the extra space
+                .padding(.bottom, 10) 
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.white)

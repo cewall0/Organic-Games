@@ -65,49 +65,53 @@ final class GameViewModel {
             tiles = tileStrings.map { Tile(name: $0) }
             
         case .game6:
-                var aaLetter1 = "Blank"
-                var aaLetter2 = "Blank"
-                
-                // Validate aminoAcidSelections length and content
-                if aminoAcidSelections.count > 0 {
-                    if aminoAcidSelections.contains("Chemical Structure") {
-                        aaLetter1 = "A"
-                    }
-                    
-                    if aminoAcidSelections.contains("Name") {
-                        if aaLetter1 == "Blank" {
-                            aaLetter1 = "B"
-                        } else {
-                            aaLetter2 = "B"
-                        }
-                    }
-                    if aminoAcidSelections.contains("3-letter abbreviation") {
-                        if aaLetter1 == "Blank" {
-                            aaLetter1 = "C"
-                        } else {
-                            aaLetter2 = "C"
-                        }
-                    }
-                    if aminoAcidSelections.contains("1-letter abbreviation") {
-                        if aaLetter1 == "Blank" {
-                            aaLetter1 = "D"
-                        } else {
-                            aaLetter2 = "D"
-                        }
-                    }
-                    
-                    let tileNames = (1...20).map { ["G6_\($0)_\(aaLetter1)", "G6_\($0)_\(aaLetter2)"] }
-                    let shuffledPairs = tileNames.shuffled()
-                    let tileStrings = shuffledPairs.flatMap { $0 }
-
-                    tiles = tileStrings.map { Tile(name: $0) }
+            var aaLetter1 = "Blank"
+            var aaLetter2 = "Blank"
+            
+            // Validate aminoAcidSelections length and content
+            if aminoAcidSelections.count > 0 {
+                if aminoAcidSelections.contains("Chemical Structure") {
+                    aaLetter1 = "A"
                 }
                 
-            case .game6Started:
-                // No game logic needed. This navigates to the amino acid selection screen.
-                break
+                if aminoAcidSelections.contains("Name") {
+                    if aaLetter1 == "Blank" {
+                        aaLetter1 = "B"
+                    } else {
+                        aaLetter2 = "B"
+                    }
+                }
+                if aminoAcidSelections.contains("3-letter abbreviation") {
+                    if aaLetter1 == "Blank" {
+                        aaLetter1 = "C"
+                    } else {
+                        aaLetter2 = "C"
+                    }
+                }
+                if aminoAcidSelections.contains("1-letter abbreviation") {
+                    if aaLetter1 == "Blank" {
+                        aaLetter1 = "D"
+                    } else {
+                        aaLetter2 = "D"
+                    }
+                }
+                
+                let tileNames = (1...20).map { ["G6_\($0)_\(aaLetter1)", "G6_\($0)_\(aaLetter2)"] }
+                let shuffledPairs = tileNames.shuffled()
+                let tileStrings = shuffledPairs.flatMap { $0 }
+                
+                tiles = tileStrings.map { Tile(name: $0) }
             }
-        
+            
+        case .game6Started:
+            // No game logic needed. This navigates to the amino acid selection screen.
+            break
+            
+        case .game7:
+            // No game logic needed.
+            break
+    }
+    
         selectedTiles = []
         tilePositions = [:]
         tileRotations = [:]

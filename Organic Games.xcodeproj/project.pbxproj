@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B0371672CAC9A7400CE26E1 /* RSGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0371662CAC9A7400CE26E1 /* RSGameView.swift */; };
+		0B0371692CAC9A7800CE26E1 /* RSResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0371682CAC9A7800CE26E1 /* RSResultsView.swift */; };
 		0B09C6702CA48128003ADC3C /* BannerAdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF98BB2CA369D1003EEF9E /* BannerAdView.swift */; };
 		0B09C6712CA48145003ADC3C /* AdUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF98BA2CA369D1003EEF9E /* AdUnit.swift */; };
 		0B09C6722CA4814B003ADC3C /* AdSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF98BC2CA369D1003EEF9E /* AdSettings.swift */; };
@@ -24,6 +26,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0B0371662CAC9A7400CE26E1 /* RSGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSGameView.swift; sourceTree = "<group>"; };
+		0B0371682CAC9A7800CE26E1 /* RSResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSResultsView.swift; sourceTree = "<group>"; };
 		0B546F4A2C94DB9E00861005 /* AminoAcidChoiceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AminoAcidChoiceView.swift; sourceTree = "<group>"; };
 		0B743B3E2C65BEB50036DF60 /* Organic Games.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Organic Games.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B743B412C65BEB50036DF60 /* Organic_GamesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Organic_GamesApp.swift; sourceTree = "<group>"; };
@@ -112,6 +116,8 @@
 		0B743B512C65BEF10036DF60 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0B0371662CAC9A7400CE26E1 /* RSGameView.swift */,
+				0B0371682CAC9A7800CE26E1 /* RSResultsView.swift */,
 				0B743B582C65BFDE0036DF60 /* SplashScreenView.swift */,
 				0B743B5A2C65BFEB0036DF60 /* GameChoiceView.swift */,
 				0B743B5C2C65BFFD0036DF60 /* GameView.swift */,
@@ -205,8 +211,10 @@
 			files = (
 				0B743B422C65BEB50036DF60 /* Organic_GamesApp.swift in Sources */,
 				0B743B532C65BF180036DF60 /* GameType.swift in Sources */,
+				0B0371692CAC9A7800CE26E1 /* RSResultsView.swift in Sources */,
 				0B743B572C65BFC30036DF60 /* GameViewModel.swift in Sources */,
 				0B743B552C65BF2F0036DF60 /* Tile.swift in Sources */,
+				0B0371672CAC9A7400CE26E1 /* RSGameView.swift in Sources */,
 				0B09C6712CA48145003ADC3C /* AdUnit.swift in Sources */,
 				0B743B5B2C65BFEB0036DF60 /* GameChoiceView.swift in Sources */,
 				0B743B5D2C65BFFD0036DF60 /* GameView.swift in Sources */,
