@@ -160,8 +160,7 @@ struct RSGameView: View {
                                 }
                                 .padding(.horizontal)
                                 Spacer()
-                                BannerAdView(adFormat: UIDevice.current.userInterfaceIdiom == .pad ? .leaderboard : .standardBanner, onShow: { print("Show Banner") })
-                                    .padding(.bottom, 10) 
+        
                             }
                         }
                         .padding()

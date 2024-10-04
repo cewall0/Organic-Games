@@ -116,6 +116,12 @@ struct RSResultsView: View {
                 .padding(.bottom, 10)
             
         }
+        .onAppear(perform: {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                            requestPermission()
+                        }
+                    })
+
         .padding()
     }
 }

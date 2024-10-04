@@ -33,9 +33,6 @@ struct GameChoiceView: View {
                         .resizable()
                         .frame(width: 375, height: 210)
                     
-        
-
-                
                 Divider()
                 Text("")
                 Button(action: {
@@ -105,6 +102,12 @@ struct GameChoiceView: View {
                 BannerAdView(adFormat: UIDevice.current.userInterfaceIdiom == .pad ? .leaderboard : .standardBanner, onShow: { print("Show Banner") })
 
             }
+            .onAppear(perform: {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                requestPermission()
+                            }
+                        })
+
             .navigationDestination(for: GameType.self) { gameType in
                 switch gameType {
                 case .game6:

@@ -99,6 +99,12 @@ struct GameView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.white)
         .edgesIgnoringSafeArea(.all)
+        .onAppear(perform: {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                            requestPermission()
+                        }
+                    })
+
         .onAppear {
             viewModel.resetGame(for: gameType)
         }

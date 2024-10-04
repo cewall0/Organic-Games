@@ -56,8 +56,14 @@ struct AminoAcidChoiceView: View {
                      .cornerRadius(10)
                      .shadow(color: .gray, radius: 4, x: 0, y: 2)
 
-            
+            BannerAdView(adFormat: UIDevice.current.userInterfaceIdiom == .pad ? .leaderboard : .standardBanner, onShow: { print("Show Banner") })
                  }
+                .onAppear(perform: {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                            requestPermission()
+                        }
+                    })
+
                  .padding()
     }
 
