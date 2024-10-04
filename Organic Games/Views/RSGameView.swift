@@ -100,7 +100,10 @@ struct RSGameView: View {
                         GeometryReader { geometry in
                             VStack {
                                 Spacer()
-                                HStack(spacing: 16) { // Ensure equal spacing between all items
+                                HStack {
+                                    Spacer() // Ensure left alignment
+
+                                    // S button
                                     Button(action: {
                                         sButtonTapped = true
                                         handleAnswer(selectedAnswer: "S")
@@ -118,6 +121,9 @@ struct RSGameView: View {
                                             .scaleEffect(sButtonTapped ? 1.2 : 1.0)
                                     }
 
+                                    Spacer() // Equal space between button and image
+
+                                    // Molecule image
                                     ZStack {
                                         if let image = UIImage(named: currentImage) {
                                             Image(uiImage: image)
@@ -131,7 +137,7 @@ struct RSGameView: View {
                                         if showFeedback {
                                             Image(systemName: feedbackType == .correct ? "checkmark.circle.fill" : "xmark.circle.fill")
                                                 .resizable()
-                                                .frame(width: geometry.size.width * 0.5 * 0.8, height: geometry.size.width * 0.5 * 0.8) // Adjust size to nearly cover the tile
+                                                .frame(width: geometry.size.width * 0.5 * 0.8, height: geometry.size.width * 0.5 * 0.8)
                                                 .foregroundColor(.white)
                                                 .background(Circle()
                                                     .fill(feedbackType == .correct ? Color.green : Color.red)
@@ -141,6 +147,9 @@ struct RSGameView: View {
                                         }
                                     }
 
+                                    Spacer() // Equal space between image and button
+
+                                    // R button
                                     Button(action: {
                                         rButtonTapped = true
                                         handleAnswer(selectedAnswer: "R")
@@ -157,12 +166,14 @@ struct RSGameView: View {
                                             .shadow(radius: 5)
                                             .scaleEffect(rButtonTapped ? 1.2 : 1.0)
                                     }
+
+                                    Spacer() // Ensure right alignment
                                 }
                                 .padding(.horizontal)
                                 Spacer()
-        
                             }
                         }
+
                         .padding()
                     }
                     .onAppear(perform: startCountdown)

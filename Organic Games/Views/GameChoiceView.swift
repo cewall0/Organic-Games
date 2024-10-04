@@ -32,8 +32,11 @@ struct GameChoiceView: View {
                     Image("OrganicGamesTitle")
                         .resizable()
                         .frame(width: 375, height: 210)
-                    
-                Divider()
+
+                Text("- Lazy Tile Match Games -")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.orange)
                 Text("")
                 Button(action: {
                     reset()
@@ -88,7 +91,13 @@ struct GameChoiceView: View {
                 }, label: {
                     Text("Amino Acids")
                 })
-                
+                Text("")
+                Text("- Blitz Pick Game -")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.orange)
+                    .padding(.top)
+
                 Text("")
                 Button(action: {
                     reset() // Reset navigation stack if needed
@@ -124,8 +133,6 @@ struct GameChoiceView: View {
                     GameView(path: $path, gameType: gameType)
                 }
             }
-
-
         }
     }
 }
