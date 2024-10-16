@@ -12,6 +12,7 @@
 		0B09C6702CA48128003ADC3C /* BannerAdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF98BB2CA369D1003EEF9E /* BannerAdView.swift */; };
 		0B09C6712CA48145003ADC3C /* AdUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF98BA2CA369D1003EEF9E /* AdUnit.swift */; };
 		0B09C6722CA4814B003ADC3C /* AdSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF98BC2CA369D1003EEF9E /* AdSettings.swift */; };
+		0B39433C2CC01C5600139CB4 /* CountdownOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B39433B2CC01C5600139CB4 /* CountdownOverlay.swift */; };
 		0B546F4B2C94DB9E00861005 /* AminoAcidChoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B546F4A2C94DB9E00861005 /* AminoAcidChoiceView.swift */; };
 		0B743B422C65BEB50036DF60 /* Organic_GamesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B743B412C65BEB50036DF60 /* Organic_GamesApp.swift */; };
 		0B743B462C65BEC00036DF60 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B743B452C65BEC00036DF60 /* Assets.xcassets */; };
@@ -28,6 +29,7 @@
 /* Begin PBXFileReference section */
 		0B0371662CAC9A7400CE26E1 /* RSGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSGameView.swift; sourceTree = "<group>"; };
 		0B0371682CAC9A7800CE26E1 /* RSResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSResultsView.swift; sourceTree = "<group>"; };
+		0B39433B2CC01C5600139CB4 /* CountdownOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownOverlay.swift; sourceTree = "<group>"; };
 		0B546F4A2C94DB9E00861005 /* AminoAcidChoiceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AminoAcidChoiceView.swift; sourceTree = "<group>"; };
 		0B743B3E2C65BEB50036DF60 /* Organic Games.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Organic Games.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B743B412C65BEB50036DF60 /* Organic_GamesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Organic_GamesApp.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 				0B743B5A2C65BFEB0036DF60 /* GameChoiceView.swift */,
 				0B743B5C2C65BFFD0036DF60 /* GameView.swift */,
 				0B546F4A2C94DB9E00861005 /* AminoAcidChoiceView.swift */,
+				0B39433B2CC01C5600139CB4 /* CountdownOverlay.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -282,6 +285,7 @@
 				0B743B5B2C65BFEB0036DF60 /* GameChoiceView.swift in Sources */,
 				0B743B5D2C65BFFD0036DF60 /* GameView.swift in Sources */,
 				0B09C6722CA4814B003ADC3C /* AdSettings.swift in Sources */,
+				0B39433C2CC01C5600139CB4 /* CountdownOverlay.swift in Sources */,
 				0B09C6702CA48128003ADC3C /* BannerAdView.swift in Sources */,
 				0B743B592C65BFDE0036DF60 /* SplashScreenView.swift in Sources */,
 				0B546F4B2C94DB9E00861005 /* AminoAcidChoiceView.swift in Sources */,

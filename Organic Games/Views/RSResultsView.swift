@@ -18,7 +18,7 @@ struct RSResultsView: View {
     var body: some View {
         VStack {
             Text("Incorrect Guesses This Round")
-                .font(.title)
+                .font(.subheadline)
                 .fontWeight(.bold)
                 .foregroundColor(.primary)
                 .padding()

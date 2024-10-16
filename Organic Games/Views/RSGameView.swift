@@ -5,6 +5,12 @@
 //  Created by Chad Wallace on 9/24/24.
 //
 
+//  MoleculeGameView.swift
+//  RandS
+//
+//  Created by Chad Wallace on 9/24/24.
+//
+
 import SwiftUI
 import UIKit
 
@@ -26,6 +32,9 @@ struct RSGameView: View {
     @State private var showResults = false
     @State private var timer: DispatchSourceTimer?
     @State private var showCountdown = true
+
+    // Relaxed Mode state
+    @State private var isRelaxedMode = false
 
     // States for button animations
     @State private var sButtonTapped = false
@@ -50,27 +59,42 @@ struct RSGameView: View {
                     }
                 } else {
                     VStack {
+                        // Relaxed Mode Toggle
                         HStack {
-                            // Timer Box
-                            VStack {
-                                Text("Timer")
-                                    .font(.title2)
-                                    .foregroundColor(.black)
-                                Text("\(timeRemaining)")
-                                    .font(.largeTitle)
-                                    .frame(width: 100, height: 100)
-                                    .background(
-                                        RoundedRectangle(cornerRadius: 20)
-                                            .fill(Color.black)
-                                            .shadow(color: .gray, radius: 10, x: 5, y: 5)
-                                    )
-                                    .foregroundColor(.green)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 20)
-                                            .stroke(Color.white, lineWidth: 5)
-                                    )
+                            Spacer()
+                            
+                            Text("Relaxed Mode")
+                            Toggle("", isOn: $isRelaxedMode)
+                                .labelsHidden()
+                        }
+                        .padding()
+                        .onChange(of: isRelaxedMode) { _, newValue in
+                            toggleRelaxedMode()
+                        }
+
+                        HStack {
+                            // Conditionally show Timer Box
+                            if !isRelaxedMode {
+                                VStack {
+                                    Text("Timer")
+                                        .font(.title2)
+                                        .foregroundColor(.black)
+                                    Text("\(timeRemaining)")
+                                        .font(.largeTitle)
+                                        .frame(width: 100, height: 100)
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 20)
+                                                .fill(Color.black)
+                                                .shadow(color: .gray, radius: 10, x: 5, y: 5)
+                                        )
+                                        .foregroundColor(.green)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 20)
+                                                .stroke(Color.white, lineWidth: 5)
+                                        )
+                                }
+                                .padding(.leading)
                             }
-                            .padding(.leading)
 
                             Spacer()
 
@@ -101,7 +125,7 @@ struct RSGameView: View {
                             VStack {
                                 Spacer()
                                 HStack {
-                                    Spacer() // Ensure left alignment
+                                    Spacer()
 
                                     // S button
                                     Button(action: {
@@ -121,9 +145,9 @@ struct RSGameView: View {
                                             .scaleEffect(sButtonTapped ? 1.2 : 1.0)
                                     }
 
-                                    Spacer() // Equal space between button and image
+                                    Spacer()
 
-                                    // Molecule image
+                                    // Molecule image with feedback indicators
                                     ZStack {
                                         if let image = UIImage(named: currentImage) {
                                             Image(uiImage: image)
@@ -137,17 +161,17 @@ struct RSGameView: View {
                                         if showFeedback {
                                             Image(systemName: feedbackType == .correct ? "checkmark.circle.fill" : "xmark.circle.fill")
                                                 .resizable()
-                                                .frame(width: geometry.size.width * 0.5 * 0.8, height: geometry.size.width * 0.5 * 0.8)
+                                                .frame(width: geometry.size.width * 0.5 * 0.5, height: geometry.size.width * 0.5 * 0.5)
                                                 .foregroundColor(.white)
                                                 .background(Circle()
                                                     .fill(feedbackType == .correct ? Color.green : Color.red)
-                                                    .frame(width: geometry.size.width * 0.5 * 0.9, height: geometry.size.width * 0.5 * 0.9)
+                                                    .frame(width: geometry.size.width * 0.5 * 0.6, height: geometry.size.width * 0.5 * 0.6)
                                                 )
                                                 .transition(.opacity)
                                         }
                                     }
 
-                                    Spacer() // Equal space between image and button
+                                    Spacer()
 
                                     // R button
                                     Button(action: {
@@ -167,13 +191,12 @@ struct RSGameView: View {
                                             .scaleEffect(rButtonTapped ? 1.2 : 1.0)
                                     }
 
-                                    Spacer() // Ensure right alignment
+                                    Spacer()
                                 }
                                 .padding(.horizontal)
                                 Spacer()
                             }
                         }
-
                         .padding()
                     }
                     .onAppear(perform: startCountdown)
@@ -190,6 +213,8 @@ struct RSGameView: View {
                         )
                     }
                 }
+                BannerAdView(adFormat: UIDevice.current.userInterfaceIdiom == .pad ? .leaderboard : .standardBanner, onShow: { print("Show Banner") })
+                    .padding(.bottom, 10) 
             }
 
             // Countdown overlay
@@ -210,6 +235,7 @@ struct RSGameView: View {
         // Reset feedback before processing new answer
         showFeedback = false
         
+        // Check if the answer is correct
         if currentImage.hasSuffix("_\(selectedAnswer)") {
             score += 1
             feedbackType = .correct
@@ -224,7 +250,8 @@ struct RSGameView: View {
             generator.impactOccurred()
         }
         
-        showFeedback = true // Show feedback indicator
+        // Show feedback indicator
+        showFeedback = true
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             showFeedback = false // Hide feedback indicator after 0.2 seconds
@@ -267,37 +294,65 @@ struct RSGameView: View {
                 } else {
                     self.timer?.cancel()
                     self.showCountdown = false
-                    self.startGame()
+                    self.startGameTimer()
                 }
             }
             self.timer?.resume()
         }
     }
 
-    private func startGame() {
-        showNextMolecule()
-
-        timer?.cancel()
-        timer = DispatchSource.makeTimerSource(queue: DispatchQueue.main)
-        timer?.schedule(deadline: .now(), repeating: 1.0)
-        timer?.setEventHandler {
+    private func startGameTimer() {
+        self.timer?.cancel()
+        self.timer = DispatchSource.makeTimerSource(queue: DispatchQueue.main)
+        self.timer?.schedule(deadline: .now(), repeating: 1.0)
+        self.timer?.setEventHandler {
             if self.timeRemaining > 0 {
                 self.timeRemaining -= 1
             } else {
                 self.timer?.cancel()
                 self.gameOver = true
                 
+                // Update high score if needed
                 if score > highScore {
-                    highScore = score
+                    highScore = score // Update high score if current score is higher
                 }
             }
         }
-        timer?.resume()
+        self.timer?.resume()
+        
+        // Start with the first molecule image
+        showNextMolecule()
     }
 
     private func resetGame() {
+        // Resetting the game state for a new round
+        score = 0
+        timeRemaining = 30
+        incorrectGuesses.removeAll()
+        usedMoleculeImages.removeAll()
+        unusedMoleculeImages.removeAll()
+        currentImage = ""
+        showResults = false
+        gameOver = false
+        countdown = 3
+        isRelaxedMode = false // Reset relaxed mode
+        showCountdown = true
+
+        // Reset timer and start a new game
+        timer?.cancel()
         startCountdown()
     }
+
+    private func toggleRelaxedMode() {
+        if isRelaxedMode {
+            // Enter relaxed mode without countdown or timer
+            timer?.cancel() // Stop any ongoing timers
+            showCountdown = false // Hide countdown immediately
+            timeRemaining = 0 // Set time remaining to 0 since timer is not needed
+            showNextMolecule() // Continue the game without timers
+        } else {
+            // Exit relaxed mode and reset the game with the timer
+            startCountdown() // Restart the countdown and timer if relaxed mode is turned off
+        }
+    }
 }
-
-
