@@ -1,4 +1,5 @@
 import SwiftUI
+import WallaceAds
 import Foundation
 import AVFoundation
 
@@ -93,7 +94,7 @@ struct GameView: View {
             }
             .padding(.bottom, 10) // Less padding to bring the button closer
             
-            BannerAdView(adFormat: UIDevice.current.userInterfaceIdiom == .pad ? .leaderboard : .standardBanner, onShow: { print("Show Banner") })
+            BannerAdView()
                 .padding(.bottom, 10) 
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -101,7 +102,7 @@ struct GameView: View {
         .edgesIgnoringSafeArea(.all)
         .onAppear(perform: {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                            requestPermission()
+                            WallaceAds.start()
                         }
                     })
 

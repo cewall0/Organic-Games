@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WallaceAds
 import Observation
 
 struct AminoAcidChoiceView: View {
@@ -56,11 +57,11 @@ struct AminoAcidChoiceView: View {
                      .cornerRadius(10)
                      .shadow(color: .gray, radius: 4, x: 0, y: 2)
 
-            BannerAdView(adFormat: UIDevice.current.userInterfaceIdiom == .pad ? .leaderboard : .standardBanner, onShow: { print("Show Banner") })
+            BannerAdView()
                  }
                 .onAppear(perform: {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                            requestPermission()
+                            WallaceAds.start()
                         }
                     })
 

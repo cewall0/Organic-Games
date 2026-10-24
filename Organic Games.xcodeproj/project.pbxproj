@@ -9,9 +9,6 @@
 /* Begin PBXBuildFile section */
 		0B0371672CAC9A7400CE26E1 /* RSGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0371662CAC9A7400CE26E1 /* RSGameView.swift */; };
 		0B0371692CAC9A7800CE26E1 /* RSResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0371682CAC9A7800CE26E1 /* RSResultsView.swift */; };
-		0B09C6702CA48128003ADC3C /* BannerAdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF98BB2CA369D1003EEF9E /* BannerAdView.swift */; };
-		0B09C6712CA48145003ADC3C /* AdUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF98BA2CA369D1003EEF9E /* AdUnit.swift */; };
-		0B09C6722CA4814B003ADC3C /* AdSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF98BC2CA369D1003EEF9E /* AdSettings.swift */; };
 		0B39433C2CC01C5600139CB4 /* CountdownOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B39433B2CC01C5600139CB4 /* CountdownOverlay.swift */; };
 		0B546F4B2C94DB9E00861005 /* AminoAcidChoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B546F4A2C94DB9E00861005 /* AminoAcidChoiceView.swift */; };
 		0B743B422C65BEB50036DF60 /* Organic_GamesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B743B412C65BEB50036DF60 /* Organic_GamesApp.swift */; };
@@ -23,7 +20,7 @@
 		0B743B592C65BFDE0036DF60 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B743B582C65BFDE0036DF60 /* SplashScreenView.swift */; };
 		0B743B5B2C65BFEB0036DF60 /* GameChoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B743B5A2C65BFEB0036DF60 /* GameChoiceView.swift */; };
 		0B743B5D2C65BFFD0036DF60 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B743B5C2C65BFFD0036DF60 /* GameView.swift */; };
-		78624B8755D56003DC1A2449 /* Pods_Organic_Games.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A750AD869B1D8EF151D7A06B /* Pods_Organic_Games.framework */; };
+		FBA0CC6FB4A1EB009264C3C0 /* WallaceAds in Frameworks */ = {isa = PBXBuildFile; productRef = B6F7EA17334B2FB78BFFD0E7 /* WallaceAds */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,13 +38,7 @@
 		0B743B582C65BFDE0036DF60 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		0B743B5A2C65BFEB0036DF60 /* GameChoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameChoiceView.swift; sourceTree = "<group>"; };
 		0B743B5C2C65BFFD0036DF60 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
-		0BBF98BA2CA369D1003EEF9E /* AdUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdUnit.swift; sourceTree = "<group>"; };
-		0BBF98BB2CA369D1003EEF9E /* BannerAdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerAdView.swift; sourceTree = "<group>"; };
-		0BBF98BC2CA369D1003EEF9E /* AdSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdSettings.swift; sourceTree = "<group>"; };
 		0BBF98C52CA39A32003EEF9E /* Organic-Games-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Organic-Games-Info.plist"; sourceTree = "<group>"; };
-		7AD2E59242ED3309C3A1B355 /* Pods-Organic Games.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Organic Games.release.xcconfig"; path = "Target Support Files/Pods-Organic Games/Pods-Organic Games.release.xcconfig"; sourceTree = "<group>"; };
-		A750AD869B1D8EF151D7A06B /* Pods_Organic_Games.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Organic_Games.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F28B0D714E62EBA4D1299B0D /* Pods-Organic Games.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Organic Games.debug.xcconfig"; path = "Target Support Files/Pods-Organic Games/Pods-Organic Games.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,7 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78624B8755D56003DC1A2449 /* Pods_Organic_Games.framework in Frameworks */,
+				FBA0CC6FB4A1EB009264C3C0 /* WallaceAds in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,7 +59,6 @@
 				0B743B402C65BEB50036DF60 /* Organic Games */,
 				0B743B3F2C65BEB50036DF60 /* Products */,
 				95040334F2328C94611A273C /* Pods */,
-				B54FDC0283F57AA7C7F2C5D2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -137,9 +127,6 @@
 		0BBF98BD2CA369D1003EEF9E /* Ad */ = {
 			isa = PBXGroup;
 			children = (
-				0BBF98BA2CA369D1003EEF9E /* AdUnit.swift */,
-				0BBF98BB2CA369D1003EEF9E /* BannerAdView.swift */,
-				0BBF98BC2CA369D1003EEF9E /* AdSettings.swift */,
 			);
 			path = Ad;
 			sourceTree = "<group>";
@@ -147,18 +134,8 @@
 		95040334F2328C94611A273C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				F28B0D714E62EBA4D1299B0D /* Pods-Organic Games.debug.xcconfig */,
-				7AD2E59242ED3309C3A1B355 /* Pods-Organic Games.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		B54FDC0283F57AA7C7F2C5D2 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				A750AD869B1D8EF151D7A06B /* Pods_Organic_Games.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -168,17 +145,18 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0B743B4C2C65BEC00036DF60 /* Build configuration list for PBXNativeTarget "Organic Games" */;
 			buildPhases = (
-				0EBF638B5063AF40C6B3AE2B /* [CP] Check Pods Manifest.lock */,
 				0B743B3A2C65BEB50036DF60 /* Sources */,
 				0B743B3B2C65BEB50036DF60 /* Frameworks */,
 				0B743B3C2C65BEB50036DF60 /* Resources */,
-				DB0B1EE09453A1DF4C776D74 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = "Organic Games";
+			packageProductDependencies = (
+				B6F7EA17334B2FB78BFFD0E7 /* WallaceAds */,
+			);
 			productName = "Organic Games";
 			productReference = 0B743B3E2C65BEB50036DF60 /* Organic Games.app */;
 			productType = "com.apple.product-type.application";
@@ -207,6 +185,9 @@
 				Base,
 			);
 			mainGroup = 0B743B352C65BEB50036DF60;
+			packageReferences = (
+				3103B3FC17F7401FD2C5CF36 /* XCRemoteSwiftPackageReference "WallaceAds" */,
+			);
 			productRefGroup = 0B743B3F2C65BEB50036DF60 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -228,48 +209,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		0EBF638B5063AF40C6B3AE2B /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Organic Games-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		DB0B1EE09453A1DF4C776D74 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Organic Games/Pods-Organic Games-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Organic Games/Pods-Organic Games-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Organic Games/Pods-Organic Games-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		0B743B3A2C65BEB50036DF60 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -281,12 +220,9 @@
 				0B743B572C65BFC30036DF60 /* GameViewModel.swift in Sources */,
 				0B743B552C65BF2F0036DF60 /* Tile.swift in Sources */,
 				0B0371672CAC9A7400CE26E1 /* RSGameView.swift in Sources */,
-				0B09C6712CA48145003ADC3C /* AdUnit.swift in Sources */,
 				0B743B5B2C65BFEB0036DF60 /* GameChoiceView.swift in Sources */,
 				0B743B5D2C65BFFD0036DF60 /* GameView.swift in Sources */,
-				0B09C6722CA4814B003ADC3C /* AdSettings.swift in Sources */,
 				0B39433C2CC01C5600139CB4 /* CountdownOverlay.swift in Sources */,
-				0B09C6702CA48128003ADC3C /* BannerAdView.swift in Sources */,
 				0B743B592C65BFDE0036DF60 /* SplashScreenView.swift in Sources */,
 				0B546F4B2C94DB9E00861005 /* AminoAcidChoiceView.swift in Sources */,
 			);
@@ -416,7 +352,6 @@
 		};
 		0B743B4D2C65BEC00036DF60 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F28B0D714E62EBA4D1299B0D /* Pods-Organic Games.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -452,7 +387,6 @@
 		};
 		0B743B4E2C65BEC00036DF60 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7AD2E59242ED3309C3A1B355 /* Pods-Organic Games.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -508,6 +442,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3103B3FC17F7401FD2C5CF36 /* XCRemoteSwiftPackageReference "WallaceAds" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/cewall0/WallaceAds.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B6F7EA17334B2FB78BFFD0E7 /* WallaceAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3103B3FC17F7401FD2C5CF36 /* XCRemoteSwiftPackageReference "WallaceAds" */;
+			productName = WallaceAds;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0B743B362C65BEB50036DF60 /* Project object */;
 }

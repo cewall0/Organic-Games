@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WallaceAds
 
 struct GameChoiceView: View {
     @Environment(GameViewModel.self) private var viewModel
@@ -108,12 +109,12 @@ struct GameChoiceView: View {
                 
                 Spacer()
                 
-                BannerAdView(adFormat: UIDevice.current.userInterfaceIdiom == .pad ? .leaderboard : .standardBanner, onShow: { print("Show Banner") })
+                BannerAdView()
 
             }
             .onAppear(perform: {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                                requestPermission()
+                                WallaceAds.start()
                             }
                         })
 

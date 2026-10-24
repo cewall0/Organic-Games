@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WallaceAds
 
 // Results view to show incorrect guesses
 struct RSResultsView: View {
@@ -112,13 +113,13 @@ struct RSResultsView: View {
             
             Spacer()
             
-            BannerAdView(adFormat: UIDevice.current.userInterfaceIdiom == .pad ? .leaderboard : .standardBanner, onShow: { print("Show Banner") })
+            BannerAdView()
                 .padding(.bottom, 10)
             
         }
         .onAppear(perform: {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                            requestPermission()
+                            WallaceAds.start()
                         }
                     })
 

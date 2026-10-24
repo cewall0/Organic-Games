@@ -12,6 +12,7 @@
 //
 
 import SwiftUI
+import WallaceAds
 import UIKit
 
 struct RSGameView: View {
@@ -213,7 +214,7 @@ struct RSGameView: View {
                         )
                     }
                 }
-                BannerAdView(adFormat: UIDevice.current.userInterfaceIdiom == .pad ? .leaderboard : .standardBanner, onShow: { print("Show Banner") })
+                BannerAdView()
                     .padding(.bottom, 10) 
             }
 

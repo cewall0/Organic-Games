@@ -6,8 +6,7 @@
 //
 
 import SwiftUI
-import AppTrackingTransparency
-import GoogleMobileAds
+import WallaceAds
 
 @main
 struct Organic_GamesApp: App {
@@ -15,17 +14,15 @@ struct Organic_GamesApp: App {
     @State private var tiles = GameViewModel(gameType: .game1)
     
     init() {
-        if ATTrackingManager.trackingAuthorizationStatus == .notDetermined {
-            // The user has not made a choice yet regarding app tracking.
-            // This is a good place to show a custom explainer screen or dialog.
-            // Toggle any variables or state here if you want to handle this.
-        } else {
-            // Request the tracking authorization and initialize GADMobileAds
-            ATTrackingManager.requestTrackingAuthorization { status in
-                // Initialize Google Mobile Ads regardless of the user's choice
-                GADMobileAds.sharedInstance().start(completionHandler: nil)
-            }
-        }
+        #if DEBUG
+        let useTestAds = true
+        #else
+        let useTestAds = false
+        #endif
+        WallaceAds.configure(.init(
+            bannerID: "ca-app-pub-5511806561009019/7821042125",
+            useTestAds: useTestAds
+        ))
     }
     
     var body: some Scene {
