@@ -20,7 +20,18 @@ struct GameChoiceView: View {
         NavigationStack(path: $path) {
             VStack {
                 HStack{
-                    
+                    if WallaceAds.privacyOptionsRequired {
+                        Button {
+                            WallaceAds.presentPrivacyOptions()
+                        } label: {
+                            Image(systemName: "hand.raised.circle")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .padding(.leading)
+                                .foregroundColor(.gray)
+                        }
+                        .accessibilityLabel("Ad privacy settings")
+                    }
                     Spacer()
                     Link(destination: URL(string: "https://sites.google.com/view/organic-chem-games/home")!) {
                         Image(systemName: "questionmark.circle")
