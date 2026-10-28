@@ -23,7 +23,7 @@ struct RSGameView: View {
 
     @State private var currentImage = ""
     @State private var score = 0
-    @State private var highScore = 0
+    @AppStorage("rsHighScore") private var highScore = 0 // kept between launches
     @State private var timeRemaining = 30
     @State private var gameOver = false
     @State private var countdown = 3
@@ -65,7 +65,7 @@ struct RSGameView: View {
                             Spacer()
                             
                             Text("Relaxed Mode")
-                            Toggle("", isOn: $isRelaxedMode)
+                            Toggle("Relaxed Mode", isOn: $isRelaxedMode)
                                 .labelsHidden()
                         }
                         .padding()
@@ -169,6 +169,7 @@ struct RSGameView: View {
                                                     .frame(width: geometry.size.width * 0.5 * 0.6, height: geometry.size.width * 0.5 * 0.6)
                                                 )
                                                 .transition(.opacity)
+                                                .accessibilityLabel(feedbackType == .correct ? Text("Correct") : Text("Incorrect"))
                                         }
                                     }
 

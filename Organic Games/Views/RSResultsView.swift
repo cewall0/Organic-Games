@@ -7,6 +7,7 @@
 
 import SwiftUI
 import WallaceAds
+import StoreKit
 
 // Results view to show incorrect guesses
 struct RSResultsView: View {
@@ -15,6 +16,9 @@ struct RSResultsView: View {
     let highScore: Int // Add high score
     @State private var currentIndex = 0
     var onPlayAgain: () -> Void
+
+    @Environment(\.requestReview) private var requestReview
+    @AppStorage("completedGames") private var completedGames = 0
 
     var body: some View {
         VStack {
@@ -64,6 +68,7 @@ struct RSResultsView: View {
                                 .foregroundColor(currentIndex == 0 ? .gray : .blue) // Gray out if at the first tile
                         }
                         .disabled(currentIndex == 0)
+                        .accessibilityLabel("Previous incorrect guess")
 
                         Spacer()
 
@@ -78,6 +83,7 @@ struct RSResultsView: View {
                                 .foregroundColor(currentIndex == incorrectGuesses.count - 1 ? .gray : .blue) // Gray out if at the last tile
                         }
                         .disabled(currentIndex == incorrectGuesses.count - 1)
+                        .accessibilityLabel("Next incorrect guess")
                     }
                     .padding()
                 }
@@ -120,6 +126,11 @@ struct RSResultsView: View {
         .onAppear(perform: {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                             WallaceAds.start()
+                        }
+                        // A finished round: ask for a rating after the 3rd, then every 10th (iOS limits how often it shows)
+                        completedGames += 1
+                        if completedGames == 3 || completedGames % 10 == 0 {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { requestReview() }
                         }
                     })
 

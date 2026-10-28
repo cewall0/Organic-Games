@@ -40,6 +40,7 @@ struct GameChoiceView: View {
                             .padding(.trailing)
                             .foregroundColor(.gray)
                     }
+                    .accessibilityLabel("Help")
                 }
                     Image("OrganicGamesTitle")
                         .resizable()

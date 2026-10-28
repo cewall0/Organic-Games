@@ -2,12 +2,15 @@ import SwiftUI
 import WallaceAds
 import Foundation
 import AVFoundation
+import StoreKit
 
 struct GameView: View {
     @Environment(GameViewModel.self) private var viewModel
     @Binding var path: NavigationPath
     @State private var showFireworks = false // State to control fireworks animation
     @State private var pulseAnimation = false // State to control pulsing animation for text
+    @Environment(\.requestReview) private var requestReview
+    @AppStorage("completedGames") private var completedGames = 0
     
     var gameType: GameType // GameType to determine the type of game
     
@@ -43,6 +46,11 @@ struct GameView: View {
                             .animation(Animation.easeInOut(duration: 0.8).repeatForever(autoreverses: true), value: pulseAnimation)
                             .onAppear {
                                 pulseAnimation = true
+                                // A finished game: ask for a rating after the 3rd, then every 10th (iOS limits how often it shows)
+                                completedGames += 1
+                                if completedGames == 3 || completedGames % 10 == 0 {
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { requestReview() }
+                                }
                             }
                         
                         Button("Play Again") {

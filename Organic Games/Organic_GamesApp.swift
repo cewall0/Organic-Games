@@ -29,6 +29,7 @@ struct Organic_GamesApp: App {
         WindowGroup {
             SplashScreenView()
                 .environment(tiles)
+                .onAppear { UIApplication.shared.isIdleTimerDisabled = true } // keep the screen awake during play
         }
     }
 }
