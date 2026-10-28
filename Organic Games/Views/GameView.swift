@@ -11,6 +11,17 @@ struct GameView: View {
     @State private var pulseAnimation = false // State to control pulsing animation for text
     @Environment(\.requestReview) private var requestReview
     @AppStorage("completedGames") private var completedGames = 0
+    @State private var askedForReview = false
+
+    /// Natural break after a finished game: an interstitial (if ready), unless we just asked for a rating.
+    private func afterGame(_ action: @escaping () -> Void) {
+        if askedForReview {
+            askedForReview = false
+            action()
+        } else {
+            Interstitials.shared.showIfReady(onFinish: action)
+        }
+    }
     
     var gameType: GameType // GameType to determine the type of game
     
@@ -49,15 +60,18 @@ struct GameView: View {
                                 // A finished game: ask for a rating after the 3rd, then every 10th (iOS limits how often it shows)
                                 completedGames += 1
                                 if completedGames == 3 || completedGames % 10 == 0 {
+                                    askedForReview = true
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { requestReview() }
                                 }
                             }
                         
                         Button("Play Again") {
-                            viewModel.gameCompleted = false
-                            viewModel.resetGame(for: gameType)
-                            showFireworks = false
-                            pulseAnimation = false
+                            afterGame {
+                                viewModel.gameCompleted = false
+                                viewModel.resetGame(for: gameType)
+                                showFireworks = false
+                                pulseAnimation = false
+                            }
                         }
                         .padding()
                         .background(.blue)
@@ -66,10 +80,12 @@ struct GameView: View {
                         .shadow(color: .gray, radius: 4, x: 0, y: 2)
                         
                         Button("Choose different game") {
-                            viewModel.gameCompleted = false
-                            resetPath()
-                            showFireworks = false
-                            pulseAnimation = false
+                            afterGame {
+                                viewModel.gameCompleted = false
+                                resetPath()
+                                showFireworks = false
+                                pulseAnimation = false
+                            }
                         }
                         .padding()
                         .background(.teal)

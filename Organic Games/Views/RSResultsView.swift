@@ -19,6 +19,7 @@ struct RSResultsView: View {
 
     @Environment(\.requestReview) private var requestReview
     @AppStorage("completedGames") private var completedGames = 0
+    @State private var askedForReview = false
 
     var body: some View {
         VStack {
@@ -105,7 +106,12 @@ struct RSResultsView: View {
 
             // Play again button at the bottom
             Button(action: {
-                onPlayAgain()
+                // Natural break: an interstitial (if ready), unless we just asked for a rating
+                if askedForReview {
+                    onPlayAgain()
+                } else {
+                    Interstitials.shared.showIfReady(onFinish: onPlayAgain)
+                }
             }) {
                 Text("Play Again")
                     .font(.title)
@@ -130,6 +136,7 @@ struct RSResultsView: View {
                         // A finished round: ask for a rating after the 3rd, then every 10th (iOS limits how often it shows)
                         completedGames += 1
                         if completedGames == 3 || completedGames % 10 == 0 {
+                            askedForReview = true
                             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { requestReview() }
                         }
                     })
