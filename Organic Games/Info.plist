@@ -4,5 +4,7 @@
 <dict>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-5511806561009019~7400673054</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>

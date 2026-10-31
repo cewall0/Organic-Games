@@ -33,7 +33,7 @@ struct GameChoiceView: View {
                         .accessibilityLabel("Ad privacy settings")
                     }
                     Spacer()
-                    Link(destination: URL(string: "https://sites.google.com/view/organic-chem-games/home")!) {
+                    Link(destination: URL(string: "https://wallacewaysoftware.com/organic-games/")!) {
                         Image(systemName: "questionmark.circle")
                             .resizable()
                             .frame(width: 30, height: 30)
