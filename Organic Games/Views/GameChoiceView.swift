@@ -32,6 +32,12 @@ struct GameChoiceView: View {
                         }
                         .accessibilityLabel("Ad privacy settings")
                     }
+                    RemoveAdsLink {
+                        Text("Remove Ads")
+                            .font(.footnote.bold())
+                            .foregroundColor(.gray)
+                            .padding(.leading)
+                    }
                     Spacer()
                     Link(destination: URL(string: "https://wallacewaysoftware.com/organic-games/")!) {
                         Image(systemName: "questionmark.circle")

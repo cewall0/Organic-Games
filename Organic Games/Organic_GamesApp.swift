@@ -23,7 +23,8 @@ struct Organic_GamesApp: App {
             bannerID: "ca-app-pub-5511806561009019/7821042125",
             interstitialID: "ca-app-pub-5511806561009019/1523861549",
             interstitialInterval: 300, // rounds are short, so at most one every 5 minutes
-            useTestAds: useTestAds
+            useTestAds: useTestAds,
+            removeAdsProductID: "com.Wallace.OrganicGames.removeads"
         ))
     }
     
