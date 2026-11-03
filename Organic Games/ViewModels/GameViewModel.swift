@@ -107,7 +107,7 @@ final class GameViewModel {
             // No game logic needed. This navigates to the amino acid selection screen.
             break
             
-        case .game7, .irSpectra, .irTiles, .msPatterns, .msTiles:
+        case .game7, .irSpectra, .irTiles, .msPatterns, .msTiles, .rxnPredict:
             // No tile game: these have their own views.
             break
     }

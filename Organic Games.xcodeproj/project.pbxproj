@@ -22,12 +22,14 @@
 		0B743B5D2C65BFFD0036DF60 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B743B5C2C65BFFD0036DF60 /* GameView.swift */; };
 		1A6A74F6A38D8304BADE6DBF /* NameThatPatternView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A96D92106A098CB2E09B35 /* NameThatPatternView.swift */; };
 		5B2E517A5D4BF718103EA16D /* TextTileGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD2A20793F087AF143C6E54 /* TextTileGameView.swift */; };
+		7893DAAC0C9FC394BEA51D29 /* PredictProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1AA80EE3DBC68AE5385E38 /* PredictProductView.swift */; };
 		A8C0880316DF112FAF504DDB /* StudySet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81360021A864D733CEBC75DA /* StudySet.swift */; };
 		AEA4546DC1C764520E40357E /* MassSpectrumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D04EF7D16C165F80C62E2FE /* MassSpectrumView.swift */; };
 		B25CDFEB89595667651053A0 /* SpectrumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D44CA148FAAA567743129CE /* SpectrumView.swift */; };
 		C1224C811FF1646A7C892BF8 /* PlusStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E13A3A55D1160A0571CB0 /* PlusStore.swift */; };
 		C2FAB0A435FA50F2738587D5 /* StudySets.json in Resources */ = {isa = PBXBuildFile; fileRef = 6C7C5B3D8C21452DFBF675D6 /* StudySets.json */; };
 		D320DDCE596FE3F915127574 /* MassSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = B258028E35DD11F140BE76AB /* MassSpec.swift */; };
+		D93E264DE76BB204BCA320A3 /* Reactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BC7499CBF58E2561385D76 /* Reactions.swift */; };
 		DDC6A952F7B31E93B06B6366 /* NameThatSpectrumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB729E658F49B264DE746E15 /* NameThatSpectrumView.swift */; };
 		EC48F11CD11F27D821B1DD0D /* IRSpectra.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76B8B7B48526813B6DCF53B /* IRSpectra.swift */; };
 		FBA0CC6FB4A1EB009264C3C0 /* WallaceAds in Frameworks */ = {isa = PBXBuildFile; productRef = B6F7EA17334B2FB78BFFD0E7 /* WallaceAds */; };
@@ -57,7 +59,9 @@
 		9FD2A20793F087AF143C6E54 /* TextTileGameView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TextTileGameView.swift; sourceTree = "<group>"; };
 		A84E13A3A55D1160A0571CB0 /* PlusStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PlusStore.swift; sourceTree = "<group>"; };
 		B258028E35DD11F140BE76AB /* MassSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MassSpec.swift; sourceTree = "<group>"; };
+		C4BC7499CBF58E2561385D76 /* Reactions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Reactions.swift; sourceTree = "<group>"; };
 		C76B8B7B48526813B6DCF53B /* IRSpectra.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = IRSpectra.swift; sourceTree = "<group>"; };
+		CD1AA80EE3DBC68AE5385E38 /* PredictProductView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PredictProductView.swift; sourceTree = "<group>"; };
 		DB729E658F49B264DE746E15 /* NameThatSpectrumView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NameThatSpectrumView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -172,6 +176,8 @@
 				B258028E35DD11F140BE76AB /* MassSpec.swift */,
 				2D04EF7D16C165F80C62E2FE /* MassSpectrumView.swift */,
 				21A96D92106A098CB2E09B35 /* NameThatPatternView.swift */,
+				C4BC7499CBF58E2561385D76 /* Reactions.swift */,
+				CD1AA80EE3DBC68AE5385E38 /* PredictProductView.swift */,
 			);
 			name = Plus;
 			path = Plus;
@@ -274,6 +280,8 @@
 				D320DDCE596FE3F915127574 /* MassSpec.swift in Sources */,
 				AEA4546DC1C764520E40357E /* MassSpectrumView.swift in Sources */,
 				1A6A74F6A38D8304BADE6DBF /* NameThatPatternView.swift in Sources */,
+				D93E264DE76BB204BCA320A3 /* Reactions.swift in Sources */,
+				7893DAAC0C9FC394BEA51D29 /* PredictProductView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -141,6 +141,8 @@ struct GameChoiceView: View {
                 plusGame("Mass Spec: Name That Pattern", .msPatterns)
                 Text("")
                 plusGame("Mass Spec: Tile Match", .msTiles)
+                Text("")
+                plusGame("Reactions: Predict the Product", .rxnPredict)
                 
                 Spacer()
 
@@ -178,6 +180,8 @@ struct GameChoiceView: View {
                     if let set = StudySet.all.first(where: { $0.id == "ms-tiles" }) {
                         TextTileGameView(set: set)
                     }
+                case .rxnPredict:
+                    PredictProductView()
                 default:
                     // All other games navigate to GameView as usual
                     GameView(path: $path, gameType: gameType)
