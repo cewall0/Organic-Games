@@ -14,7 +14,8 @@ import SwiftUI
 final class PlusStore {
     static let shared = PlusStore()
 
-    static let productIDs = ["com.Wallace.OrganicGames.plus.semester", "com.Wallace.OrganicGames.plus.monthly"]
+    static let productIDs = ["com.Wallace.OrganicGames.plus.semester", "com.Wallace.OrganicGames.plus.yearly",
+                                    "com.Wallace.OrganicGames.plus.monthly"]
     static let termsURL = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
     static let privacyURL = URL(string: "https://wallacewaysoftware.com/organic-games/privacy/")!
 

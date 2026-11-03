@@ -106,8 +106,8 @@ struct RSResultsView: View {
 
             // Play again button at the bottom
             Button(action: {
-                // Natural break: an interstitial (if ready), unless we just asked for a rating
-                if askedForReview {
+                // Natural break: an interstitial (if ready), unless we just asked for a rating or they have Plus
+                if askedForReview || PlusStore.shared.isPlus {
                     onPlayAgain()
                 } else {
                     Interstitials.shared.showIfReady(onFinish: onPlayAgain)
@@ -125,7 +125,9 @@ struct RSResultsView: View {
             
             Spacer()
             
-            BannerAdView()
+            if !PlusStore.shared.isPlus {
+                BannerAdView()
+            }
                 .padding(.bottom, 10)
             
         }

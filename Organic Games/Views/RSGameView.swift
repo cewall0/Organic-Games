@@ -215,7 +215,9 @@ struct RSGameView: View {
                         )
                     }
                 }
-                BannerAdView()
+                if !PlusStore.shared.isPlus {
+                    BannerAdView()
+                }
                     .padding(.bottom, 10) 
             }
 
