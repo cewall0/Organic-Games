@@ -12,4 +12,5 @@ enum GameType {
     case game6Started // New case for Game 6 after selections are made.
     case game7
     case irSpectra   // Organic Games Plus: Name That Spectrum
+    case irTiles     // Organic Games Plus: IR tile match
 }

@@ -134,20 +134,9 @@ struct GameChoiceView: View {
                     .foregroundStyle(.orange)
                     .padding(.top)
                 Text("")
-                Button(action: {
-                    reset()
-                    path.append(GameType.irSpectra)
-                }, label: {
-                    HStack(spacing: 6) {
-                        Text("IR: Name That Spectrum")
-                        if !plus.isPlus {
-                            Text("PLUS")
-                                .font(.caption2.bold())
-                                .padding(.horizontal, 5).padding(.vertical, 2)
-                                .background(Capsule().fill(Color.orange.opacity(0.15)))
-                        }
-                    }
-                })
+                plusGame("IR: Name That Spectrum", .irSpectra)
+                Text("")
+                plusGame("IR: Tile Match", .irTiles)
                 
                 Spacer()
 
@@ -175,11 +164,33 @@ struct GameChoiceView: View {
                     RSGameView(path: $path)
                 case .irSpectra:
                     NameThatSpectrumView()
+                case .irTiles:
+                    if let set = StudySet.all.first(where: { $0.id == "ir-tiles" }) {
+                        TextTileGameView(set: set)
+                    }
                 default:
                     // All other games navigate to GameView as usual
                     GameView(path: $path, gameType: gameType)
                 }
             }
         }
+    }
+
+    /// A menu entry for an Organic Games Plus game (with a PLUS badge for non-subscribers)
+    private func plusGame(_ title: String, _ type: GameType) -> some View {
+        Button(action: {
+            reset()
+            path.append(type)
+        }, label: {
+            HStack(spacing: 6) {
+                Text(title)
+                if !plus.isPlus {
+                    Text("PLUS")
+                        .font(.caption2.bold())
+                        .padding(.horizontal, 5).padding(.vertical, 2)
+                        .background(Capsule().fill(Color.orange.opacity(0.15)))
+                }
+            }
+        })
     }
 }

@@ -20,6 +20,7 @@
 		0B743B592C65BFDE0036DF60 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B743B582C65BFDE0036DF60 /* SplashScreenView.swift */; };
 		0B743B5B2C65BFEB0036DF60 /* GameChoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B743B5A2C65BFEB0036DF60 /* GameChoiceView.swift */; };
 		0B743B5D2C65BFFD0036DF60 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B743B5C2C65BFFD0036DF60 /* GameView.swift */; };
+		5B2E517A5D4BF718103EA16D /* TextTileGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD2A20793F087AF143C6E54 /* TextTileGameView.swift */; };
 		A8C0880316DF112FAF504DDB /* StudySet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81360021A864D733CEBC75DA /* StudySet.swift */; };
 		B25CDFEB89595667651053A0 /* SpectrumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D44CA148FAAA567743129CE /* SpectrumView.swift */; };
 		C1224C811FF1646A7C892BF8 /* PlusStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E13A3A55D1160A0571CB0 /* PlusStore.swift */; };
@@ -48,6 +49,7 @@
 		3D44CA148FAAA567743129CE /* SpectrumView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SpectrumView.swift; sourceTree = "<group>"; };
 		6C7C5B3D8C21452DFBF675D6 /* StudySets.json */ = {isa = PBXFileReference; includeInIndex = 1; path = StudySets.json; sourceTree = "<group>"; };
 		81360021A864D733CEBC75DA /* StudySet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StudySet.swift; sourceTree = "<group>"; };
+		9FD2A20793F087AF143C6E54 /* TextTileGameView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TextTileGameView.swift; sourceTree = "<group>"; };
 		A84E13A3A55D1160A0571CB0 /* PlusStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PlusStore.swift; sourceTree = "<group>"; };
 		C76B8B7B48526813B6DCF53B /* IRSpectra.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = IRSpectra.swift; sourceTree = "<group>"; };
 		DB729E658F49B264DE746E15 /* NameThatSpectrumView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NameThatSpectrumView.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 				3D44CA148FAAA567743129CE /* SpectrumView.swift */,
 				DB729E658F49B264DE746E15 /* NameThatSpectrumView.swift */,
 				6C7C5B3D8C21452DFBF675D6 /* StudySets.json */,
+				9FD2A20793F087AF143C6E54 /* TextTileGameView.swift */,
 			);
 			name = Plus;
 			path = Plus;
@@ -258,6 +261,7 @@
 				EC48F11CD11F27D821B1DD0D /* IRSpectra.swift in Sources */,
 				B25CDFEB89595667651053A0 /* SpectrumView.swift in Sources */,
 				DDC6A952F7B31E93B06B6366 /* NameThatSpectrumView.swift in Sources */,
+				5B2E517A5D4BF718103EA16D /* TextTileGameView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,30 +1,30 @@
 {
   "sets": [
     {
-      "id": "ir-peaks",
-      "title": "IR Peaks",
+      "id": "ir-tiles",
+      "title": "IR: Tile Match",
       "chapter": "Ch. 3",
       "chapterURL": "https://organicchemistryguide.com/infrared-spectroscopy/",
       "mode": "pairs",
       "pairs": [
-        {"a": "O–H (alcohol)", "b": "~3300 cm⁻¹, very broad and strong"},
-        {"a": "N–H₂ (primary amine)", "b": "~3300 cm⁻¹, two humps"},
-        {"a": "Terminal alkyne ≡C–H", "b": "~3300 cm⁻¹, sharp (with C≡C)"},
-        {"a": "sp² C–H (alkene or aromatic)", "b": "Just above 3000 cm⁻¹"},
-        {"a": "sp³ C–H (alkyl)", "b": "Just below 3000 cm⁻¹"},
-        {"a": "Aldehyde C–H", "b": "Two peaks, ~2700 and ~2800 cm⁻¹"},
-        {"a": "Carboxylic acid O–H", "b": "Very broad, centered near 3000 cm⁻¹"},
-        {"a": "C≡N (nitrile)", "b": "Just above 2200 cm⁻¹, sharp"},
-        {"a": "C≡C (alkyne)", "b": "Just below 2200 cm⁻¹, weaker"},
-        {"a": "Ester C=O", "b": "~1730s cm⁻¹, plus C–O at ~1250 and ~1050"},
-        {"a": "Aldehyde C=O", "b": "~1720s cm⁻¹"},
-        {"a": "Ketone C=O", "b": "1700–1720 cm⁻¹"},
-        {"a": "Conjugated C=O", "b": "~1680s cm⁻¹"},
-        {"a": "Amide C=O", "b": "~1660s cm⁻¹"},
-        {"a": "C=C (alkene)", "b": "~1650–1660 cm⁻¹, weaker than C=O"},
-        {"a": "NO₂ (nitro)", "b": "Two strong peaks around 1400 cm⁻¹"},
-        {"a": "C–O (ether)", "b": "~1100 cm⁻¹, strong"},
-        {"a": "C–Cl", "b": "~700 cm⁻¹, unusually strong"}
+        {"a": "O–H alcohol", "b": "3300, very broad"},
+        {"a": "NH₂ amine", "b": "3300, two humps"},
+        {"a": "≡C–H terminal alkyne", "b": "3300, sharp"},
+        {"a": "sp² C–H", "b": "just above 3000"},
+        {"a": "sp³ C–H", "b": "just below 3000"},
+        {"a": "Aldehyde C–H", "b": "2700 & 2800"},
+        {"a": "Acid O–H", "b": "broad, near 3000"},
+        {"a": "C≡N nitrile", "b": "just above 2200"},
+        {"a": "C≡C alkyne", "b": "just below 2200; often absent if internal"},
+        {"a": "Ester C=O", "b": "1730s (+ two C–O)"},
+        {"a": "Aldehyde C=O", "b": "1720s"},
+        {"a": "Ketone C=O", "b": "1700–1720"},
+        {"a": "Conjugated C=O", "b": "1680s"},
+        {"a": "Amide C=O", "b": "1660s"},
+        {"a": "C=C alkene", "b": "1650, weaker"},
+        {"a": "NO₂ nitro", "b": "two peaks near 1400"},
+        {"a": "C–O ether", "b": "1100, strong"},
+        {"a": "C–Cl", "b": "700, strong"}
       ]
     }
   ]
