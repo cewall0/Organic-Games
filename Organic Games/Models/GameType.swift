@@ -2,7 +2,7 @@
 import SwiftUI
 import Foundation
 
-enum GameType {
+enum GameType: String {   // raw value: remembering the last game played
     case game1
     case game2
     case game3

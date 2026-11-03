@@ -20,6 +20,7 @@
 		0B743B592C65BFDE0036DF60 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B743B582C65BFDE0036DF60 /* SplashScreenView.swift */; };
 		0B743B5B2C65BFEB0036DF60 /* GameChoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B743B5A2C65BFEB0036DF60 /* GameChoiceView.swift */; };
 		0B743B5D2C65BFFD0036DF60 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B743B5C2C65BFFD0036DF60 /* GameView.swift */; };
+		18C47AFFAED020D979BA24E2 /* GameCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85FAFB26F011A8BEB3C4564 /* GameCatalog.swift */; };
 		1A6A74F6A38D8304BADE6DBF /* NameThatPatternView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A96D92106A098CB2E09B35 /* NameThatPatternView.swift */; };
 		5B2E517A5D4BF718103EA16D /* TileGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD2A20793F087AF143C6E54 /* TileGameView.swift */; };
 		7893DAAC0C9FC394BEA51D29 /* ReactionQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1AA80EE3DBC68AE5385E38 /* ReactionQuizView.swift */; };
@@ -65,6 +66,7 @@
 		CD1AA80EE3DBC68AE5385E38 /* ReactionQuizView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReactionQuizView.swift; sourceTree = "<group>"; };
 		DB729E658F49B264DE746E15 /* NameThatSpectrumView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NameThatSpectrumView.swift; sourceTree = "<group>"; };
 		DEAD49F9386BE610C045C7FF /* FillTheGapView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FillTheGapView.swift; sourceTree = "<group>"; };
+		E85FAFB26F011A8BEB3C4564 /* GameCatalog.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GameCatalog.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +149,7 @@
 				0B743B5C2C65BFFD0036DF60 /* GameView.swift */,
 				0B546F4A2C94DB9E00861005 /* AminoAcidChoiceView.swift */,
 				0B39433B2CC01C5600139CB4 /* CountdownOverlay.swift */,
+				E85FAFB26F011A8BEB3C4564 /* GameCatalog.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -286,6 +289,7 @@
 				D93E264DE76BB204BCA320A3 /* Reactions.swift in Sources */,
 				7893DAAC0C9FC394BEA51D29 /* ReactionQuizView.swift in Sources */,
 				D73CD50B6BF00BB6BF0020C0 /* FillTheGapView.swift in Sources */,
+				18C47AFFAED020D979BA24E2 /* GameCatalog.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

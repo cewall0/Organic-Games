@@ -12,6 +12,7 @@ struct GameChoiceView: View {
     @Environment(GameViewModel.self) private var viewModel
     @State var path = NavigationPath()
     private let plus = PlusStore.shared
+    @AppStorage("lastGame") private var lastGame = ""
 
     func reset() {
         self.path = NavigationPath()
@@ -51,110 +52,44 @@ struct GameChoiceView: View {
                     }
                     .accessibilityLabel("Help")
                 }
-                // The game list scrolls: with the Plus games it is taller than a phone screen
                 ScrollView {
-                VStack {
-                    Image("OrganicGamesTitle")
-                        .resizable()
-                        .frame(width: 375, height: 210)
+                    VStack(spacing: 14) {
+                        Image("OrganicGamesTitle")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: 300)
 
-                Text("- Lazy Tile Match Games -")
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .foregroundStyle(.orange)
-                Text("")
-                Button(action: {
-                    reset()
-                    viewModel.gameType = .game1
-                    viewModel.resetGame(for: .game1)
-                    path.append(GameType.game1)
-                }, label: {
-                    Text("Functional Groups")
-                })
-                Text("")
-                Button(action: {
-                    reset()
-                    viewModel.gameType = .game2
-                    viewModel.resetGame(for: .game2)
-                    path.append(GameType.game2)
-                }, label: {
-                    Text("Functional Group Suffixes")
-                })
-                Text("")
-                Button(action: {
-                    reset()
-                    viewModel.gameType = .game3
-                    viewModel.resetGame(for: .game3)
-                    path.append(GameType.game3)
-                }, label: {
-                    Text("Formal Charges")
-                })
-                Text("")
-                Button(action: {
-                    reset()
-                    viewModel.gameType = .game4
-                    viewModel.resetGame(for: .game4)
-                    path.append(GameType.game4)
-                }, label: {
-                    Text("Hybridization")
-                })
-                Text("")
-                Button(action: {
-                    reset()
-                    viewModel.gameType = .game5
-                    viewModel.resetGame(for: .game5)
-                    path.append(GameType.game5)
-                }, label: {
-                    Text("Alkyl groups")
-                })
-                
-                Text("")
-                Button(action: {
-                    reset() // Reset navigation stack if needed
-                    viewModel.gameType = .game6 // Set the game type to game6 (Amino Acids)
-                    path.append(GameType.game6) // Navigate to AminoAcidChoiceView
-                }, label: {
-                    Text("Amino Acids")
-                })
-                Text("")
-                Text("- Blitz Pick Game -")
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .foregroundStyle(.orange)
-                    .padding(.top)
+                        // Pick up where they left off
+                        if let (topic, game) = GameType(rawValue: lastGame).flatMap(GameTopic.containing) {
+                            Button { open(game.type, fromHome: true) } label: {
+                                HStack(spacing: 12) {
+                                    Image(systemName: "play.circle.fill").font(.title).foregroundStyle(topic.tint)
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text("Continue").font(.caption.bold()).foregroundStyle(.secondary)
+                                        Text(game.title).font(.headline).foregroundStyle(.primary)
+                                        if let p = game.progress {
+                                            Text("\(p.done) of \(p.total) mastered").font(.caption).foregroundStyle(.secondary)
+                                        }
+                                    }
+                                    Spacer()
+                                }
+                                .padding(12)
+                                .background(RoundedRectangle(cornerRadius: 14).fill(topic.tint.opacity(0.12)))
+                            }
+                            .buttonStyle(.plain)
+                        }
 
-                Text("")
-                Button(action: {
-                    reset() // Reset navigation stack if needed
-                    path.append(GameType.game7) // Navigate to RSGameView
-                }, label: {
-                    Text("R & S Stereochemistry")
-                })
-
-                Text("- Organic Games Plus -")
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .foregroundStyle(.orange)
-                    .padding(.top)
-                Text("")
-                plusGame("IR: Name That Spectrum", .irSpectra)
-                Text("")
-                plusGame("IR: Tile Match", .irTiles)
-                Text("")
-                plusGame("Mass Spec: Name That Pattern", .msPatterns)
-                Text("")
-                plusGame("Mass Spec: Tile Match", .msTiles)
-                Text("")
-                plusGame("Reactions: Predict the Product", .rxnPredict)
-                Text("")
-                plusGame("Reactions: Name the Reagents", .rxnReagents)
-                Text("")
-                plusGame("Reactions: Tile Match", .rxnTiles)
-                Text("")
-                plusGame("Reactions: Fill the Gap", .rxnGaps)
+                        LazyVGrid(columns: [GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)], spacing: 12) {
+                            ForEach(GameTopic.all) { topic in
+                                NavigationLink(value: topic) { TopicCard(topic: topic, isPlus: plus.isPlus) }
+                                    .buttonStyle(.plain)
+                            }
+                        }
+                    }
+                    .padding(.horizontal)
                     .padding(.bottom)
-                }
-                .frame(maxWidth: .infinity)
+                    .frame(maxWidth: 600)
+                    .frame(maxWidth: .infinity)
                 }
 
                 Spacer(minLength: 0)
@@ -170,6 +105,9 @@ struct GameChoiceView: View {
                             }
                         })
 
+            .navigationDestination(for: GameTopic.self) { topic in
+                TopicView(topic: topic) { open($0, fromHome: false) }
+            }
             .navigationDestination(for: GameType.self) { gameType in
                 switch gameType {
                 case .game6:
@@ -215,21 +153,20 @@ struct GameChoiceView: View {
         }
     }
 
-    /// A menu entry for an Organic Games Plus game (with a PLUS badge for non-subscribers)
-    private func plusGame(_ title: String, _ type: GameType) -> some View {
-        Button(action: {
-            reset()
-            path.append(type)
-        }, label: {
-            HStack(spacing: 6) {
-                Text(title)
-                if !plus.isPlus {
-                    Text("PLUS")
-                        .font(.caption2.bold())
-                        .padding(.horizontal, 5).padding(.vertical, 2)
-                        .background(Capsule().fill(Color.orange.opacity(0.15)))
-                }
-            }
-        })
+    /// Starts a game: from the home page (Continue) the stack starts fresh; from a topic page the game goes on
+    /// top, so Back returns to the topic.
+    private func open(_ type: GameType, fromHome: Bool) {
+        if fromHome { reset() }
+        switch type {
+        case .game1, .game2, .game3, .game4, .game5:
+            viewModel.gameType = type
+            viewModel.resetGame(for: type)
+        case .game6:
+            viewModel.gameType = .game6   // AminoAcidChoiceView picks the amino acids first
+        default:
+            break
+        }
+        path.append(type)
+        lastGame = type.rawValue
     }
 }
