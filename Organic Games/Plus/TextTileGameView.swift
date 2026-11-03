@@ -3,8 +3,9 @@
 //  Organic Games
 //
 //  Organic Games Plus: the lazy tile-clearing game with text tiles (e.g. a bond and its IR peak).
-//  Tiles are scattered with a slight tilt so the text stays readable. Rounds of 9 pairs, weakest first;
-//  a pair is mastered after three first-try matches in a row. Without Plus, the first round is a free preview.
+//  Like the picture games, the whole set is piled up, overlapping, and drawn pair by pair, so the top
+//  two tiles always match and can be cleared. A slight tilt keeps the text readable. A pair is mastered
+//  after three first-try matches in a row. Without Plus, the first round is a free preview.
 //
 
 import SwiftUI
@@ -12,7 +13,6 @@ import WallaceAds
 
 struct TextTileGameView: View {
     let set: StudySet
-    private let pairsPerRound = 9
 
     @Environment(\.dismiss) private var dismiss
     @AppStorage private var freeRoundsUsed: Int
@@ -27,10 +27,8 @@ struct TextTileGameView: View {
     }
 
     @State private var tiles: [TextTile] = []
-    @State private var slots: [UUID: Int] = [:]          // tile → grid cell
-    @State private var gridCells = 0                     // cells in this round's grid (fixed while tiles clear)
+    @State private var spots: [UUID: CGPoint] = [:]      // tile centre, as a fraction of the board
     @State private var tilts: [UUID: Double] = [:]
-    @State private var jitter: [UUID: CGSize] = [:]
     @State private var selected: [TextTile] = []
     @State private var wrongFlash: Set<UUID> = []
     @State private var missed: Set<String> = []
@@ -76,21 +74,18 @@ struct TextTileGameView: View {
     // MARK: Board
 
     private func board(in size: CGSize) -> some View {
-        let cols = size.width > 600 ? 4 : 3
-        // The grid keeps its size for the whole round, so tiles never move when others are cleared
-        let rows = Int(ceil(Double(max(gridCells, 1)) / Double(cols)))
-        let cell = CGSize(width: size.width / CGFloat(cols), height: size.height / CGFloat(max(rows, 1)))
-        let tileSize = CGSize(width: min(cell.width - 14, 200), height: min(cell.height - 12, 86))
+        let big = size.width > 600
+        let tileSize = CGSize(width: big ? 170 : 118, height: big ? 92 : 68)
+        // Keep whole tiles on the board
+        let usable = CGSize(width: max(1, size.width - tileSize.width - 8), height: max(1, size.height - tileSize.height - 8))
         return ZStack {
+            // Drawn in pair order: the last pair is on top, so there is always a matching pair showing
             ForEach(tiles) { tile in
-                if let slot = slots[tile.id] {
-                    let base = CGPoint(x: (CGFloat(slot % cols) + 0.5) * cell.width,
-                                       y: (CGFloat(slot / cols) + 0.5) * cell.height)
-                    let j = jitter[tile.id] ?? .zero
+                if let spot = spots[tile.id] {
                     tileView(tile, size: tileSize)
                         .rotationEffect(.degrees(tilts[tile.id] ?? 0))
-                        .position(x: base.x + j.width * max(0, cell.width - tileSize.width) / 2,
-                                  y: base.y + j.height * max(0, cell.height - tileSize.height) / 2)
+                        .position(x: tileSize.width / 2 + 4 + spot.x * usable.width,
+                                  y: tileSize.height / 2 + 4 + spot.y * usable.height)
                         .onTapGesture { tap(tile) }
                         .transition(.scale.combined(with: .opacity))
                 }
@@ -174,25 +169,41 @@ struct TextTileGameView: View {
     @State private var pairsCleared = 0
 
     private func startRound() {
+        // The whole set in one pile, like the picture games; weakest pairs end up nearest the top
         let pairs = Dictionary(uniqueKeysWithValues: (set.pairs ?? []).map { ($0.a, $0) })
-        let chosen = mastery.practiceOrder(setID: set.id, keys: set.keys).prefix(pairsPerRound).compactMap { pairs[$0] }
-        tiles = chosen.flatMap { [TextTile(text: $0.a, pairKey: $0.a, isPrompt: true),
-                                  TextTile(text: $0.b, pairKey: $0.a, isPrompt: false)] }
+        let order = mastery.practiceOrder(setID: set.id, keys: set.keys).reversed().compactMap { pairs[$0] }
+        tiles = order.flatMap { [TextTile(text: $0.a, pairKey: $0.a, isPrompt: true),
+                                 TextTile(text: $0.b, pairKey: $0.a, isPrompt: false)] }
         selected = []
         missed = []
         pairsCleared = 0
         roundDone = false
         started = true
-        gridCells = tiles.count
         scatter()
     }
 
-    /// Random cell, slight tilt and offset for each remaining tile
+    /// Spreads the remaining tiles over a zone grid (as the picture games do), keeping the two tiles of a pair
+    /// apart, with a slight random tilt and offset. Pair order, and so the top pair, stays the same.
     private func scatter() {
-        let cells = Array(0..<gridCells).shuffled()   // remaining tiles spread over the whole board
-        slots = Dictionary(uniqueKeysWithValues: zip(tiles.map(\.id), cells))
+        let cols = 5, rows = 8
+        var free = Set(0..<(cols * rows))
+        func spot(in zone: Int) -> CGPoint {
+            CGPoint(x: (Double(zone % cols) + .random(in: 0.15...0.85)) / Double(cols),
+                    y: (Double(zone / cols) + .random(in: 0.15...0.85)) / Double(rows))
+        }
+        func apart(_ a: Int, _ b: Int) -> Bool { abs(a / cols - b / cols) >= 2 || abs(a % cols - b % cols) >= 2 }
+        var newSpots: [UUID: CGPoint] = [:]
+        for i in stride(from: 0, to: tiles.count - 1, by: 2) {
+            if free.count < 2 { free = Set(0..<(cols * rows)) }     // more tiles than zones: start overlapping more
+            let shuffled = free.shuffled()
+            let z1 = shuffled[0]
+            let z2 = shuffled.dropFirst().first(where: { apart(z1, $0) }) ?? shuffled[1]
+            free.remove(z1); free.remove(z2)
+            newSpots[tiles[i].id] = spot(in: z1)
+            newSpots[tiles[i + 1].id] = spot(in: z2)
+        }
+        spots = newSpots
         tilts = Dictionary(uniqueKeysWithValues: tiles.map { ($0.id, Double.random(in: -10...10)) })
-        jitter = Dictionary(uniqueKeysWithValues: tiles.map { ($0.id, CGSize(width: .random(in: -1...1), height: .random(in: -1...1))) })
     }
 
     private func tap(_ tile: TextTile) {
