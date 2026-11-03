@@ -137,8 +137,8 @@ struct GameChoiceView: View {
                     ReactionQuizView(mode: .reagents)
                 case .rxnTiles:
                     ReactionTilesMenu()
-                case .rxnGaps:
-                    FillTheGapView()
+                case .synthesis:
+                    SynthesisView()
                 case .rxn9Predict:
                     ReactionQuizView(mode: .product, chapter: .ch9)
                 case .rxn9Reagents:

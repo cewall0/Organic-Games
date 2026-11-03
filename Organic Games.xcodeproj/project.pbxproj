@@ -23,6 +23,7 @@
 		18C47AFFAED020D979BA24E2 /* GameCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85FAFB26F011A8BEB3C4564 /* GameCatalog.swift */; };
 		1A6A74F6A38D8304BADE6DBF /* NameThatPatternView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A96D92106A098CB2E09B35 /* NameThatPatternView.swift */; };
 		5B2E517A5D4BF718103EA16D /* TileGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD2A20793F087AF143C6E54 /* TileGameView.swift */; };
+		75B10A6DA98D3D531BD6D01B /* SynthesisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9F45E08A4440F64CFD1ED3 /* SynthesisView.swift */; };
 		7893DAAC0C9FC394BEA51D29 /* ReactionQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1AA80EE3DBC68AE5385E38 /* ReactionQuizView.swift */; };
 		A8C0880316DF112FAF504DDB /* StudySet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81360021A864D733CEBC75DA /* StudySet.swift */; };
 		AEA4546DC1C764520E40357E /* MassSpectrumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D04EF7D16C165F80C62E2FE /* MassSpectrumView.swift */; };
@@ -30,7 +31,6 @@
 		C1224C811FF1646A7C892BF8 /* PlusStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E13A3A55D1160A0571CB0 /* PlusStore.swift */; };
 		C2FAB0A435FA50F2738587D5 /* StudySets.json in Resources */ = {isa = PBXBuildFile; fileRef = 6C7C5B3D8C21452DFBF675D6 /* StudySets.json */; };
 		D320DDCE596FE3F915127574 /* MassSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = B258028E35DD11F140BE76AB /* MassSpec.swift */; };
-		D73CD50B6BF00BB6BF0020C0 /* FillTheGapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAD49F9386BE610C045C7FF /* FillTheGapView.swift */; };
 		D93E264DE76BB204BCA320A3 /* Reactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BC7499CBF58E2561385D76 /* Reactions.swift */; };
 		DDC6A952F7B31E93B06B6366 /* NameThatSpectrumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB729E658F49B264DE746E15 /* NameThatSpectrumView.swift */; };
 		EC48F11CD11F27D821B1DD0D /* IRSpectra.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76B8B7B48526813B6DCF53B /* IRSpectra.swift */; };
@@ -54,6 +54,7 @@
 		0B743B5C2C65BFFD0036DF60 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		0BBF98C52CA39A32003EEF9E /* Organic-Games-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Organic-Games-Info.plist"; sourceTree = "<group>"; };
 		21A96D92106A098CB2E09B35 /* NameThatPatternView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NameThatPatternView.swift; sourceTree = "<group>"; };
+		2A9F45E08A4440F64CFD1ED3 /* SynthesisView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SynthesisView.swift; sourceTree = "<group>"; };
 		2D04EF7D16C165F80C62E2FE /* MassSpectrumView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MassSpectrumView.swift; sourceTree = "<group>"; };
 		3D44CA148FAAA567743129CE /* SpectrumView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SpectrumView.swift; sourceTree = "<group>"; };
 		6C7C5B3D8C21452DFBF675D6 /* StudySets.json */ = {isa = PBXFileReference; includeInIndex = 1; path = StudySets.json; sourceTree = "<group>"; };
@@ -65,7 +66,6 @@
 		C76B8B7B48526813B6DCF53B /* IRSpectra.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = IRSpectra.swift; sourceTree = "<group>"; };
 		CD1AA80EE3DBC68AE5385E38 /* ReactionQuizView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReactionQuizView.swift; sourceTree = "<group>"; };
 		DB729E658F49B264DE746E15 /* NameThatSpectrumView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NameThatSpectrumView.swift; sourceTree = "<group>"; };
-		DEAD49F9386BE610C045C7FF /* FillTheGapView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FillTheGapView.swift; sourceTree = "<group>"; };
 		E85FAFB26F011A8BEB3C4564 /* GameCatalog.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GameCatalog.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -183,7 +183,7 @@
 				21A96D92106A098CB2E09B35 /* NameThatPatternView.swift */,
 				C4BC7499CBF58E2561385D76 /* Reactions.swift */,
 				CD1AA80EE3DBC68AE5385E38 /* ReactionQuizView.swift */,
-				DEAD49F9386BE610C045C7FF /* FillTheGapView.swift */,
+				2A9F45E08A4440F64CFD1ED3 /* SynthesisView.swift */,
 			);
 			name = Plus;
 			path = Plus;
@@ -288,8 +288,8 @@
 				1A6A74F6A38D8304BADE6DBF /* NameThatPatternView.swift in Sources */,
 				D93E264DE76BB204BCA320A3 /* Reactions.swift in Sources */,
 				7893DAAC0C9FC394BEA51D29 /* ReactionQuizView.swift in Sources */,
-				D73CD50B6BF00BB6BF0020C0 /* FillTheGapView.swift in Sources */,
 				18C47AFFAED020D979BA24E2 /* GameCatalog.swift in Sources */,
+				75B10A6DA98D3D531BD6D01B /* SynthesisView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

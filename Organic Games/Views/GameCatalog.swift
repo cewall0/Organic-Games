@@ -119,7 +119,10 @@ struct GameTopic: Identifiable, Hashable {
                                   mastery: [(ReactionQuizView.Mode.reagents.setID(.ch11), ReactionQuizView.Mode.reagents.reactions(.ch11).map(\.id))]),
                         GameEntry(title: "Reaction Tiles", type: .rxnTiles, style: .tiles, isPlus: true,
                                   mastery: [ReactionGroup.alkene, .propyne, .butyne].map { ("rxn-tiles-\($0.rawValue)", reactionKeys($0)) }),
-                        // Fill the Gap is out until it becomes multistep synthesis chains (Ch. 9–11)
+                    ]),
+                    Section(title: "Synthesis (Ch. 9–11)", games: [
+                        GameEntry(title: "Synthesis Steps", type: .synthesis, style: .quiz, isPlus: true,
+                                  mastery: [(SynthesisView.setID, SynthesisGap.all.map(\.id))]),
                     ]),
                   ]),
         GameTopic(id: "biochem", title: "Biochemistry", subtitle: "Amino acids",
