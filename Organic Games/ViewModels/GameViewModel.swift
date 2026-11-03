@@ -108,7 +108,7 @@ final class GameViewModel {
             break
             
         case .game7, .irSpectra, .irTiles, .msPatterns, .msTiles, .rxnPredict, .rxnReagents,
-             .rxnTiles, .rxnTilesAlkene, .rxnTilesPropyne, .rxnTilesButyne:
+             .rxnTiles, .rxnTilesAlkene, .rxnTilesPropyne, .rxnTilesButyne, .rxnGaps:
             // No tile game: these have their own views.
             break
     }

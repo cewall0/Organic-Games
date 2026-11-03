@@ -150,6 +150,8 @@ struct GameChoiceView: View {
                 plusGame("Reactions: Name the Reagents", .rxnReagents)
                 Text("")
                 plusGame("Reactions: Tile Match", .rxnTiles)
+                Text("")
+                plusGame("Reactions: Fill the Gap", .rxnGaps)
                     .padding(.bottom)
                 }
                 .frame(maxWidth: .infinity)
@@ -197,6 +199,8 @@ struct GameChoiceView: View {
                     ReactionQuizView(mode: .reagents)
                 case .rxnTiles:
                     ReactionTilesMenu()
+                case .rxnGaps:
+                    FillTheGapView()
                 case .rxnTilesAlkene:
                     TileGameView(pile: TilePile(reactions: .alkene))
                 case .rxnTilesPropyne:

@@ -19,4 +19,5 @@ enum GameType {
     case rxnReagents // Organic Games Plus: Ch. 11 Name the Reagents
     case rxnTiles    // Organic Games Plus: Ch. 11 Reaction Tiles (choose a pile)
     case rxnTilesAlkene, rxnTilesPropyne, rxnTilesButyne
+    case rxnGaps     // Organic Games Plus: Ch. 11 Fill the Gap (two-step sequences, metathesis)
 }
