@@ -185,7 +185,7 @@ struct NameThatSpectrumView: View {
     private func show(_ i: Int) {
         picked = nil
         guard i < round.count else { spectrum = nil; return }
-        let s = round[i].varied()
+        let s = round[i]   // exactly the textbook's spectra, so what students see matches the book
         spectrum = s
         let others = keys.filter { $0 != s.id }.shuffled().prefix(3)
         choices = (Array(others) + [s.id]).shuffled()

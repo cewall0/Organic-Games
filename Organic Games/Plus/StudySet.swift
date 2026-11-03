@@ -41,7 +41,7 @@ struct StudySet: Codable, Identifiable, Hashable {
     private struct File: Codable { let sets: [StudySet] }
 }
 
-/// What the student has learned, per item: mastered after two first-try answers in a row.
+/// What the student has learned, per item: mastered after three first-try answers in a row.
 @Observable
 final class MasteryStore {
     static let shared = MasteryStore()
@@ -58,7 +58,7 @@ final class MasteryStore {
         }
     }
 
-    static let streakToMaster = 2
+    static let streakToMaster = 3
 
     /// Each game keeps its own records under a set id (e.g. "ir-spectra"); items are keyed by name.
     func isMastered(_ item: String, setID: String) -> Bool {

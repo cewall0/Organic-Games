@@ -30,18 +30,6 @@ struct IRSpectrum: Identifiable, Hashable {
     let hint: String            // what gives it away, in the textbook's words
     let highlight: [ClosedRange<Double>]   // the giveaway regions, cm⁻¹
 
-    /// A copy with every peak nudged a little, so students learn the pattern rather than one picture.
-    func varied() -> IRSpectrum {
-        func j(_ range: Double) -> Double { Double.random(in: -range...range) }
-        return IRSpectrum(
-            id: id,
-            peaks: peaks.map { IRPeak(center: $0.center + j(12), halfWidth: $0.halfWidth * (1 + j(0.08)),
-                                      depth: min(0.98, $0.depth * (1 + j(0.06))), rightHalfWidth: $0.rightHalfWidth,
-                                      group: $0.group) },
-            soft: soft.map { IRSoftPeak(center: $0.center + j(8), sigma: $0.sigma, depth: $0.depth) },
-            hint: hint, highlight: highlight)
-    }
-
     private static let ch = IRPeak(center: 2925, halfWidth: 62, depth: 0.75)   // sp³ C–H, in almost every spectrum
     private static let nhShoulder = [IRSoftPeak(center: 3560, sigma: 90, depth: 0.15), IRSoftPeak(center: 3420, sigma: 110, depth: 0.20),
                                      IRSoftPeak(center: 3250, sigma: 95, depth: 0.17), IRSoftPeak(center: 3380, sigma: 12, depth: 0.08)]
