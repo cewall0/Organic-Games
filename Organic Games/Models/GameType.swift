@@ -16,4 +16,5 @@ enum GameType {
     case msPatterns  // Organic Games Plus: mass spec Name That Pattern
     case msTiles     // Organic Games Plus: mass spec tile match
     case rxnPredict  // Organic Games Plus: Ch. 11 Predict the Product
+    case rxnReagents // Organic Games Plus: Ch. 11 Name the Reagents
 }

@@ -143,6 +143,8 @@ struct GameChoiceView: View {
                 plusGame("Mass Spec: Tile Match", .msTiles)
                 Text("")
                 plusGame("Reactions: Predict the Product", .rxnPredict)
+                Text("")
+                plusGame("Reactions: Name the Reagents", .rxnReagents)
                 
                 Spacer()
 
@@ -181,7 +183,9 @@ struct GameChoiceView: View {
                         TextTileGameView(set: set)
                     }
                 case .rxnPredict:
-                    PredictProductView()
+                    ReactionQuizView(mode: .product)
+                case .rxnReagents:
+                    ReactionQuizView(mode: .reagents)
                 default:
                     // All other games navigate to GameView as usual
                     GameView(path: $path, gameType: gameType)

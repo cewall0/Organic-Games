@@ -1,20 +1,32 @@
 //
-//  PredictProductView.swift
+//  ReactionQuizView.swift
 //  Organic Games
 //
-//  Organic Games Plus: starting material and reagents from the Ch. 11 reaction summary; pick the product
-//  from four drawings. Distractors come from the same starting material when possible and are never the
-//  same compound as the answer. Rounds of 10, weakest reactions first. Without Plus, the first round is free.
+//  Organic Games Plus: multiple-choice questions on the Ch. 11 reaction summary.
+//  Predict the Product: starting material and reagents shown, pick the product from four drawings.
+//  Name the Reagents: starting material and product shown, pick the reagents (metathesis is left out,
+//  since every one uses Grubbs catalyst).
+//  Choices come from the same starting material when possible and never include a second right answer.
+//  Rounds of 10, weakest reactions first. Without Plus, the first round is free.
 //
 
 import SwiftUI
 
-struct PredictProductView: View {
-    static let setID = "rxn-predict"
+struct ReactionQuizView: View {
+    enum Mode {
+        case product, reagents
+
+        var setID: String { self == .product ? "rxn-predict" : "rxn-reagents" }
+        var title: String { self == .product ? "Predict the Product" : "Name the Reagents" }
+        var prompt: String { self == .product ? "What's the product?" : "Which reagents?" }
+        var reactions: [OrgReaction] { self == .product ? OrgReaction.all : OrgReaction.all.filter { $0.group != .metathesis } }
+    }
+
+    let mode: Mode
     private let roundLength = 10
 
     @Environment(\.dismiss) private var dismiss
-    @AppStorage("freeRounds.rxn-predict") private var freeRoundsUsed = 0
+    @AppStorage private var freeRoundsUsed: Int
     private let plus = PlusStore.shared
     private let mastery = MasteryStore.shared
 
@@ -25,7 +37,12 @@ struct PredictProductView: View {
     @State private var correctCount = 0
     @State private var showPaywall = false
 
-    private var keys: [String] { OrgReaction.all.map(\.id) }
+    init(mode: Mode) {
+        self.mode = mode
+        _freeRoundsUsed = AppStorage(wrappedValue: 0, "freeRounds.\(mode.setID)")
+    }
+
+    private var keys: [String] { mode.reactions.map(\.id) }
     private var roundDone: Bool { !round.isEmpty && index >= round.count }
     private var locked: Bool { !plus.isPlus && freeRoundsUsed >= 1 }
 
@@ -45,7 +62,7 @@ struct PredictProductView: View {
             .frame(maxWidth: .infinity)
         }
         .background(Color(.systemGroupedBackground))
-        .navigationTitle("Predict the Product")
+        .navigationTitle(mode.title)
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showPaywall) { NavigationStack { PlusPaywall() } }
         .onAppear { if round.isEmpty && !locked { startRound() } }
@@ -63,29 +80,40 @@ struct PredictProductView: View {
                     .font(.subheadline.bold()).foregroundStyle(.green)
                     .accessibilityLabel("\(correctCount) correct")
             }
+            // The answer is marked in the choices below; it stays a "?" here so nothing gets squeezed
             HStack(spacing: 8) {
                 StructureImage(name: r.smImage, label: "Starting material")
-                ReagentArrow(reagentsImage: r.reagentsImage, reversible: r.reversible, label: r.reagents)
-                // The answer is marked in the choices below; swapping it in here would squeeze the starting material
-                Text("?").font(.largeTitle.bold()).foregroundStyle(.orange).frame(minWidth: 50)
+                if mode == .product {
+                    ReagentArrow(reagentsImage: r.reagentsImage, reversible: r.reversible, label: r.reagents)
+                    Text("?").font(.largeTitle.bold()).foregroundStyle(.orange).frame(minWidth: 50)
+                } else {
+                    ReagentArrow(reagentsImage: nil, reversible: r.reversible)
+                    StructureImage(name: r.productImage, label: r.productName)
+                }
             }
             .frame(maxWidth: .infinity, minHeight: 90)
             .paperCard()
             .shadow(color: .black.opacity(0.08), radius: 4, y: 2)
 
-            Text("What's the product?").font(.headline)
+            Text(mode.prompt).font(.headline)
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
                 ForEach(choices) { c in
                     Button { answer(c, for: r) } label: {
-                        StructureImage(name: c.productImage, scale: 1.1, label: c.productName)
-                            .frame(maxWidth: .infinity, minHeight: 96, maxHeight: 96)
-                            .paperCard(highlight: highlight(c, answer: r))
+                        Group {
+                            if mode == .product {
+                                StructureImage(name: c.productImage, scale: 1.1, label: c.productName)
+                            } else {
+                                StructureImage(name: c.reagentsImage, scale: 1.1, label: c.reagents)
+                            }
+                        }
+                        .frame(maxWidth: .infinity, minHeight: mode == .product ? 96 : 72, maxHeight: mode == .product ? 96 : 72)
+                        .paperCard(highlight: highlight(c, answer: r))
                     }
                     .buttonStyle(.plain)   // taps after answering are ignored in answer()
                 }
             }
             if let picked {
-                let right = picked.productName == r.productName
+                let right = isRight(picked, for: r)
                 VStack(alignment: .leading, spacing: 6) {
                     Label(right ? "Correct! \(r.name)" : r.name,
                           systemImage: right ? "checkmark.circle.fill" : "xmark.circle.fill")
@@ -101,9 +129,14 @@ struct PredictProductView: View {
         }
     }
 
+    /// The answer itself, or (for the product) another drawing of the same compound
+    private func isRight(_ c: OrgReaction, for r: OrgReaction) -> Bool {
+        mode == .product ? c.productName == r.productName : c.id == r.id
+    }
+
     private func highlight(_ c: OrgReaction, answer r: OrgReaction) -> Color? {
         guard let picked else { return nil }
-        if c.productName == r.productName { return .green }
+        if isRight(c, for: r) { return .green }
         if c.id == picked.id { return .red }
         return nil
     }
@@ -111,7 +144,7 @@ struct PredictProductView: View {
     // MARK: Summary and locked
 
     private var summary: some View {
-        let done = mastery.masteredCount(setID: Self.setID, keys: keys)
+        let done = mastery.masteredCount(setID: mode.setID, keys: keys)
         return VStack(spacing: 16) {
             Image(systemName: correctCount >= round.count - 2 ? "star.circle.fill" : "checkmark.seal.fill")
                 .font(.system(size: 56)).foregroundStyle(.orange)
@@ -135,7 +168,7 @@ struct PredictProductView: View {
         VStack(spacing: 16) {
             Image(systemName: "lock.circle.fill").font(.system(size: 56)).foregroundStyle(.orange)
             Text("Keep practicing with Plus").font(.title2.bold())
-            Text("You've used your free round of Predict the Product. Plus unlocks every round, tracks what you've mastered and drills the reactions you miss.")
+            Text("You've used your free round of \(mode.title). Plus unlocks every round, tracks what you've mastered and drills the reactions you miss.")
                 .multilineTextAlignment(.center).font(.subheadline)
             wideButton("Try Plus free") { showPaywall = true }
             Link("Review the reaction summary on organicchemistryguide.com", destination: OrgReaction.chapterURL).font(.subheadline)
@@ -155,7 +188,7 @@ struct PredictProductView: View {
 
     /// Ten reactions, weakest first, in random order
     private func startRound() {
-        let order = mastery.practiceOrder(setID: Self.setID, keys: keys).compactMap(OrgReaction.byID)
+        let order = mastery.practiceOrder(setID: mode.setID, keys: keys).compactMap(OrgReaction.byID)
         round = Array(order.prefix(roundLength)).shuffled()
         index = 0
         correctCount = 0
@@ -166,15 +199,15 @@ struct PredictProductView: View {
     private func makeChoices() {
         guard index < round.count else { return }
         let r = round[index]
-        choices = ([r] + r.distractors(3)).shuffled()
+        choices = ([r] + (mode == .product ? r.distractors(3) : r.reagentDistractors(3))).shuffled()
     }
 
     private func answer(_ c: OrgReaction, for r: OrgReaction) {
         guard picked == nil else { return }
         picked = c
-        let right = c.productName == r.productName
+        let right = isRight(c, for: r)
         if right { correctCount += 1 }
-        mastery.record(r.id, setID: Self.setID, firstTry: right)
+        mastery.record(r.id, setID: mode.setID, firstTry: right)
     }
 
     private func next() {

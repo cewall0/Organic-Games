@@ -43,13 +43,37 @@ struct OrgReaction: Identifiable, Hashable {
     /// never one that is the same compound as the answer.
     func distractors(_ count: Int) -> [OrgReaction] {
         var seen: Set<String> = [productName]
+        return pick(count) { r in seen.insert(r.productName).inserted }
+    }
+
+    /// Up to `count` other reagent sets: never one that also makes this product, and never the same reagents twice.
+    func reagentDistractors(_ count: Int) -> [OrgReaction] {
+        var seen: Set<String> = [reagents]
+        return pick(count) { r in r.productName != productName && seen.insert(r.reagents).inserted }
+    }
+
+    /// The reactions students confuse with each one (Markovnikov vs anti-Markovnikov, syn vs anti, cold vs hot
+    /// KMnO₄...). They always come first among the wrong answers.
+    private static let rivals: [String: [String]] = [
+        "r01": ["r02"], "r02": ["r01", "r07"],
+        "r03": ["r07", "r01"], "r04": ["r07"], "r05": ["r07", "r06"], "r06": ["r05", "r07"], "r07": ["r05", "r02"],
+        "r08": ["r09"], "r09": ["r08"],
+        "r10": ["r11", "r16"], "r11": ["r16", "r10"], "r16": ["r11", "r18"], "r17": ["r11", "r18"],
+        "r12": ["r14"], "r13": ["r14"], "r14": ["r12"],
+        "r18": ["r19", "r17"], "r19": ["r18"],
+        "r24": ["r25", "r29"], "r25": ["r24", "r27"], "r26": ["r27"], "r27": ["r26", "r25"], "r29": ["r24"],
+        "r30": ["r31"], "r31": ["r30"], "r32": ["r33"], "r33": ["r32"], "r34": ["r33"],
+        "r35a": ["r36a", "r37a"], "r36a": ["r37a", "r35a"], "r37a": ["r36a", "r35a"],
+        "r35b": ["r36b"], "r36b": ["r35b"], "r37b": ["r35b"],
+    ]
+
+    private func pick(_ count: Int, _ keep: (OrgReaction) -> Bool) -> [OrgReaction] {
         var picks: [OrgReaction] = []
-        let pools = [Self.all.filter { $0.group == group }, Self.all.filter { $0.group != group && $0.group.family == group.family }]
+        let pools = [(Self.rivals[id] ?? []).compactMap(Self.byID),
+                     Self.all.filter { $0.group == group }.shuffled(),
+                     Self.all.filter { $0.group != group && $0.group.family == group.family }.shuffled()]
         for pool in pools {
-            for r in pool.shuffled() where picks.count < count && !seen.contains(r.productName) {
-                seen.insert(r.productName)
-                picks.append(r)
-            }
+            for r in pool where picks.count < count && keep(r) { picks.append(r) }
         }
         return picks
     }
@@ -187,14 +211,18 @@ struct StructureImage: View {
 
 /// A reaction arrow (or equilibrium arrows) with the reagents drawing above it
 struct ReagentArrow: View {
-    let reagentsImage: String
+    let reagentsImage: String?      // nil: a "?" for the reagents to name
     var reversible = false
     var scale: CGFloat = 1
     var label: String = ""
 
     var body: some View {
         VStack(spacing: 3) {
-            StructureImage(name: reagentsImage, scale: scale, label: label)
+            if let reagentsImage {
+                StructureImage(name: reagentsImage, scale: scale, label: label)
+            } else {
+                Text("?").font(.title.bold()).foregroundStyle(.orange)
+            }
             Canvas { context, size in
                 let y = size.height / 2
                 var path = Path()
@@ -218,7 +246,7 @@ struct ReagentArrow: View {
             .frame(height: 12)
         }
         .frame(minWidth: 56)
-        .fixedSize(horizontal: false, vertical: true)
+        .fixedSize()   // only as wide as the reagents, so the structures get the room
     }
 }
 
