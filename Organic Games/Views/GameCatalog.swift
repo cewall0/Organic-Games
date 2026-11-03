@@ -87,10 +87,6 @@ struct GameTopic: Identifiable, Hashable {
                   icon: "arrow.triangle.2.circlepath", tint: .purple, sections: [
                     Section(title: nil, games: [GameEntry(title: "R & S Stereochemistry", type: .game7, style: .blitz)]),
                   ]),
-        GameTopic(id: "biochem", title: "Biochemistry", subtitle: "Amino acids",
-                  icon: "leaf", tint: .green, sections: [
-                    Section(title: nil, games: [GameEntry(title: "Amino Acids", type: .game6, style: .tiles)]),
-                  ]),
         GameTopic(id: "spectroscopy", title: "Spectroscopy", subtitle: "IR and mass spec",
                   icon: "waveform.path.ecg", tint: .blue, sections: [
                     Section(title: "IR spectroscopy", games: [
@@ -118,6 +114,10 @@ struct GameTopic: Identifiable, Hashable {
                         GameEntry(title: "Fill the Gap", type: .rxnGaps, style: .quiz, isPlus: true,
                                   mastery: [(FillTheGapView.setID, GapQuestion.all.map(\.id))]),
                     ]),
+                  ]),
+        GameTopic(id: "biochem", title: "Biochemistry", subtitle: "Amino acids",
+                  icon: "leaf", tint: .green, sections: [
+                    Section(title: nil, games: [GameEntry(title: "Amino Acids", type: .game6, style: .tiles)]),
                   ]),
     ]
 }
