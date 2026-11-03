@@ -2,8 +2,8 @@
 //  IRSpectra.swift
 //  Organic Games
 //
-//  Generic IR spectra (from Problem 5 of section 3.2 on organicchemistryguide.com), described as peaks
-//  and drawn by SpectrumView in the same style as the textbook's drawings.
+//  Generic IR spectra (the 12 from Problem 5 of section 3.2 on organicchemistryguide.com, plus two conjugated
+//  ketones), described as peaks and drawn by SpectrumView in the same style as the textbook's drawings.
 //
 
 import Foundation
@@ -89,6 +89,18 @@ struct IRSpectrum: Identifiable, Hashable {
                            IRPeak(center: 1245, halfWidth: 58, depth: 0.70), IRPeak(center: 1062, halfWidth: 50, depth: 0.70)],
                    hint: "C=O in the 1730s plus two C–O peaks near 1250 and 1050.",
                    highlight: [1690...1800, 1000...1310]),
+        // Not in Problem 5: conjugation lowers the C=O about 30 cm⁻¹ below a plain ketone
+        IRSpectrum(id: "conjugated ketone (aromatic)",       // like acetophenone
+                   peaks: [IRPeak(center: 3065, halfWidth: 45, depth: 0.32), IRPeak(center: 2925, halfWidth: 50, depth: 0.45),
+                           IRPeak(center: 1685, halfWidth: 52, depth: 0.97), IRPeak(center: 1598, halfWidth: 22, depth: 0.50)],
+                   soft: [2030, 1975, 1920, 1865].map { IRSoftPeak(center: $0, sigma: 14, depth: 0.05) },
+                   hint: "C=O near 1685, lower than a plain ketone (1715) because it is conjugated with the ring; sp² C–H above 3000, overtones below 2000 and a ring C=C near 1600 point to an aromatic ring.",
+                   highlight: [1640...1730, 1570...1625, 3010...3120, 1840...2060]),
+        IRSpectrum(id: "conjugated ketone (C=C)",            // like 2-cyclohexenone
+                   peaks: [IRPeak(center: 3040, halfWidth: 35, depth: 0.22), ch,
+                           IRPeak(center: 1680, halfWidth: 52, depth: 0.97), IRPeak(center: 1620, halfWidth: 22, depth: 0.60)],
+                   hint: "C=O near 1680, lowered by conjugation with the C=C next to it; that C=C near 1620 is stronger than an isolated C=C, with sp² C–H just above 3000.",
+                   highlight: [1640...1725, 1595...1645, 3010...3080]),
     ]
 
     /// Height of the curve at a wavenumber: 0 = top of the frame, 1 = bottom. Same math as the prototype that
