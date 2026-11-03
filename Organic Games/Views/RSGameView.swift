@@ -217,8 +217,8 @@ struct RSGameView: View {
                 }
                 if !PlusStore.shared.isPlus {
                     BannerAdView()
+                        .padding(.bottom, 10)
                 }
-                    .padding(.bottom, 10) 
             }
 
             // Countdown overlay

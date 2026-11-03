@@ -127,8 +127,8 @@ struct RSResultsView: View {
             
             if !PlusStore.shared.isPlus {
                 BannerAdView()
+                    .padding(.bottom, 10)
             }
-                .padding(.bottom, 10)
             
         }
         .onAppear(perform: {
