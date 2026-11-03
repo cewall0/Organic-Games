@@ -300,7 +300,7 @@ struct SynthesisView: View {
                     .multilineTextAlignment(.center).font(.subheadline)
                 wideButton("Try Plus free") { showPaywall = true }
             }
-            Link("Review the reaction summary on organicchemistryguide.com", destination: ReactionChapter.ch11.url).font(.subheadline)
+            Link("Review the Ch. 11 summary in the free textbook", destination: ReactionChapter.ch11.url).font(.subheadline)
             Button("Back to games") { dismiss() }.font(.subheadline)
         }
         .padding(.top, 30)
@@ -313,7 +313,7 @@ struct SynthesisView: View {
             Text("You've used your free round of Synthesis Steps. Plus unlocks every round, tracks what you've mastered and drills the steps you miss.")
                 .multilineTextAlignment(.center).font(.subheadline)
             wideButton("Try Plus free") { showPaywall = true }
-            Link("Review the reaction summary on organicchemistryguide.com", destination: ReactionChapter.ch11.url).font(.subheadline)
+            Link("Review the Ch. 11 summary in the free textbook", destination: ReactionChapter.ch11.url).font(.subheadline)
         }
         .padding(.top, 40)
     }

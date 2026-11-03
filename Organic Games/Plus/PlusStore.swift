@@ -60,7 +60,7 @@ struct PlusPaywall: View {
                 Text("Organic Games Plus")
                     .font(.title.bold())
                 VStack(alignment: .leading, spacing: 10) {
-                    Label("Study sets from the WallaceWay Organic textbook: IR, reactions, mechanisms", systemImage: "books.vertical.fill")
+                    Label("Study sets from the WallaceWay Organic textbook: IR, mass spec, reactions, synthesis", systemImage: "books.vertical.fill")
                     Label("Tracks what you've mastered and drills your weak spots", systemImage: "chart.bar.fill")
                     Label("New sets added through the semester", systemImage: "sparkles")
                     Label("No ads", systemImage: "nosign")

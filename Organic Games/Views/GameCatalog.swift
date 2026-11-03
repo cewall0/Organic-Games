@@ -44,7 +44,11 @@ struct GameEntry: Identifiable {
 }
 
 struct GameTopic: Identifiable, Hashable {
-    struct Section { let title: String?; let games: [GameEntry] }
+    struct Section {
+        let title: String?
+        let games: [GameEntry]
+        var link: URL? = nil    // that chapter in the free textbook
+    }
 
     let id: String
     let title: String
@@ -69,6 +73,8 @@ struct GameTopic: Identifiable, Hashable {
         return nil
     }
 
+    static let textbookURL = URL(string: "https://organicchemistryguide.com/all-lessons/")!
+    private static func textbook(_ slug: String) -> URL { URL(string: "https://organicchemistryguide.com/\(slug)/")! }
     private static func studySetKeys(_ id: String) -> [String] { StudySet.all.first { $0.id == id }?.keys ?? [] }
     private static func reactionKeys(_ group: ReactionGroup) -> [String] { OrgReaction.all.filter { $0.group == group }.map(\.id) }
 
@@ -85,22 +91,23 @@ struct GameTopic: Identifiable, Hashable {
                   ]),
         GameTopic(id: "stereo", title: "Stereochemistry", subtitle: "R and S",
                   icon: "arrow.triangle.2.circlepath", tint: .purple, sections: [
-                    Section(title: nil, games: [GameEntry(title: "R & S Stereochemistry", type: .game7, style: .blitz)]),
+                    Section(title: "Ch. 7 R and S", games: [GameEntry(title: "R & S Stereochemistry", type: .game7, style: .blitz)],
+                            link: textbook("r-and-s-nomenclature")),
                   ]),
         GameTopic(id: "spectroscopy", title: "Spectroscopy", subtitle: "IR and mass spec",
                   icon: "waveform.path.ecg", tint: .blue, sections: [
-                    Section(title: "IR spectroscopy", games: [
+                    Section(title: "Ch. 3 IR spectroscopy", games: [
                         GameEntry(title: "Name That Spectrum", type: .irSpectra, style: .quiz, isPlus: true,
                                   mastery: [(NameThatSpectrumView.setID, IRSpectrum.all.map(\.id))]),
                         GameEntry(title: "IR Tile Match", type: .irTiles, style: .tiles, isPlus: true,
                                   mastery: [("ir-tiles", studySetKeys("ir-tiles"))]),
-                    ]),
-                    Section(title: "Mass spectrometry", games: [
+                    ], link: textbook("infrared-spectroscopy")),
+                    Section(title: "Ch. 3 Mass spectrometry", games: [
                         GameEntry(title: "Name That Pattern", type: .msPatterns, style: .quiz, isPlus: true,
                                   mastery: [(NameThatPatternView.setID, MSAtom.allCases.map(\.rawValue))]),
                         GameEntry(title: "Mass Spec Tile Match", type: .msTiles, style: .tiles, isPlus: true,
                                   mastery: [("ms-tiles", studySetKeys("ms-tiles"))]),
-                    ]),
+                    ], link: textbook("mass-spectrometry")),
                   ]),
         GameTopic(id: "reactions", title: "Reactions", subtitle: "Alkyl halides, alkenes and alkynes",
                   icon: "arrow.right.circle", tint: .orange, sections: [
@@ -111,7 +118,7 @@ struct GameTopic: Identifiable, Hashable {
                                   mastery: [(ReactionQuizView.Mode.reagents.setID(.ch9), ReactionQuizView.Mode.reagents.reactions(.ch9).map(\.id))]),
                         GameEntry(title: "Reaction Tiles", type: .rxn9Tiles, style: .tiles, isPlus: true,
                                   mastery: [("rxn-tiles-ch9", ReactionChapter.ch9.reactions.map(\.id))]),
-                    ]),
+                    ], link: textbook("alkyl-halides-introduction")),
                     Section(title: "Ch. 11 Alkenes & Alkynes", games: [
                         GameEntry(title: "Predict the Product", type: .rxnPredict, style: .quiz, isPlus: true,
                                   mastery: [(ReactionQuizView.Mode.product.setID(.ch11), ReactionQuizView.Mode.product.reactions(.ch11).map(\.id))]),
@@ -119,11 +126,11 @@ struct GameTopic: Identifiable, Hashable {
                                   mastery: [(ReactionQuizView.Mode.reagents.setID(.ch11), ReactionQuizView.Mode.reagents.reactions(.ch11).map(\.id))]),
                         GameEntry(title: "Reaction Tiles", type: .rxnTiles, style: .tiles, isPlus: true,
                                   mastery: [ReactionGroup.alkene, .propyne, .butyne].map { ("rxn-tiles-\($0.rawValue)", reactionKeys($0)) }),
-                    ]),
+                    ], link: textbook("electrophilic-attack")),
                     Section(title: "Synthesis (Ch. 9–11)", games: [
                         GameEntry(title: "Synthesis Steps", type: .synthesis, style: .quiz, isPlus: true,
                                   mastery: [(SynthesisView.setID, SynthesisGap.all.map(\.id))]),
-                    ]),
+                    ], link: textbook("alkene-and-alkyne-reaction-problems")),
                   ]),
         GameTopic(id: "biochem", title: "Biochemistry", subtitle: "Amino acids",
                   icon: "leaf", tint: .green, sections: [
@@ -133,6 +140,28 @@ struct GameTopic: Identifiable, Hashable {
 }
 
 // MARK: Views
+
+/// Home-page card pointing to the free textbook the chapter numbers come from
+struct TextbookCard: View {
+    var body: some View {
+        Link(destination: GameTopic.textbookURL) {
+            HStack(spacing: 12) {
+                Image(systemName: "book.fill").font(.title2).foregroundStyle(.orange)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Free textbook").font(.headline).foregroundStyle(.primary)
+                    Text("Chapter numbers follow WallaceWay Organic, Dr. Wallace's free textbook at organicchemistryguide.com.")
+                        .font(.caption).foregroundStyle(.secondary).multilineTextAlignment(.leading)
+                }
+                Spacer(minLength: 0)
+                Image(systemName: "arrow.up.right").font(.caption.bold()).foregroundStyle(.tertiary)
+            }
+            .padding(12)
+            .background(RoundedRectangle(cornerRadius: 14).fill(Color(.secondarySystemGroupedBackground)))
+            .overlay(RoundedRectangle(cornerRadius: 14).stroke(Color.orange.opacity(0.35), lineWidth: 1))
+        }
+        .buttonStyle(.plain)
+    }
+}
 
 /// A small PLUS or FREE tag
 struct PriceTag: View {
@@ -217,10 +246,21 @@ struct TopicView: View {
     var body: some View {
         List {
             ForEach(Array(topic.sections.enumerated()), id: \.offset) { _, section in
-                Section(section.title ?? "") {
+                Section {
                     ForEach(section.games) { game in
                         Button { open(game.type) } label: { GameRow(game: game, tint: topic.tint, isPlus: plus.isPlus) }
                             .buttonStyle(.plain)   // black titles, not link blue
+                    }
+                } header: {
+                    HStack {
+                        Text(section.title ?? "")
+                        Spacer()
+                        if let link = section.link {
+                            Link(destination: link) { Label("Textbook", systemImage: "book") }
+                                .font(.caption.bold())
+                                .textCase(nil)
+                                .accessibilityLabel("Read \(section.title ?? "this chapter") in the free textbook")
+                        }
                     }
                 }
             }

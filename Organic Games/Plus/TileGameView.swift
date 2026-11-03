@@ -84,7 +84,7 @@ extension TilePile {
     init(chapter: ReactionChapter) {
         let reactions = chapter.reactions
         self.init(id: "rxn-tiles-ch\(chapter.rawValue)", title: "Reaction Tiles: Ch. \(chapter == .ch9 ? "9–10" : chapter.rawValue)",
-                  chapter: "Ch. \(chapter.rawValue)", chapterURL: chapter.url,
+                  chapter: chapter == .ch9 ? "Ch. 9–10" : "Ch. \(chapter.rawValue)", chapterURL: chapter.url,
                   pairs: reactions.map { r in
                       Pair(key: r.id, a: .reaction(sm: r.smImage, product: r.productImage, label: "\(r.caption ?? "") to \(r.productName)"),
                            b: .image(r.reagentsImage, label: r.reagents), answerKey: r.reagents, promptKey: r.productName) })
@@ -243,7 +243,7 @@ struct TileGameView: View {
                     .multilineTextAlignment(.center).font(.subheadline)
                 wideButton("Try Plus free") { showPaywall = true }
             }
-            Link("Review \(pile.chapter) on organicchemistryguide.com", destination: pile.chapterURL).font(.subheadline)
+            Link("Review \(pile.chapter) in the free textbook", destination: pile.chapterURL).font(.subheadline)
             Button("Choose different game") { dismiss() }.font(.subheadline)
             Spacer(minLength: 0)
         }
@@ -257,7 +257,7 @@ struct TileGameView: View {
             Text("You've used your free round of \(pile.title). Plus unlocks every round, tracks what you've mastered and brings back the pairs you miss.")
                 .multilineTextAlignment(.center).font(.subheadline)
             wideButton("Try Plus free") { showPaywall = true }
-            Link("Review \(pile.chapter) on organicchemistryguide.com", destination: pile.chapterURL).font(.subheadline)
+            Link("Review \(pile.chapter) in the free textbook", destination: pile.chapterURL).font(.subheadline)
             Spacer(minLength: 0)
         }
         .padding(.top, 40)

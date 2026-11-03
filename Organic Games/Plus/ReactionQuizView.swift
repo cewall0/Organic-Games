@@ -170,7 +170,7 @@ struct ReactionQuizView: View {
                     .multilineTextAlignment(.center).font(.subheadline)
                 wideButton("Try Plus free") { showPaywall = true }
             }
-            Link("Review the reaction summary on organicchemistryguide.com", destination: chapter.url).font(.subheadline)
+            Link("Review the \(chapter == .ch9 ? "Ch. 9–10" : "Ch. 11") summary in the free textbook", destination: chapter.url).font(.subheadline)
             Button("Back to games") { dismiss() }.font(.subheadline)
         }
         .padding(.top, 30)
@@ -183,7 +183,7 @@ struct ReactionQuizView: View {
             Text("You've used your free round of \(mode.title). Plus unlocks every round, tracks what you've mastered and drills the reactions you miss.")
                 .multilineTextAlignment(.center).font(.subheadline)
             wideButton("Try Plus free") { showPaywall = true }
-            Link("Review the reaction summary on organicchemistryguide.com", destination: chapter.url).font(.subheadline)
+            Link("Review the \(chapter == .ch9 ? "Ch. 9–10" : "Ch. 11") summary in the free textbook", destination: chapter.url).font(.subheadline)
         }
         .padding(.top, 40)
     }

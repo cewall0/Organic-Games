@@ -131,7 +131,7 @@ struct NameThatPatternView: View {
                     .multilineTextAlignment(.center).font(.subheadline)
                 wideButton("Try Plus free") { showPaywall = true }
             }
-            Link("Review mass spec on organicchemistryguide.com", destination: Self.chapterURL).font(.subheadline)
+            Link("Review mass spec (Ch. 3) in the free textbook", destination: Self.chapterURL).font(.subheadline)
             Button("Back to games") { dismiss() }.font(.subheadline)
             Spacer(minLength: 0)
         }
@@ -145,7 +145,7 @@ struct NameThatPatternView: View {
             Text("You've used your free round of Name That Pattern. Plus unlocks every round, tracks what you've mastered and drills the patterns you miss.")
                 .multilineTextAlignment(.center).font(.subheadline)
             wideButton("Try Plus free") { showPaywall = true }
-            Link("Review mass spec on organicchemistryguide.com", destination: Self.chapterURL).font(.subheadline)
+            Link("Review mass spec (Ch. 3) in the free textbook", destination: Self.chapterURL).font(.subheadline)
             Spacer(minLength: 0)
         }
         .padding(.top, 40)

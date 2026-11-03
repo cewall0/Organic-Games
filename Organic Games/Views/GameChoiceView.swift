@@ -34,14 +34,6 @@ struct GameChoiceView: View {
                         }
                         .accessibilityLabel("Ad privacy settings")
                     }
-                    if !plus.isPlus {
-                        RemoveAdsLink {
-                            Text("Remove Ads")
-                                .font(.footnote.bold())
-                                .foregroundColor(.gray)
-                                .padding(.leading)
-                        }
-                    }
                     Spacer()
                     Link(destination: URL(string: "https://wallacewaysoftware.com/organic-games/")!) {
                         Image(systemName: "questionmark.circle")
@@ -85,6 +77,8 @@ struct GameChoiceView: View {
                                     .buttonStyle(.plain)
                             }
                         }
+
+                        TextbookCard()
                     }
                     .padding(.horizontal)
                     .padding(.bottom)

@@ -140,7 +140,7 @@ struct NameThatSpectrumView: View {
                     .multilineTextAlignment(.center).font(.subheadline)
                 wideButton("Try Plus free") { showPaywall = true }
             }
-            Link("Review IR on organicchemistryguide.com", destination: Self.chapterURL)
+            Link("Review IR (Ch. 3) in the free textbook", destination: Self.chapterURL)
                 .font(.subheadline)
             Button("Back to games") { dismiss() }
                 .font(.subheadline)
@@ -156,7 +156,7 @@ struct NameThatSpectrumView: View {
             Text("You've used your free round of Name That Spectrum. Plus unlocks every round, tracks what you've mastered and drills the spectra you miss.")
                 .multilineTextAlignment(.center).font(.subheadline)
             wideButton("Try Plus free") { showPaywall = true }
-            Link("Review IR on organicchemistryguide.com", destination: Self.chapterURL).font(.subheadline)
+            Link("Review IR (Ch. 3) in the free textbook", destination: Self.chapterURL).font(.subheadline)
             Spacer(minLength: 0)
         }
         .padding(.top, 40)
