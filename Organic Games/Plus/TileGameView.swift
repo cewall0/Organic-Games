@@ -3,7 +3,8 @@
 //  Organic Games
 //
 //  Organic Games Plus: the lazy tile-clearing game, with text tiles (a bond and its IR peak) or drawings
-//  (reagents and the product they make, with the starting material shown above the pile).
+//  (reagents and the product they make, with the starting material shown above the pile, or, for Ch. 9–10,
+//  a whole transformation and the reagents that do it).
 //  Like the picture games, the whole set is piled up, overlapping, and drawn pair by pair, so the top
 //  two tiles always match and can be cleared. A slight tilt keeps the tiles readable. A pair is mastered
 //  after three first-try matches in a row. Without Plus, the first round is a free preview.
@@ -18,16 +19,19 @@ struct TilePile {
         case text(String)
         case image(String, label: String)
         case captioned(String, image: String, label: String)    // "1° alcohol" above the reagents
+        case reaction(sm: String, product: String, label: String)   // starting material → product, no reagents
 
         var label: String {
             switch self {
             case .text(let text): return text
             case .image(_, let label): return label
             case .captioned(let caption, _, let label): return "\(caption), \(label)"
+            case .reaction(_, _, let label): return label
             }
         }
 
         var isText: Bool { if case .text = self { return true } else { return false } }
+        var isReaction: Bool { if case .reaction = self { return true } else { return false } }
     }
 
     struct Pair {
@@ -35,6 +39,7 @@ struct TilePile {
         let a: Face             // the prompt side (bond, reagents)
         let b: Face
         var answerKey: String   // pairs with the same answer (the same product) never share a pile
+        var promptKey: String? = nil    // nor do pairs with the same prompt (the same transformation)
     }
 
     let id: String
@@ -74,15 +79,15 @@ extension TilePile {
                   header: reactions.first.map { .image($0.smImage, label: "Starting material") })
     }
 
-    /// Ch. 9–10: starting materials differ, so each reagent tile names what it starts from ("1° alcohol")
+    /// Ch. 9–10: each transformation (starting material → product) ↔ the reagents that do it. A pile has each
+    /// reagent set once (SOCl₂ for the 1° or the 2° alcohol), so SOCl₂ sits next to HCl, PBr₃ next to HBr...
     init(chapter: ReactionChapter) {
         let reactions = chapter.reactions
         self.init(id: "rxn-tiles-ch\(chapter.rawValue)", title: "Reaction Tiles: Ch. \(chapter == .ch9 ? "9–10" : chapter.rawValue)",
                   chapter: "Ch. \(chapter.rawValue)", chapterURL: chapter.url,
                   pairs: reactions.map { r in
-                      Pair(key: r.id,
-                           a: r.caption.map { .captioned($0, image: r.reagentsImage, label: r.reagents) } ?? .image(r.reagentsImage, label: r.reagents),
-                           b: .image(r.productImage, label: r.productName), answerKey: r.productName) })
+                      Pair(key: r.id, a: .reaction(sm: r.smImage, product: r.productImage, label: "\(r.caption ?? "") to \(r.productName)"),
+                           b: .image(r.reagentsImage, label: r.reagents), answerKey: r.reagents, promptKey: r.productName) })
     }
 }
 
@@ -160,7 +165,9 @@ struct TileGameView: View {
     private func board(in size: CGSize) -> some View {
         let big = size.width > 600
         let drawings = pile.pairs.contains { !$0.a.isText }
-        let tileSize = drawings ? CGSize(width: big ? 210 : 150, height: big ? 112 : 84)
+        let reactions = pile.pairs.contains { $0.a.isReaction }
+        let tileSize = reactions ? CGSize(width: big ? 280 : 184, height: big ? 128 : 96)
+                     : drawings ? CGSize(width: big ? 210 : 150, height: big ? 112 : 84)
                                 : CGSize(width: big ? 170 : 118, height: big ? 92 : 68)
         // Keep whole tiles on the board
         let usable = CGSize(width: max(1, size.width - tileSize.width - 8), height: max(1, size.height - tileSize.height - 8))
@@ -198,6 +205,8 @@ struct TileGameView: View {
                     Text(caption).font(.system(size: 12, weight: .semibold, design: .rounded)).foregroundStyle(.secondary)
                     StructureImage(name: name, label: label)
                 }
+            case .reaction(let sm, let product, let label):
+                TransformationImage(sm: sm, product: product).accessibilityLabel(label)
             }
         }
         .padding(6)
@@ -270,9 +279,10 @@ struct TileGameView: View {
         // The whole set in one pile, like the picture games; weakest pairs end up nearest the top.
         // Of pairs with the same answer (e.g. three ways to the same alcohol), only the weakest goes in.
         let byKey = Dictionary(uniqueKeysWithValues: pile.pairs.map { ($0.key, $0) })
-        var answers: Set<String> = []
+        var answers: Set<String> = [], prompts: Set<String> = []
         let weakestFirst = mastery.practiceOrder(setID: pile.id, keys: pile.keys).compactMap { byKey[$0] }
             .filter { answers.insert($0.answerKey).inserted }
+            .filter { $0.promptKey.map { prompts.insert($0).inserted } ?? true }
         tiles = weakestFirst.reversed().flatMap { [Tile(face: $0.a, pairKey: $0.key, isPrompt: true),
                                                    Tile(face: $0.b, pairKey: $0.key, isPrompt: false)] }
         selected = []
@@ -334,6 +344,27 @@ struct TileGameView: View {
                 selected = []
                 wrongFlash = []
             }
+        }
+    }
+}
+
+/// Starting material → product at one shared scale, so the two drawings stay in proportion as the tile shrinks them
+struct TransformationImage: View {
+    let sm: String
+    let product: String
+    private let arrow: CGFloat = 18
+
+    var body: some View {
+        let a = UIImage(named: sm)?.size ?? CGSize(width: 80, height: 50)
+        let b = UIImage(named: product)?.size ?? CGSize(width: 80, height: 50)
+        GeometryReader { geo in
+            let k = min(1, (geo.size.width - arrow - 8) / (a.width + b.width), geo.size.height / max(a.height, b.height))
+            HStack(spacing: 4) {
+                Image(sm).resizable().interpolation(.high).frame(width: a.width * k, height: a.height * k)
+                Image(systemName: "arrow.right").font(.system(size: 12, weight: .semibold)).frame(width: arrow)
+                Image(product).resizable().interpolation(.high).frame(width: b.width * k, height: b.height * k)
+            }
+            .frame(width: geo.size.width, height: geo.size.height)
         }
     }
 }
