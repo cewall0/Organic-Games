@@ -4,8 +4,9 @@
 //
 //  Organic Games Plus: multiple-choice questions on one chapter's reaction summary (Ch. 9–10 or Ch. 11).
 //  Predict the Product: starting material and reagents shown, pick the product from four drawings.
-//  Name the Reagents: starting material and product shown, pick the reagents (metathesis is left out,
-//  since every one uses Grubbs catalyst).
+//  Name the Reagents: starting material and product shown, pick the reagents.
+//  Metathesis and polymerization are left out of both for now: each starts from its own compound, so the
+//  wrong answers were unrelated skeletons (and every metathesis uses Grubbs catalyst).
 //  Choices come from the same starting material when possible and never include a second right answer.
 //  Rounds of 10, weakest reactions first. Without Plus, the first round is free.
 //
@@ -26,8 +27,7 @@ struct ReactionQuizView: View {
         }
 
         func reactions(_ chapter: ReactionChapter) -> [OrgReaction] {
-            let all = chapter.reactions
-            return self == .product ? all : all.filter { $0.group != .metathesis }
+            chapter.reactions.filter { $0.group != .metathesis }
         }
     }
 

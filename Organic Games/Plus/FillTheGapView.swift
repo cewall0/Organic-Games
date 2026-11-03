@@ -5,8 +5,9 @@
 //  Organic Games Plus: Ch. 11 puzzles that don't fit "predict the product" or "name the reagents".
 //  Two-step acetylide sequences (propyne → acetylide → product) with one piece blanked out: step 1,
 //  the intermediate, step 2 or the product. The Ag⁺ and Cu⁺ routes end at the same product, so the
-//  intermediate is always shown when a reagent is asked. And the metathesis/polymer reactions: which
-//  kind of reaction is it? Rounds of 10, weakest first. Without Plus, the first round is free.
+//  intermediate is always shown when a reagent is asked. Rounds of 10, weakest first. Without Plus, the
+//  first round is free. (The "which kind of reaction?" metathesis questions are out for now: the reagents and
+//  the one fixed drawing per kind gave them away.)
 //
 
 import SwiftUI
@@ -32,7 +33,6 @@ struct GapQuestion: Identifiable {
 
     static let all: [GapQuestion] =
         sequences.flatMap { seq in [Blank.step1, .intermediate, .step2, .product].map { GapQuestion(seq: seq, blank: $0) } }
-        + kinds.map { GapQuestion(seq: $0.id, blank: .kind) }
 
     static func byID(_ id: String) -> GapQuestion? { all.first { $0.id == id } }
 
