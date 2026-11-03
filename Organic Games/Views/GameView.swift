@@ -15,7 +15,9 @@ struct GameView: View {
 
     /// Natural break after a finished game: an interstitial (if ready), unless we just asked for a rating.
     private func afterGame(_ action: @escaping () -> Void) {
-        if askedForReview {
+        if PlusStore.shared.isPlus {   // no ads for subscribers
+            action()
+        } else if askedForReview {
             askedForReview = false
             action()
         } else {
@@ -118,8 +120,10 @@ struct GameView: View {
             }
             .padding(.bottom, 10) // Less padding to bring the button closer
             
-            BannerAdView()
-                .padding(.bottom, 10) 
+            if !PlusStore.shared.isPlus {
+                BannerAdView()
+                    .padding(.bottom, 10)
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.white)

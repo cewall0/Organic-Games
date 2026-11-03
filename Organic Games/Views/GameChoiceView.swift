@@ -11,6 +11,7 @@ import WallaceAds
 struct GameChoiceView: View {
     @Environment(GameViewModel.self) private var viewModel
     @State var path = NavigationPath()
+    private let plus = PlusStore.shared
 
     func reset() {
         self.path = NavigationPath()
@@ -32,11 +33,13 @@ struct GameChoiceView: View {
                         }
                         .accessibilityLabel("Ad privacy settings")
                     }
-                    RemoveAdsLink {
-                        Text("Remove Ads")
-                            .font(.footnote.bold())
-                            .foregroundColor(.gray)
-                            .padding(.leading)
+                    if !plus.isPlus {
+                        RemoveAdsLink {
+                            Text("Remove Ads")
+                                .font(.footnote.bold())
+                                .foregroundColor(.gray)
+                                .padding(.leading)
+                        }
                     }
                     Spacer()
                     Link(destination: URL(string: "https://wallacewaysoftware.com/organic-games/")!) {
@@ -124,10 +127,33 @@ struct GameChoiceView: View {
                 }, label: {
                     Text("R & S Stereochemistry")
                 })
+
+                Text("- Organic Games Plus -")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.orange)
+                    .padding(.top)
+                Text("")
+                Button(action: {
+                    reset()
+                    path.append(GameType.irSpectra)
+                }, label: {
+                    HStack(spacing: 6) {
+                        Text("IR: Name That Spectrum")
+                        if !plus.isPlus {
+                            Text("PLUS")
+                                .font(.caption2.bold())
+                                .padding(.horizontal, 5).padding(.vertical, 2)
+                                .background(Capsule().fill(Color.orange.opacity(0.15)))
+                        }
+                    }
+                })
                 
                 Spacer()
-                
-                BannerAdView()
+
+                if !plus.isPlus {
+                    BannerAdView()
+                }
 
             }
             .onAppear(perform: {
@@ -147,6 +173,8 @@ struct GameChoiceView: View {
                 case .game7:
                     // This will navigate to RSGameView
                     RSGameView(path: $path)
+                case .irSpectra:
+                    NameThatSpectrumView()
                 default:
                     // All other games navigate to GameView as usual
                     GameView(path: $path, gameType: gameType)

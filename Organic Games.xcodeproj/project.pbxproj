@@ -20,6 +20,12 @@
 		0B743B592C65BFDE0036DF60 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B743B582C65BFDE0036DF60 /* SplashScreenView.swift */; };
 		0B743B5B2C65BFEB0036DF60 /* GameChoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B743B5A2C65BFEB0036DF60 /* GameChoiceView.swift */; };
 		0B743B5D2C65BFFD0036DF60 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B743B5C2C65BFFD0036DF60 /* GameView.swift */; };
+		A8C0880316DF112FAF504DDB /* StudySet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81360021A864D733CEBC75DA /* StudySet.swift */; };
+		B25CDFEB89595667651053A0 /* SpectrumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D44CA148FAAA567743129CE /* SpectrumView.swift */; };
+		C1224C811FF1646A7C892BF8 /* PlusStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E13A3A55D1160A0571CB0 /* PlusStore.swift */; };
+		C2FAB0A435FA50F2738587D5 /* StudySets.json in Resources */ = {isa = PBXBuildFile; fileRef = 6C7C5B3D8C21452DFBF675D6 /* StudySets.json */; };
+		DDC6A952F7B31E93B06B6366 /* NameThatSpectrumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB729E658F49B264DE746E15 /* NameThatSpectrumView.swift */; };
+		EC48F11CD11F27D821B1DD0D /* IRSpectra.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76B8B7B48526813B6DCF53B /* IRSpectra.swift */; };
 		FBA0CC6FB4A1EB009264C3C0 /* WallaceAds in Frameworks */ = {isa = PBXBuildFile; productRef = B6F7EA17334B2FB78BFFD0E7 /* WallaceAds */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +45,12 @@
 		0B743B5A2C65BFEB0036DF60 /* GameChoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameChoiceView.swift; sourceTree = "<group>"; };
 		0B743B5C2C65BFFD0036DF60 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		0BBF98C52CA39A32003EEF9E /* Organic-Games-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Organic-Games-Info.plist"; sourceTree = "<group>"; };
+		3D44CA148FAAA567743129CE /* SpectrumView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SpectrumView.swift; sourceTree = "<group>"; };
+		6C7C5B3D8C21452DFBF675D6 /* StudySets.json */ = {isa = PBXFileReference; includeInIndex = 1; path = StudySets.json; sourceTree = "<group>"; };
+		81360021A864D733CEBC75DA /* StudySet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StudySet.swift; sourceTree = "<group>"; };
+		A84E13A3A55D1160A0571CB0 /* PlusStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PlusStore.swift; sourceTree = "<group>"; };
+		C76B8B7B48526813B6DCF53B /* IRSpectra.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = IRSpectra.swift; sourceTree = "<group>"; };
+		DB729E658F49B264DE746E15 /* NameThatSpectrumView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NameThatSpectrumView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +93,7 @@
 				0B743B4F2C65BED30036DF60 /* Models */,
 				0B743B452C65BEC00036DF60 /* Assets.xcassets */,
 				0B743B472C65BEC00036DF60 /* Preview Content */,
+				9755C198FAC5D914F868FAA1 /* Plus */,
 			);
 			path = "Organic Games";
 			sourceTree = "<group>";
@@ -136,6 +149,20 @@
 			children = (
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		9755C198FAC5D914F868FAA1 /* Plus */ = {
+			isa = PBXGroup;
+			children = (
+				81360021A864D733CEBC75DA /* StudySet.swift */,
+				A84E13A3A55D1160A0571CB0 /* PlusStore.swift */,
+				C76B8B7B48526813B6DCF53B /* IRSpectra.swift */,
+				3D44CA148FAAA567743129CE /* SpectrumView.swift */,
+				DB729E658F49B264DE746E15 /* NameThatSpectrumView.swift */,
+				6C7C5B3D8C21452DFBF675D6 /* StudySets.json */,
+			);
+			name = Plus;
+			path = Plus;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -204,6 +231,7 @@
 			files = (
 				0B743B492C65BEC00036DF60 /* Preview Assets.xcassets in Resources */,
 				0B743B462C65BEC00036DF60 /* Assets.xcassets in Resources */,
+				C2FAB0A435FA50F2738587D5 /* StudySets.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,6 +253,11 @@
 				0B39433C2CC01C5600139CB4 /* CountdownOverlay.swift in Sources */,
 				0B743B592C65BFDE0036DF60 /* SplashScreenView.swift in Sources */,
 				0B546F4B2C94DB9E00861005 /* AminoAcidChoiceView.swift in Sources */,
+				A8C0880316DF112FAF504DDB /* StudySet.swift in Sources */,
+				C1224C811FF1646A7C892BF8 /* PlusStore.swift in Sources */,
+				EC48F11CD11F27D821B1DD0D /* IRSpectra.swift in Sources */,
+				B25CDFEB89595667651053A0 /* SpectrumView.swift in Sources */,
+				DDC6A952F7B31E93B06B6366 /* NameThatSpectrumView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
