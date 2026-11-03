@@ -19,6 +19,8 @@ struct SpectrumView: View {
             let labelSize = max(9, min(14, size.width / 40))
             let frame = CGRect(x: 6, y: 4, width: size.width - 12, height: size.height - labelSize * 3.2 - 8)
             func x(_ wn: Double) -> CGFloat { frame.minX + CGFloat((start - wn) / (start - end)) * frame.width }
+            // Peaks reach down to here, leaving a strip at the bottom for the C=O labels
+            let depth = frame.height - labelSize * 1.4
 
             if showHighlight {
                 for range in spectrum.highlight {
@@ -34,11 +36,19 @@ struct SpectrumView: View {
             for i in 0...steps {
                 let px = frame.minX + frame.width * CGFloat(i) / CGFloat(steps)
                 let wn = start - Double(i) / Double(steps) * (start - end)
-                let y = frame.minY + CGFloat(spectrum.absorbance(at: wn)) * frame.height
+                let y = frame.minY + CGFloat(spectrum.absorbance(at: wn)) * depth
                 if i == 0 { curve.move(to: CGPoint(x: px, y: y)) } else { curve.addLine(to: CGPoint(x: px, y: y)) }
             }
             context.stroke(curve, with: .color(.black), style: StrokeStyle(lineWidth: 1.4, lineJoin: .round))
             context.stroke(Path(frame), with: .color(.black), lineWidth: 1)
+
+            // C=O peaks are only ~20 cm⁻¹ apart (1705 vs 1725), too close to read off the axis: label each one
+            // just below its tip
+            for p in spectrum.peaks where (1670...1800).contains(p.center) {
+                let tip = frame.minY + CGFloat(spectrum.absorbance(at: p.center)) * depth
+                context.draw(Text(verbatim: String(Int(p.center))).font(.system(size: labelSize * 0.9, weight: .semibold)).foregroundStyle(.black),
+                             at: CGPoint(x: x(p.center), y: tip + 1), anchor: .top)
+            }
 
             // Ticks and labels every 200 cm⁻¹ (labels every 400 when the plot is narrow)
             let labelEvery = size.width < 420 ? 400.0 : 200.0
