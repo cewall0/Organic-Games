@@ -139,6 +139,12 @@ struct GameChoiceView: View {
                     ReactionTilesMenu()
                 case .rxnGaps:
                     FillTheGapView()
+                case .rxn9Predict:
+                    ReactionQuizView(mode: .product, chapter: .ch9)
+                case .rxn9Reagents:
+                    ReactionQuizView(mode: .reagents, chapter: .ch9)
+                case .rxn9Tiles:
+                    TileGameView(pile: TilePile(chapter: .ch9))
                 case .rxnTilesAlkene:
                     TileGameView(pile: TilePile(reactions: .alkene))
                 case .rxnTilesPropyne:

@@ -2,16 +2,17 @@
 //  Reactions.swift
 //  Organic Games
 //
-//  The Ch. 11 reaction summary (organicchemistryguide.com 11.25): starting material, reagents and product
-//  drawings cut from the textbook's own figures (Assets.xcassets/Reactions). Two-step acetylide sequences are
-//  split into their single steps. Reactions with the same product share a productKey, so a question never
-//  offers two right answers.
+//  End-of-chapter reaction summaries: starting material, reagents and product drawings cut from the textbook's
+//  own figures. Ch. 11 (organicchemistryguide.com 11.25, Assets.xcassets/Reactions) with the two-step acetylide
+//  sequences split into single steps; Ch. 9 and 10 from the book PDF (Assets.xcassets/ReactionsCh9, @3x).
+//  Reactions with the same product share a productName, so a question never offers two right answers.
 //
 
 import SwiftUI
 
 enum ReactionGroup: String, CaseIterable {
-    case alkene, propyne, butyne, acetylide, metathesis
+    case alkene, propyne, butyne, acetylide, metathesis     // Ch. 11
+    case allylic, alcoholToHalide, dihalide                 // Ch. 9–10
 
     /// Groups whose products make fair distractors for each other
     var family: Int {
@@ -19,8 +20,29 @@ enum ReactionGroup: String, CaseIterable {
         case .alkene: return 0
         case .propyne, .butyne, .acetylide: return 1
         case .metathesis: return 2
+        case .allylic, .alcoholToHalide, .dihalide: return 3
         }
     }
+
+    var chapter: ReactionChapter {
+        switch self {
+        case .allylic, .alcoholToHalide, .dihalide: return .ch9
+        default: return .ch11
+        }
+    }
+}
+
+/// One chapter's reaction summary: its own games and mastery
+enum ReactionChapter: String {
+    case ch9 = "9", ch11 = "11"
+
+    var url: URL {
+        switch self {
+        case .ch9: return URL(string: "https://organicchemistryguide.com/alkyl-halide-reaction-summary/")!
+        case .ch11: return URL(string: "https://organicchemistryguide.com/alkene-alkyne-reaction-summary/")!
+        }
+    }
+    var reactions: [OrgReaction] { OrgReaction.all.filter { $0.group.chapter == self } }
 }
 
 struct OrgReaction: Identifiable, Hashable {
@@ -34,8 +56,8 @@ struct OrgReaction: Identifiable, Hashable {
     let reagentsImage: String
     let productImage: String
     var reversible = false
-
-    static let chapterURL = URL(string: "https://organicchemistryguide.com/alkene-alkyne-reaction-summary/")!
+    var caption: String? = nil  // what the starting material is ("1° alcohol"), for tiles that don't show it
+    var makes: String? = nil    // reagents that do the same job ("chloride") are never wrong answers for each other
 
     static func byID(_ id: String) -> OrgReaction? { all.first { $0.id == id } }
 
@@ -49,7 +71,9 @@ struct OrgReaction: Identifiable, Hashable {
     /// Up to `count` other reagent sets: never one that also makes this product, and never the same reagents twice.
     func reagentDistractors(_ count: Int) -> [OrgReaction] {
         var seen: Set<String> = [reagents]
-        return pick(count) { r in r.productName != productName && seen.insert(r.reagents).inserted }
+        return pick(count) { r in
+            r.productName != productName && (makes == nil || r.makes != makes) && seen.insert(r.reagents).inserted
+        }
     }
 
     /// The reactions students confuse with each one (Markovnikov vs anti-Markovnikov, syn vs anti, cold vs hot
@@ -65,6 +89,12 @@ struct OrgReaction: Identifiable, Hashable {
         "r30": ["r31"], "r31": ["r30"], "r32": ["r33"], "r33": ["r32"], "r34": ["r33"],
         "r35a": ["r36a", "r37a"], "r36a": ["r37a", "r35a"], "r37a": ["r36a", "r35a"],
         "r35b": ["r36b"], "r36b": ["r35b"], "r37b": ["r35b"],
+        // Ch. 9: same alcohol, other halide
+        "r9g": ["r9j", "r9m"], "r9j": ["r9g", "r9m"], "r9m": ["r9g", "r9j"],
+        "r9h": ["r9k", "r9n"], "r9k": ["r9h", "r9n"], "r9n": ["r9h", "r9k"],
+        "r9i": ["r9l", "r9o"], "r9l": ["r9i", "r9o"], "r9o": ["r9i", "r9l"],
+        // Ch. 10: alkyne (two E2) vs alkene (dehalogenation, dehydration)
+        "r10c": ["r10f", "r10h"], "r10d": ["r10g", "r10h"], "r10f": ["r10c", "r10h"], "r10g": ["r10d", "r10h"], "r10h": ["r10f", "r10c"],
     ]
 
     private func pick(_ count: Int, _ keep: (OrgReaction) -> Bool) -> [OrgReaction] {
@@ -96,6 +126,14 @@ struct OrgReaction: Identifiable, Hashable {
                     smImage: "rxn-\(id)-sm", reagentsImage: "rxn-\(id)-reagents", productImage: "rxn-\(id)-product", reversible: reversible)
     }
 
+    /// A reaction cut from the book PDF (bk-<id>-sm/reagents/product)
+    private static func book(_ id: String, _ group: ReactionGroup, _ name: String, _ reagents: String, _ product: String,
+                             _ note: String, caption: String, makes: String? = nil) -> OrgReaction {
+        OrgReaction(id: id, group: group, name: name, note: note, reagents: reagents, productName: product,
+                    smImage: "bk-\(id)-sm", reagentsImage: "bk-\(id)-reagents", productImage: "bk-\(id)-product",
+                    caption: caption, makes: makes)
+    }
+
     /// Step 1 (propyne to the acetylide) or step 2 (the acetylide on to the product) of a two-step sequence
     private static func step(_ seq: String, _ n: Int, _ name: String, _ reagents: String, _ product: String, _ note: String) -> OrgReaction {
         OrgReaction(id: "\(seq)\(n == 1 ? "a" : "b")", group: n == 1 ? .propyne : .acetylide, name: name, note: note,
@@ -105,7 +143,60 @@ struct OrgReaction: Identifiable, Hashable {
                     productImage: n == 1 ? "rxn-\(seq)-intermediate" : "rxn-\(seq)-product")
     }
 
-    static let all: [OrgReaction] = [
+    static let all: [OrgReaction] = ch11 + ch9
+
+    private static let ch9: [OrgReaction] = [
+        book("r9e", .allylic, "Allylic bromination (Br₂, light)", "Br₂, light", "3-bromocyclohexene",
+             "Light makes Br radicals. The allylic H is removed because the allylic radical is stabilized by resonance, so Br ends up next to the C=C.",
+             caption: "alkene"),
+        book("r9f", .allylic, "Allylic bromination (NBS)", "NBS, heat", "3-bromocyclohexene",
+             "NBS keeps the Br₂ concentration low, so Br substitutes at the allylic carbon instead of adding across the C=C.",
+             caption: "alkene"),
+        book("r9g", .alcoholToHalide, "1° alcohol to alkyl chloride", "SOCl₂", "chloroethane",
+             "SOCl₂ turns the OH into a good leaving group and chloride replaces it (SN2). Used for 1° and 2° alcohols.",
+             caption: "1° alcohol", makes: "chloride"),
+        book("r9h", .alcoholToHalide, "2° alcohol to alkyl chloride", "SOCl₂", "2-chloropropane",
+             "SOCl₂ turns the OH into a good leaving group and chloride replaces it (SN2). Used for 1° and 2° alcohols.",
+             caption: "2° alcohol", makes: "chloride"),
+        book("r9i", .alcoholToHalide, "3° alcohol to alkyl chloride", "HCl or Lucas reagent (HCl, ZnCl₂)", "2-chloro-2-methylpropane",
+             "The protonated OH leaves as water, giving a 3° carbocation that Cl⁻ attacks (SN1).",
+             caption: "3° alcohol", makes: "chloride"),
+        book("r9j", .alcoholToHalide, "1° alcohol to alkyl bromide", "PBr₃", "bromoethane",
+             "PBr₃ turns the OH into a good leaving group and bromide replaces it (SN2). Used for 1° and 2° alcohols.",
+             caption: "1° alcohol", makes: "bromide"),
+        book("r9k", .alcoholToHalide, "2° alcohol to alkyl bromide", "PBr₃", "2-bromopropane",
+             "PBr₃ turns the OH into a good leaving group and bromide replaces it (SN2). Used for 1° and 2° alcohols.",
+             caption: "2° alcohol", makes: "bromide"),
+        book("r9l", .alcoholToHalide, "3° alcohol to alkyl bromide", "HBr", "2-bromo-2-methylpropane",
+             "The protonated OH leaves as water, giving a 3° carbocation that Br⁻ attacks (SN1).",
+             caption: "3° alcohol", makes: "bromide"),
+        book("r9m", .alcoholToHalide, "1° alcohol to alkyl iodide", "P/I₂", "iodoethane",
+             "P and I₂ make PI₃, which works like PBr₃: iodide replaces the OH (SN2). Used for 1° and 2° alcohols.",
+             caption: "1° alcohol", makes: "iodide"),
+        book("r9n", .alcoholToHalide, "2° alcohol to alkyl iodide", "P/I₂", "2-iodopropane",
+             "P and I₂ make PI₃, which works like PBr₃: iodide replaces the OH (SN2). Used for 1° and 2° alcohols.",
+             caption: "2° alcohol", makes: "iodide"),
+        book("r9o", .alcoholToHalide, "3° alcohol to alkyl iodide", "HI", "2-iodo-2-methylpropane",
+             "The protonated OH leaves as water, giving a 3° carbocation that I⁻ attacks (SN1).",
+             caption: "3° alcohol", makes: "iodide"),
+        book("r10c", .dihalide, "Alkyne from a vicinal dihalide", "NaOH", "2-butyne",
+             "A strong base removes HBr twice (two E2 eliminations), making a triple bond. Vicinal: the Br atoms are on neighboring carbons.",
+             caption: "vicinal dihalide"),
+        book("r10d", .dihalide, "Alkyne from a geminal dihalide", "NaOH", "2-butyne",
+             "Geminal: both Br atoms are on the same carbon. Two E2 eliminations still give the alkyne.",
+             caption: "geminal dihalide"),
+        book("r10f", .dihalide, "Dehalogenation with NaI", "NaI, acetone", "2,3-dimethyl-2-butene",
+             "I⁻ removes the two Br atoms from neighboring carbons (anti), forming a C=C, not a triple bond.",
+             caption: "vicinal dihalide"),
+        book("r10g", .dihalide, "Dehalogenation with zinc", "Zn, acetic acid", "2,3-dimethyl-2-butene",
+             "Zinc removes the two Br atoms from neighboring carbons, forming a C=C, not a triple bond.",
+             caption: "vicinal dihalide"),
+        book("r10h", .dihalide, "Acid-catalyzed dehydration", "H₂SO₄", "3-ethyl-2-methyl-2-pentene",
+             "H₂SO₄ protonates the OH, water leaves, and loss of H⁺ gives the more substituted alkene (Saytzeff).",
+             caption: "alcohol"),
+    ]
+
+    private static let ch11: [OrgReaction] = [
         alkene("r01", "Markovnikov addition of HBr", "HBr", "1-bromo-1-methylcyclopentane",
                "H adds to the less substituted carbon, so Br ends up on the more substituted carbon (the more stable carbocation)."),
         alkene("r02", "Anti-Markovnikov addition of HBr", "HBr, ROOR", "1-bromo-2-methylcyclopentane",

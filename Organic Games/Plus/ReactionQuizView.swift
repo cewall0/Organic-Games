@@ -2,7 +2,7 @@
 //  ReactionQuizView.swift
 //  Organic Games
 //
-//  Organic Games Plus: multiple-choice questions on the Ch. 11 reaction summary.
+//  Organic Games Plus: multiple-choice questions on one chapter's reaction summary (Ch. 9–10 or Ch. 11).
 //  Predict the Product: starting material and reagents shown, pick the product from four drawings.
 //  Name the Reagents: starting material and product shown, pick the reagents (metathesis is left out,
 //  since every one uses Grubbs catalyst).
@@ -16,13 +16,23 @@ struct ReactionQuizView: View {
     enum Mode {
         case product, reagents
 
-        var setID: String { self == .product ? "rxn-predict" : "rxn-reagents" }
         var title: String { self == .product ? "Predict the Product" : "Name the Reagents" }
         var prompt: String { self == .product ? "What's the product?" : "Which reagents?" }
-        var reactions: [OrgReaction] { self == .product ? OrgReaction.all : OrgReaction.all.filter { $0.group != .metathesis } }
+
+        /// Ch. 11 keeps its original IDs, so saved mastery carries over
+        func setID(_ chapter: ReactionChapter) -> String {
+            let base = self == .product ? "rxn-predict" : "rxn-reagents"
+            return chapter == .ch11 ? base : "\(base)-ch\(chapter.rawValue)"
+        }
+
+        func reactions(_ chapter: ReactionChapter) -> [OrgReaction] {
+            let all = chapter.reactions
+            return self == .product ? all : all.filter { $0.group != .metathesis }
+        }
     }
 
     let mode: Mode
+    let chapter: ReactionChapter
     private let roundLength = 10
 
     @Environment(\.dismiss) private var dismiss
@@ -37,12 +47,14 @@ struct ReactionQuizView: View {
     @State private var correctCount = 0
     @State private var showPaywall = false
 
-    init(mode: Mode) {
+    init(mode: Mode, chapter: ReactionChapter = .ch11) {
         self.mode = mode
-        _freeRoundsUsed = AppStorage(wrappedValue: 0, "freeRounds.\(mode.setID)")
+        self.chapter = chapter
+        _freeRoundsUsed = AppStorage(wrappedValue: 0, "freeRounds.\(mode.setID(chapter))")
     }
 
-    private var keys: [String] { mode.reactions.map(\.id) }
+    private var setID: String { mode.setID(chapter) }
+    private var keys: [String] { mode.reactions(chapter).map(\.id) }
     private var roundDone: Bool { !round.isEmpty && index >= round.count }
     private var locked: Bool { !plus.isPlus && freeRoundsUsed >= 1 }
 
@@ -144,7 +156,7 @@ struct ReactionQuizView: View {
     // MARK: Summary and locked
 
     private var summary: some View {
-        let done = mastery.masteredCount(setID: mode.setID, keys: keys)
+        let done = mastery.masteredCount(setID: setID, keys: keys)
         return VStack(spacing: 16) {
             Image(systemName: correctCount >= round.count - 2 ? "star.circle.fill" : "checkmark.seal.fill")
                 .font(.system(size: 56)).foregroundStyle(.orange)
@@ -158,7 +170,7 @@ struct ReactionQuizView: View {
                     .multilineTextAlignment(.center).font(.subheadline)
                 wideButton("Try Plus free") { showPaywall = true }
             }
-            Link("Review the reaction summary on organicchemistryguide.com", destination: OrgReaction.chapterURL).font(.subheadline)
+            Link("Review the reaction summary on organicchemistryguide.com", destination: chapter.url).font(.subheadline)
             Button("Back to games") { dismiss() }.font(.subheadline)
         }
         .padding(.top, 30)
@@ -171,7 +183,7 @@ struct ReactionQuizView: View {
             Text("You've used your free round of \(mode.title). Plus unlocks every round, tracks what you've mastered and drills the reactions you miss.")
                 .multilineTextAlignment(.center).font(.subheadline)
             wideButton("Try Plus free") { showPaywall = true }
-            Link("Review the reaction summary on organicchemistryguide.com", destination: OrgReaction.chapterURL).font(.subheadline)
+            Link("Review the reaction summary on organicchemistryguide.com", destination: chapter.url).font(.subheadline)
         }
         .padding(.top, 40)
     }
@@ -188,7 +200,7 @@ struct ReactionQuizView: View {
 
     /// Ten reactions, weakest first, in random order
     private func startRound() {
-        let order = mastery.practiceOrder(setID: mode.setID, keys: keys).compactMap(OrgReaction.byID)
+        let order = mastery.practiceOrder(setID: setID, keys: keys).compactMap(OrgReaction.byID)
         round = Array(order.prefix(roundLength)).shuffled()
         index = 0
         correctCount = 0
@@ -207,7 +219,7 @@ struct ReactionQuizView: View {
         picked = c
         let right = isRight(c, for: r)
         if right { correctCount += 1 }
-        mastery.record(r.id, setID: mode.setID, firstTry: right)
+        mastery.record(r.id, setID: setID, firstTry: right)
     }
 
     private func next() {

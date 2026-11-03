@@ -17,13 +17,17 @@ struct TilePile {
     enum Face: Equatable {
         case text(String)
         case image(String, label: String)
+        case captioned(String, image: String, label: String)    // "1° alcohol" above the reagents
 
         var label: String {
             switch self {
             case .text(let text): return text
             case .image(_, let label): return label
+            case .captioned(let caption, _, let label): return "\(caption), \(label)"
             }
         }
+
+        var isText: Bool { if case .text = self { return true } else { return false } }
     }
 
     struct Pair {
@@ -59,12 +63,26 @@ extension TilePile {
         case .butyne: name = "2-Butyne"
         case .acetylide: name = "Acetylides"
         case .metathesis: name = "Metathesis"
+        case .allylic: name = "Allylic Bromination"
+        case .alcoholToHalide: name = "Alcohols to Alkyl Halides"
+        case .dihalide: name = "Dihalides & Dehydration"
         }
         self.init(id: "rxn-tiles-\(group.rawValue)", title: "Reaction Tiles: \(name)", chapter: "Ch. 11",
-                  chapterURL: OrgReaction.chapterURL,
+                  chapterURL: ReactionChapter.ch11.url,
                   pairs: reactions.map { Pair(key: $0.id, a: .image($0.reagentsImage, label: $0.reagents),
                                               b: .image($0.productImage, label: $0.productName), answerKey: $0.productName) },
                   header: reactions.first.map { .image($0.smImage, label: "Starting material") })
+    }
+
+    /// Ch. 9–10: starting materials differ, so each reagent tile names what it starts from ("1° alcohol")
+    init(chapter: ReactionChapter) {
+        let reactions = chapter.reactions
+        self.init(id: "rxn-tiles-ch\(chapter.rawValue)", title: "Reaction Tiles: Ch. \(chapter == .ch9 ? "9–10" : chapter.rawValue)",
+                  chapter: "Ch. \(chapter.rawValue)", chapterURL: chapter.url,
+                  pairs: reactions.map { r in
+                      Pair(key: r.id,
+                           a: r.caption.map { .captioned($0, image: r.reagentsImage, label: r.reagents) } ?? .image(r.reagentsImage, label: r.reagents),
+                           b: .image(r.productImage, label: r.productName), answerKey: r.productName) })
     }
 }
 
@@ -141,7 +159,7 @@ struct TileGameView: View {
 
     private func board(in size: CGSize) -> some View {
         let big = size.width > 600
-        let drawings = pile.header != nil
+        let drawings = pile.pairs.contains { !$0.a.isText }
         let tileSize = drawings ? CGSize(width: big ? 210 : 150, height: big ? 112 : 84)
                                 : CGSize(width: big ? 170 : 118, height: big ? 92 : 68)
         // Keep whole tiles on the board
@@ -175,6 +193,11 @@ struct TileGameView: View {
                     .minimumScaleFactor(0.6)
             case .image(let name, let label):
                 StructureImage(name: name, label: label)
+            case .captioned(let caption, let name, let label):
+                VStack(spacing: 2) {
+                    Text(caption).font(.system(size: 12, weight: .semibold, design: .rounded)).foregroundStyle(.secondary)
+                    StructureImage(name: name, label: label)
+                }
             }
         }
         .padding(6)
