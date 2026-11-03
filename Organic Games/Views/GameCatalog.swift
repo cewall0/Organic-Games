@@ -104,9 +104,9 @@ struct GameTopic: Identifiable, Hashable {
                   ]),
         GameTopic(id: "reactions", title: "Reactions", subtitle: "Alkyl halides, alkenes and alkynes",
                   icon: "arrow.right.circle", tint: .orange, sections: [
+                    // No Predict the Product here: the summary's wrong products differ only by halogen or skeleton,
+                    // so they were too easy. Product questions for Ch. 9 belong in a mechanism game (SN1/SN2/E1/E2).
                     Section(title: "Ch. 9–10 Alkyl Halides & Eliminations", games: [
-                        GameEntry(title: "Predict the Product", type: .rxn9Predict, style: .quiz, isPlus: true,
-                                  mastery: [(ReactionQuizView.Mode.product.setID(.ch9), ReactionQuizView.Mode.product.reactions(.ch9).map(\.id))]),
                         GameEntry(title: "Name the Reagents", type: .rxn9Reagents, style: .quiz, isPlus: true,
                                   mastery: [(ReactionQuizView.Mode.reagents.setID(.ch9), ReactionQuizView.Mode.reagents.reactions(.ch9).map(\.id))]),
                         GameEntry(title: "Reaction Tiles", type: .rxn9Tiles, style: .tiles, isPlus: true,

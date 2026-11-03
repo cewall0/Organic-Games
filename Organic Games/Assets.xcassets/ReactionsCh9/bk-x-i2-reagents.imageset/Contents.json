@@ -1,0 +1,13 @@
+{
+  "images" : [
+    {
+      "filename" : "bk-x-i2-reagents.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

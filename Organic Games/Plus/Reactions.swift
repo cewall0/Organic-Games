@@ -59,7 +59,7 @@ struct OrgReaction: Identifiable, Hashable {
     var caption: String? = nil  // what the starting material is ("1° alcohol"), for tiles that don't show it
     var makes: String? = nil    // reagents that do the same job ("chloride") are never wrong answers for each other
 
-    static func byID(_ id: String) -> OrgReaction? { all.first { $0.id == id } }
+    static func byID(_ id: String) -> OrgReaction? { all.first { $0.id == id } ?? decoys.first { $0.id == id } }
 
     /// Up to `count` other products for a multiple-choice question: same group first, then the same family,
     /// never one that is the same compound as the answer.
@@ -70,6 +70,7 @@ struct OrgReaction: Identifiable, Hashable {
 
     /// Up to `count` other reagent sets: never one that also makes this product, and never the same reagents twice.
     func reagentDistractors(_ count: Int) -> [OrgReaction] {
+        if let traps = Self.reagentTraps[id] { return Array(traps.compactMap(Self.byID).prefix(count)) }
         var seen: Set<String> = [reagents]
         return pick(count) { r in
             r.productName != productName && (makes == nil || r.makes != makes) && seen.insert(r.reagents).inserted
@@ -106,6 +107,24 @@ struct OrgReaction: Identifiable, Hashable {
             for r in pool where picks.count < count && keep(r) { picks.append(r) }
         }
         return picks
+    }
+
+    /// Exact wrong reagents for Ch. 9 questions. Every choice has the product's halogen in it, so students have to
+    /// tell 1°/2° reagents (SOCl₂, PBr₃, P/I₂) from 3° ones (HX), and the halide salt or X₂ traps from both.
+    private static let reagentTraps: [String: [String]] = [
+        "r9g": ["r9i", "x-nacl", "x-cl2"], "r9h": ["r9i", "x-nacl", "x-cl2"], "r9i": ["r9g", "x-nacl", "x-cl2"],
+        "r9j": ["r9l", "x-nabr", "r9e"], "r9k": ["r9l", "x-nabr", "r9e"], "r9l": ["r9j", "x-nabr", "r9e"],
+        "r9m": ["r9o", "r10f", "x-i2"], "r9n": ["r9o", "r10f", "x-i2"], "r9o": ["r9m", "r10f", "x-i2"],
+        // allylic bromination vs adding across the C=C
+        "r9e": ["x-br2-ccl4", "r9l", "r9j"], "r9f": ["x-br2-ccl4", "r9l", "r9j"],
+    ]
+
+    /// Reagents that only ever appear as wrong answers (text cut from the book: Tools/book_reagent_text.py)
+    private static let decoys: [OrgReaction] = [
+        ("x-nacl", "NaCl"), ("x-cl2", "Cl₂"), ("x-nabr", "NaBr"), ("x-i2", "I₂"), ("x-br2-ccl4", "Br₂, CCl₄"),
+    ].map { id, reagents in
+        OrgReaction(id: id, group: .alcoholToHalide, name: "", note: "", reagents: reagents, productName: "",
+                    smImage: "", reagentsImage: "bk-\(id)-reagents", productImage: "")
     }
 
     // MARK: Data
@@ -147,37 +166,37 @@ struct OrgReaction: Identifiable, Hashable {
 
     private static let ch9: [OrgReaction] = [
         book("r9e", .allylic, "Allylic bromination (Br₂, light)", "Br₂, light", "3-bromocyclohexene",
-             "Light makes Br radicals. The allylic H is removed because the allylic radical is stabilized by resonance, so Br ends up next to the C=C.",
+             "Light makes Br radicals. The allylic H is removed because the allylic radical is stabilized by resonance, so Br ends up next to the C=C. Br₂ in CCl₄ (dark) would add across the C=C instead.",
              caption: "alkene"),
         book("r9f", .allylic, "Allylic bromination (NBS)", "NBS, heat", "3-bromocyclohexene",
              "NBS keeps the Br₂ concentration low, so Br substitutes at the allylic carbon instead of adding across the C=C.",
              caption: "alkene"),
         book("r9g", .alcoholToHalide, "1° alcohol to alkyl chloride", "SOCl₂", "chloroethane",
-             "SOCl₂ turns the OH into a good leaving group and chloride replaces it (SN2). Used for 1° and 2° alcohols.",
+             "SOCl₂ turns the OH into a good leaving group and chloride replaces it (SN2). Used for 1° and 2° alcohols; HX is for 3°.",
              caption: "1° alcohol", makes: "chloride"),
         book("r9h", .alcoholToHalide, "2° alcohol to alkyl chloride", "SOCl₂", "2-chloropropane",
-             "SOCl₂ turns the OH into a good leaving group and chloride replaces it (SN2). Used for 1° and 2° alcohols.",
+             "SOCl₂ turns the OH into a good leaving group and chloride replaces it (SN2). Used for 1° and 2° alcohols; HX is for 3°.",
              caption: "2° alcohol", makes: "chloride"),
         book("r9i", .alcoholToHalide, "3° alcohol to alkyl chloride", "HCl or Lucas reagent (HCl, ZnCl₂)", "2-chloro-2-methylpropane",
-             "The protonated OH leaves as water, giving a 3° carbocation that Cl⁻ attacks (SN1).",
+             "The protonated OH leaves as water, giving a 3° carbocation that Cl⁻ attacks (SN1). SOCl₂ needs SN2, which a 3° carbon blocks.",
              caption: "3° alcohol", makes: "chloride"),
         book("r9j", .alcoholToHalide, "1° alcohol to alkyl bromide", "PBr₃", "bromoethane",
-             "PBr₃ turns the OH into a good leaving group and bromide replaces it (SN2). Used for 1° and 2° alcohols.",
+             "PBr₃ turns the OH into a good leaving group and bromide replaces it (SN2). Used for 1° and 2° alcohols; HX is for 3°.",
              caption: "1° alcohol", makes: "bromide"),
         book("r9k", .alcoholToHalide, "2° alcohol to alkyl bromide", "PBr₃", "2-bromopropane",
-             "PBr₃ turns the OH into a good leaving group and bromide replaces it (SN2). Used for 1° and 2° alcohols.",
+             "PBr₃ turns the OH into a good leaving group and bromide replaces it (SN2). Used for 1° and 2° alcohols; HX is for 3°.",
              caption: "2° alcohol", makes: "bromide"),
         book("r9l", .alcoholToHalide, "3° alcohol to alkyl bromide", "HBr", "2-bromo-2-methylpropane",
-             "The protonated OH leaves as water, giving a 3° carbocation that Br⁻ attacks (SN1).",
+             "The protonated OH leaves as water, giving a 3° carbocation that Br⁻ attacks (SN1). PBr₃ needs SN2, which a 3° carbon blocks.",
              caption: "3° alcohol", makes: "bromide"),
         book("r9m", .alcoholToHalide, "1° alcohol to alkyl iodide", "P/I₂", "iodoethane",
-             "P and I₂ make PI₃, which works like PBr₃: iodide replaces the OH (SN2). Used for 1° and 2° alcohols.",
+             "P and I₂ make PI₃, which works like PBr₃: iodide replaces the OH (SN2). Used for 1° and 2° alcohols; HI is for 3°.",
              caption: "1° alcohol", makes: "iodide"),
         book("r9n", .alcoholToHalide, "2° alcohol to alkyl iodide", "P/I₂", "2-iodopropane",
-             "P and I₂ make PI₃, which works like PBr₃: iodide replaces the OH (SN2). Used for 1° and 2° alcohols.",
+             "P and I₂ make PI₃, which works like PBr₃: iodide replaces the OH (SN2). Used for 1° and 2° alcohols; HI is for 3°.",
              caption: "2° alcohol", makes: "iodide"),
         book("r9o", .alcoholToHalide, "3° alcohol to alkyl iodide", "HI", "2-iodo-2-methylpropane",
-             "The protonated OH leaves as water, giving a 3° carbocation that I⁻ attacks (SN1).",
+             "The protonated OH leaves as water, giving a 3° carbocation that I⁻ attacks (SN1). P/I₂ needs SN2, which a 3° carbon blocks.",
              caption: "3° alcohol", makes: "iodide"),
         book("r10c", .dihalide, "Alkyne from a vicinal dihalide", "NaOH", "2-butyne",
              "A strong base removes HBr twice (two E2 eliminations), making a triple bond. Vicinal: the Br atoms are on neighboring carbons.",
