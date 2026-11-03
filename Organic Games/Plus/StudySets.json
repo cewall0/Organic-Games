@@ -7,24 +7,123 @@
       "chapterURL": "https://organicchemistryguide.com/infrared-spectroscopy/",
       "mode": "pairs",
       "pairs": [
-        {"a": "O–H alcohol", "b": "3300, very broad"},
-        {"a": "NH₂ amine", "b": "3300, two humps"},
-        {"a": "≡C–H terminal alkyne", "b": "3300, sharp"},
-        {"a": "sp² C–H", "b": "just above 3000"},
-        {"a": "sp³ C–H", "b": "just below 3000"},
-        {"a": "Aldehyde C–H", "b": "2700 & 2800"},
-        {"a": "Acid O–H", "b": "broad, near 3000"},
-        {"a": "C≡N nitrile", "b": "just above 2200"},
-        {"a": "C≡C alkyne", "b": "just below 2200; often absent if internal"},
-        {"a": "Ester C=O", "b": "1730s (+ two C–O)"},
-        {"a": "Aldehyde C=O", "b": "1720s"},
-        {"a": "Ketone C=O", "b": "1700–1720"},
-        {"a": "Conjugated C=O", "b": "1680s"},
-        {"a": "Amide C=O", "b": "1660s"},
-        {"a": "C=C alkene", "b": "1650, weaker"},
-        {"a": "NO₂ nitro", "b": "two peaks near 1400"},
-        {"a": "C–O ether", "b": "1100, strong"},
-        {"a": "C–Cl", "b": "700, strong"}
+        {
+          "a": "O–H alcohol",
+          "b": "3300, very broad"
+        },
+        {
+          "a": "NH₂ amine",
+          "b": "3300, two humps"
+        },
+        {
+          "a": "≡C–H terminal alkyne",
+          "b": "3300, sharp"
+        },
+        {
+          "a": "sp² C–H",
+          "b": "just above 3000"
+        },
+        {
+          "a": "sp³ C–H",
+          "b": "just below 3000"
+        },
+        {
+          "a": "Aldehyde C–H",
+          "b": "2700 & 2800"
+        },
+        {
+          "a": "Acid O–H",
+          "b": "broad, near 3000"
+        },
+        {
+          "a": "C≡N nitrile",
+          "b": "just above 2200"
+        },
+        {
+          "a": "C≡C alkyne",
+          "b": "just below 2200; often absent if internal"
+        },
+        {
+          "a": "Ester C=O",
+          "b": "1730s (+ two C–O)"
+        },
+        {
+          "a": "Aldehyde C=O",
+          "b": "1720s"
+        },
+        {
+          "a": "Ketone C=O",
+          "b": "1700–1720"
+        },
+        {
+          "a": "Conjugated C=O",
+          "b": "1680s"
+        },
+        {
+          "a": "Amide C=O",
+          "b": "1660s"
+        },
+        {
+          "a": "C=C alkene",
+          "b": "1650, weaker"
+        },
+        {
+          "a": "NO₂ nitro",
+          "b": "two peaks near 1400"
+        },
+        {
+          "a": "C–O ether",
+          "b": "1100, strong"
+        },
+        {
+          "a": "C–Cl",
+          "b": "700, strong"
+        }
+      ]
+    },
+    {
+      "id": "ms-tiles",
+      "title": "Mass Spec: Tile Match",
+      "chapter": "Ch. 3",
+      "chapterURL": "https://organicchemistryguide.com/mass-spectrometry/",
+      "mode": "pairs",
+      "pairs": [
+        {
+          "a": "Br",
+          "b": "M : M+2 about 1 : 1"
+        },
+        {
+          "a": "Cl",
+          "b": "M+2 about ⅓ of M⁺"
+        },
+        {
+          "a": "S",
+          "b": "M+2 larger than usual (~4%)"
+        },
+        {
+          "a": "I",
+          "b": "peak at 127; big M⁺ − 127"
+        },
+        {
+          "a": "Odd number of N",
+          "b": "odd molecular mass"
+        },
+        {
+          "a": "Only C, H, O",
+          "b": "usually no M+2"
+        },
+        {
+          "a": "¹³C (about 1%)",
+          "b": "small M+1 peak"
+        },
+        {
+          "a": "⁷⁹Br and ⁸¹Br",
+          "b": "nearly equal abundance"
+        },
+        {
+          "a": "³⁵Cl and ³⁷Cl",
+          "b": "about 75% and 25%"
+        }
       ]
     }
   ]

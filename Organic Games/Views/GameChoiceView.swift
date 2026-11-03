@@ -137,6 +137,10 @@ struct GameChoiceView: View {
                 plusGame("IR: Name That Spectrum", .irSpectra)
                 Text("")
                 plusGame("IR: Tile Match", .irTiles)
+                Text("")
+                plusGame("Mass Spec: Name That Pattern", .msPatterns)
+                Text("")
+                plusGame("Mass Spec: Tile Match", .msTiles)
                 
                 Spacer()
 
@@ -166,6 +170,12 @@ struct GameChoiceView: View {
                     NameThatSpectrumView()
                 case .irTiles:
                     if let set = StudySet.all.first(where: { $0.id == "ir-tiles" }) {
+                        TextTileGameView(set: set)
+                    }
+                case .msPatterns:
+                    NameThatPatternView()
+                case .msTiles:
+                    if let set = StudySet.all.first(where: { $0.id == "ms-tiles" }) {
                         TextTileGameView(set: set)
                     }
                 default:

@@ -13,4 +13,6 @@ enum GameType {
     case game7
     case irSpectra   // Organic Games Plus: Name That Spectrum
     case irTiles     // Organic Games Plus: IR tile match
+    case msPatterns  // Organic Games Plus: mass spec Name That Pattern
+    case msTiles     // Organic Games Plus: mass spec tile match
 }
