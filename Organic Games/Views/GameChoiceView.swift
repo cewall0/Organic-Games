@@ -51,6 +51,9 @@ struct GameChoiceView: View {
                     }
                     .accessibilityLabel("Help")
                 }
+                // The game list scrolls: with the Plus games it is taller than a phone screen
+                ScrollView {
+                VStack {
                     Image("OrganicGamesTitle")
                         .resizable()
                         .frame(width: 375, height: 210)
@@ -145,8 +148,14 @@ struct GameChoiceView: View {
                 plusGame("Reactions: Predict the Product", .rxnPredict)
                 Text("")
                 plusGame("Reactions: Name the Reagents", .rxnReagents)
-                
-                Spacer()
+                Text("")
+                plusGame("Reactions: Tile Match", .rxnTiles)
+                    .padding(.bottom)
+                }
+                .frame(maxWidth: .infinity)
+                }
+
+                Spacer(minLength: 0)
 
                 if !plus.isPlus {
                     BannerAdView()
@@ -174,18 +183,26 @@ struct GameChoiceView: View {
                     NameThatSpectrumView()
                 case .irTiles:
                     if let set = StudySet.all.first(where: { $0.id == "ir-tiles" }) {
-                        TextTileGameView(set: set)
+                        TileGameView(pile: TilePile(set: set))
                     }
                 case .msPatterns:
                     NameThatPatternView()
                 case .msTiles:
                     if let set = StudySet.all.first(where: { $0.id == "ms-tiles" }) {
-                        TextTileGameView(set: set)
+                        TileGameView(pile: TilePile(set: set))
                     }
                 case .rxnPredict:
                     ReactionQuizView(mode: .product)
                 case .rxnReagents:
                     ReactionQuizView(mode: .reagents)
+                case .rxnTiles:
+                    ReactionTilesMenu()
+                case .rxnTilesAlkene:
+                    TileGameView(pile: TilePile(reactions: .alkene))
+                case .rxnTilesPropyne:
+                    TileGameView(pile: TilePile(reactions: .propyne))
+                case .rxnTilesButyne:
+                    TileGameView(pile: TilePile(reactions: .butyne))
                 default:
                     // All other games navigate to GameView as usual
                     GameView(path: $path, gameType: gameType)

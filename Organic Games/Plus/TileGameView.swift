@@ -1,44 +1,101 @@
 //
-//  TextTileGameView.swift
+//  TileGameView.swift
 //  Organic Games
 //
-//  Organic Games Plus: the lazy tile-clearing game with text tiles (e.g. a bond and its IR peak).
+//  Organic Games Plus: the lazy tile-clearing game, with text tiles (a bond and its IR peak) or drawings
+//  (reagents and the product they make, with the starting material shown above the pile).
 //  Like the picture games, the whole set is piled up, overlapping, and drawn pair by pair, so the top
-//  two tiles always match and can be cleared. A slight tilt keeps the text readable. A pair is mastered
+//  two tiles always match and can be cleared. A slight tilt keeps the tiles readable. A pair is mastered
 //  after three first-try matches in a row. Without Plus, the first round is a free preview.
 //
 
 import SwiftUI
 import WallaceAds
 
-struct TextTileGameView: View {
-    let set: StudySet
+/// What one tile game piles up
+struct TilePile {
+    enum Face: Equatable {
+        case text(String)
+        case image(String, label: String)
+
+        var label: String {
+            switch self {
+            case .text(let text): return text
+            case .image(_, let label): return label
+            }
+        }
+    }
+
+    struct Pair {
+        let key: String         // mastery key
+        let a: Face             // the prompt side (bond, reagents)
+        let b: Face
+        var answerKey: String   // pairs with the same answer (the same product) never share a pile
+    }
+
+    let id: String
+    let title: String
+    let chapter: String
+    let chapterURL: URL
+    let pairs: [Pair]
+    var header: Face? = nil     // shown above the pile (the starting material)
+
+    var keys: [String] { pairs.map(\.key) }
+}
+
+extension TilePile {
+    init(set: StudySet) {
+        self.init(id: set.id, title: set.title, chapter: set.chapter, chapterURL: set.chapterURL,
+                  pairs: (set.pairs ?? []).map { Pair(key: $0.a, a: .text($0.a), b: .text($0.b), answerKey: $0.b) })
+    }
+
+    /// Reagents ↔ product for every reaction of one starting material in the Ch. 11 summary
+    init(reactions group: ReactionGroup) {
+        let reactions = OrgReaction.all.filter { $0.group == group }
+        let name: String
+        switch group {
+        case .alkene: name = "Alkenes"
+        case .propyne: name = "Propyne"
+        case .butyne: name = "2-Butyne"
+        case .acetylide: name = "Acetylides"
+        case .metathesis: name = "Metathesis"
+        }
+        self.init(id: "rxn-tiles-\(group.rawValue)", title: "Reaction Tiles: \(name)", chapter: "Ch. 11",
+                  chapterURL: OrgReaction.chapterURL,
+                  pairs: reactions.map { Pair(key: $0.id, a: .image($0.reagentsImage, label: $0.reagents),
+                                              b: .image($0.productImage, label: $0.productName), answerKey: $0.productName) },
+                  header: reactions.first.map { .image($0.smImage, label: "Starting material") })
+    }
+}
+
+struct TileGameView: View {
+    let pile: TilePile
 
     @Environment(\.dismiss) private var dismiss
     @AppStorage private var freeRoundsUsed: Int
     private let plus = PlusStore.shared
     private let mastery = MasteryStore.shared
 
-    struct TextTile: Identifiable, Equatable {
+    struct Tile: Identifiable, Equatable {
         let id = UUID()
-        let text: String
-        let pairKey: String     // the pair's "a" text; both tiles of a pair share it
+        let face: TilePile.Face
+        let pairKey: String     // both tiles of a pair share it
         let isPrompt: Bool      // the "a" side (e.g. the bond)
     }
 
-    @State private var tiles: [TextTile] = []
+    @State private var tiles: [Tile] = []
     @State private var spots: [UUID: CGPoint] = [:]      // tile centre, as a fraction of the board
     @State private var tilts: [UUID: Double] = [:]
-    @State private var selected: [TextTile] = []
+    @State private var selected: [Tile] = []
     @State private var wrongFlash: Set<UUID> = []
     @State private var missed: Set<String> = []
     @State private var started = false
     @State private var roundDone = false
     @State private var showPaywall = false
 
-    init(set: StudySet) {
-        self.set = set
-        _freeRoundsUsed = AppStorage(wrappedValue: 0, "freeRounds.\(set.id)")
+    init(pile: TilePile) {
+        self.pile = pile
+        _freeRoundsUsed = AppStorage(wrappedValue: 0, "freeRounds.\(pile.id)")
     }
 
     private var locked: Bool { !plus.isPlus && freeRoundsUsed >= 1 }
@@ -50,6 +107,15 @@ struct TextTileGameView: View {
             } else if roundDone {
                 summary.padding()
             } else {
+                if case .image(let name, let label) = pile.header {
+                    VStack(spacing: 2) {
+                        Text("Starting material").font(.caption).foregroundStyle(.gray)
+                        StructureImage(name: name, label: label).frame(maxHeight: 64)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .paperCard()
+                    .padding(.horizontal)
+                }
                 GeometryReader { geo in board(in: geo.size) }
                 Button("Scramble Remaining Tiles") { scatter() }
                     .padding()
@@ -64,7 +130,7 @@ struct TextTileGameView: View {
             }
         }
         .background(Color(.systemBackground))
-        .navigationTitle(set.title)
+        .navigationTitle(pile.title)
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showPaywall) { NavigationStack { PlusPaywall() } }
         .onAppear { if !started && !locked { startRound() } }
@@ -75,7 +141,9 @@ struct TextTileGameView: View {
 
     private func board(in size: CGSize) -> some View {
         let big = size.width > 600
-        let tileSize = CGSize(width: big ? 170 : 118, height: big ? 92 : 68)
+        let drawings = pile.header != nil
+        let tileSize = drawings ? CGSize(width: big ? 210 : 150, height: big ? 112 : 84)
+                                : CGSize(width: big ? 170 : 118, height: big ? 92 : 68)
         // Keep whole tiles on the board
         let usable = CGSize(width: max(1, size.width - tileSize.width - 8), height: max(1, size.height - tileSize.height - 8))
         return ZStack {
@@ -95,33 +163,40 @@ struct TextTileGameView: View {
         .animation(.easeInOut(duration: 0.3), value: tiles)
     }
 
-    private func tileView(_ tile: TextTile, size: CGSize) -> some View {
+    private func tileView(_ tile: Tile, size: CGSize) -> some View {
         let isSelected = selected.contains(tile)
         let isWrong = wrongFlash.contains(tile.id)
-        return Text(tile.text)
-            .font(.system(size: 15, weight: tile.isPrompt ? .bold : .semibold, design: .rounded))
-            .multilineTextAlignment(.center)
-            .minimumScaleFactor(0.6)
-            .padding(6)
-            .frame(width: size.width, height: size.height)
-            .foregroundStyle(.black)
-            .background(RoundedRectangle(cornerRadius: 10)
-                .fill(tile.isPrompt ? Color(red: 1.0, green: 0.95, blue: 0.86) : Color(red: 0.88, green: 0.95, blue: 1.0)))
-            .overlay(RoundedRectangle(cornerRadius: 10)
-                .stroke(isWrong ? Color.red : (isSelected ? Color.yellow : Color.black.opacity(0.15)),
-                        lineWidth: isSelected || isWrong ? 3 : 1))
-            .shadow(radius: 4)
-            .accessibilityElement()
-            .accessibilityLabel(tile.text)
-            .accessibilityAddTraits(.isButton)
-            .accessibilityAddTraits(isSelected ? .isSelected : [])
+        return Group {
+            switch tile.face {
+            case .text(let text):
+                Text(text)
+                    .font(.system(size: 15, weight: tile.isPrompt ? .bold : .semibold, design: .rounded))
+                    .multilineTextAlignment(.center)
+                    .minimumScaleFactor(0.6)
+            case .image(let name, let label):
+                StructureImage(name: name, label: label)
+            }
+        }
+        .padding(6)
+        .frame(width: size.width, height: size.height)
+        .foregroundStyle(.black)
+        .background(RoundedRectangle(cornerRadius: 10)
+            .fill(tile.isPrompt ? Color(red: 1.0, green: 0.95, blue: 0.86) : Color(red: 0.88, green: 0.95, blue: 1.0)))
+        .overlay(RoundedRectangle(cornerRadius: 10)
+            .stroke(isWrong ? Color.red : (isSelected ? Color.yellow : Color.black.opacity(0.15)),
+                    lineWidth: isSelected || isWrong ? 3 : 1))
+        .shadow(radius: 4)
+        .accessibilityElement()
+        .accessibilityLabel(tile.face.label)
+        .accessibilityAddTraits(.isButton)
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 
     // MARK: Summary and locked
 
     private var summary: some View {
-        let keys = set.keys
-        let done = mastery.masteredCount(setID: set.id, keys: keys)
+        let keys = pile.keys
+        let done = mastery.masteredCount(setID: pile.id, keys: keys)
         return VStack(spacing: 16) {
             Text("Congratulations!")
                 .font(.largeTitle).fontWeight(.bold).foregroundColor(.blue)
@@ -136,7 +211,7 @@ struct TextTileGameView: View {
                     .multilineTextAlignment(.center).font(.subheadline)
                 wideButton("Try Plus free") { showPaywall = true }
             }
-            Link("Review \(set.chapter) on organicchemistryguide.com", destination: set.chapterURL).font(.subheadline)
+            Link("Review \(pile.chapter) on organicchemistryguide.com", destination: pile.chapterURL).font(.subheadline)
             Button("Choose different game") { dismiss() }.font(.subheadline)
             Spacer(minLength: 0)
         }
@@ -147,10 +222,10 @@ struct TextTileGameView: View {
         VStack(spacing: 16) {
             Image(systemName: "lock.circle.fill").font(.system(size: 56)).foregroundStyle(.orange)
             Text("Keep practicing with Plus").font(.title2.bold())
-            Text("You've used your free round of \(set.title). Plus unlocks every round, tracks what you've mastered and brings back the pairs you miss.")
+            Text("You've used your free round of \(pile.title). Plus unlocks every round, tracks what you've mastered and brings back the pairs you miss.")
                 .multilineTextAlignment(.center).font(.subheadline)
             wideButton("Try Plus free") { showPaywall = true }
-            Link("Review \(set.chapter) on organicchemistryguide.com", destination: set.chapterURL).font(.subheadline)
+            Link("Review \(pile.chapter) on organicchemistryguide.com", destination: pile.chapterURL).font(.subheadline)
             Spacer(minLength: 0)
         }
         .padding(.top, 40)
@@ -169,11 +244,14 @@ struct TextTileGameView: View {
     @State private var pairsCleared = 0
 
     private func startRound() {
-        // The whole set in one pile, like the picture games; weakest pairs end up nearest the top
-        let pairs = Dictionary(uniqueKeysWithValues: (set.pairs ?? []).map { ($0.a, $0) })
-        let order = mastery.practiceOrder(setID: set.id, keys: set.keys).reversed().compactMap { pairs[$0] }
-        tiles = order.flatMap { [TextTile(text: $0.a, pairKey: $0.a, isPrompt: true),
-                                 TextTile(text: $0.b, pairKey: $0.a, isPrompt: false)] }
+        // The whole set in one pile, like the picture games; weakest pairs end up nearest the top.
+        // Of pairs with the same answer (e.g. three ways to the same alcohol), only the weakest goes in.
+        let byKey = Dictionary(uniqueKeysWithValues: pile.pairs.map { ($0.key, $0) })
+        var answers: Set<String> = []
+        let weakestFirst = mastery.practiceOrder(setID: pile.id, keys: pile.keys).compactMap { byKey[$0] }
+            .filter { answers.insert($0.answerKey).inserted }
+        tiles = weakestFirst.reversed().flatMap { [Tile(face: $0.a, pairKey: $0.key, isPrompt: true),
+                                                   Tile(face: $0.b, pairKey: $0.key, isPrompt: false)] }
         selected = []
         missed = []
         pairsCleared = 0
@@ -206,7 +284,7 @@ struct TextTileGameView: View {
         tilts = Dictionary(uniqueKeysWithValues: tiles.map { ($0.id, Double.random(in: -10...10)) })
     }
 
-    private func tap(_ tile: TextTile) {
+    private func tap(_ tile: Tile) {
         guard selected.count < 2, !selected.contains(tile) else {
             if selected.contains(tile) { selected.removeAll { $0 == tile } }   // tap again to deselect
             return
@@ -215,7 +293,7 @@ struct TextTileGameView: View {
         guard selected.count == 2 else { return }
         let (t1, t2) = (selected[0], selected[1])
         if t1.pairKey == t2.pairKey {
-            mastery.record(t1.pairKey, setID: set.id, firstTry: !missed.contains(t1.pairKey))
+            mastery.record(t1.pairKey, setID: pile.id, firstTry: !missed.contains(t1.pairKey))
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                 tiles.removeAll { $0.pairKey == t1.pairKey }
                 selected = []
@@ -234,5 +312,39 @@ struct TextTileGameView: View {
                 wrongFlash = []
             }
         }
+    }
+}
+
+/// The three Reaction Tiles piles, one per starting material
+struct ReactionTilesMenu: View {
+    private let plus = PlusStore.shared
+
+    var body: some View {
+        VStack(spacing: 16) {
+            Text("Match each set of reagents to the product it makes from the starting material.")
+                .multilineTextAlignment(.center).font(.subheadline).foregroundStyle(.secondary)
+            ForEach([(GameType.rxnTilesAlkene, ReactionGroup.alkene, "Alkenes"),
+                     (.rxnTilesPropyne, .propyne, "Propyne"),
+                     (.rxnTilesButyne, .butyne, "2-Butyne")], id: \.2) { type, group, title in
+                NavigationLink(value: type) {
+                    VStack(spacing: 6) {
+                        Text(title).font(.headline)
+                        if let first = OrgReaction.all.first(where: { $0.group == group }) {
+                            StructureImage(name: first.smImage, label: title).frame(maxHeight: 56)
+                        }
+                    }
+                    .frame(maxWidth: .infinity)
+                    .foregroundStyle(.black)
+                    .paperCard()
+                }
+            }
+            Spacer()
+        }
+        .padding()
+        .frame(maxWidth: 500)
+        .frame(maxWidth: .infinity)
+        .background(Color(.systemGroupedBackground))
+        .navigationTitle("Reaction Tiles")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
