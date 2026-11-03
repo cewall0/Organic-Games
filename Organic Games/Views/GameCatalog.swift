@@ -81,12 +81,15 @@ struct GameTopic: Identifiable, Hashable {
                         GameEntry(title: "Formal Charges", type: .game3, style: .tiles),
                         GameEntry(title: "Hybridization", type: .game4, style: .tiles),
                         GameEntry(title: "Alkyl Groups", type: .game5, style: .tiles),
-                        GameEntry(title: "Amino Acids", type: .game6, style: .tiles),
                     ]),
                   ]),
         GameTopic(id: "stereo", title: "Stereochemistry", subtitle: "R and S",
                   icon: "arrow.triangle.2.circlepath", tint: .purple, sections: [
                     Section(title: nil, games: [GameEntry(title: "R & S Stereochemistry", type: .game7, style: .blitz)]),
+                  ]),
+        GameTopic(id: "biochem", title: "Biochemistry", subtitle: "Amino acids",
+                  icon: "leaf", tint: .green, sections: [
+                    Section(title: nil, games: [GameEntry(title: "Amino Acids", type: .game6, style: .tiles)]),
                   ]),
         GameTopic(id: "spectroscopy", title: "Spectroscopy", subtitle: "IR and mass spec",
                   icon: "waveform.path.ecg", tint: .blue, sections: [
