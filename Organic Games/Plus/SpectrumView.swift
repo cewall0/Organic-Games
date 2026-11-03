@@ -44,7 +44,7 @@ struct SpectrumView: View {
 
             // C=O peaks are only ~20 cm⁻¹ apart (1705 vs 1725), too close to read off the axis: label each one
             // just below its tip
-            for p in spectrum.peaks where (1670...1800).contains(p.center) {
+            for p in spectrum.peaks where (1660...1800).contains(p.center) {   // not the alkene C=C at 1655
                 let tip = frame.minY + CGFloat(spectrum.absorbance(at: p.center)) * depth
                 context.draw(Text(verbatim: String(Int(p.center))).font(.system(size: labelSize * 0.9, weight: .semibold)).foregroundStyle(.black),
                              at: CGPoint(x: x(p.center), y: tip + 1), anchor: .top)

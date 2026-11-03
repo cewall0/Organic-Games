@@ -2,8 +2,9 @@
 //  IRSpectra.swift
 //  Organic Games
 //
-//  Generic IR spectra (the 12 from Problem 5 of section 3.2 on organicchemistryguide.com, plus two conjugated
-//  ketones), described as peaks and drawn by SpectrumView in the same style as the textbook's drawings.
+//  Generic IR spectra (the 12 from Problem 5 of section 3.2 on organicchemistryguide.com, plus ones for the
+//  other bands the tile game teaches and common look-alikes), described as peaks and drawn by SpectrumView
+//  in the same style as the textbook's drawings.
 //
 
 import Foundation
@@ -31,6 +32,8 @@ struct IRSpectrum: Identifiable, Hashable {
     let highlight: [ClosedRange<Double>]   // the giveaway regions, cm⁻¹
 
     private static let ch = IRPeak(center: 2925, halfWidth: 62, depth: 0.75)   // sp³ C–H, in almost every spectrum
+    private static let bends = [IRPeak(center: 1460, halfWidth: 20, depth: 0.32), IRPeak(center: 1375, halfWidth: 15, depth: 0.22)]   // C–H bends
+    private static let overtones = [2030, 1975, 1920, 1865].map { IRSoftPeak(center: $0, sigma: 14, depth: 0.05) }   // aromatic ring
     private static let nhShoulder = [IRSoftPeak(center: 3560, sigma: 90, depth: 0.15), IRSoftPeak(center: 3420, sigma: 110, depth: 0.20),
                                      IRSoftPeak(center: 3250, sigma: 95, depth: 0.17), IRSoftPeak(center: 3380, sigma: 12, depth: 0.08)]
 
@@ -101,6 +104,46 @@ struct IRSpectrum: Identifiable, Hashable {
                            IRPeak(center: 1680, halfWidth: 52, depth: 0.97), IRPeak(center: 1620, halfWidth: 22, depth: 0.60)],
                    hint: "C=O near 1680, lowered by conjugation with the C=C next to it; that C=C near 1620 is stronger than an isolated C=C, with sp² C–H just above 3000.",
                    highlight: [1640...1725, 1595...1645, 3010...3080]),
+        // The other bands from the tile game
+        IRSpectrum(id: "nitro (NO₂)",
+                   peaks: [ch, IRPeak(center: 1550, halfWidth: 40, depth: 0.90), IRPeak(center: 1365, halfWidth: 35, depth: 0.80)],
+                   hint: "Two strong N–O peaks, near 1550 and 1350, and no C=O.",
+                   highlight: [1500...1600, 1320...1410]),
+        IRSpectrum(id: "alkyl chloride (C–Cl)",
+                   peaks: [ch] + bends + [IRPeak(center: 720, halfWidth: 45, depth: 0.85)],
+                   hint: "A strong C–Cl near 700 and little else besides C–H.",
+                   highlight: [660...780]),
+        IRSpectrum(id: "internal alkyne",
+                   peaks: [ch] + bends + [IRPeak(center: 2225, halfWidth: 20, depth: 0.18)],
+                   hint: "Only a weak C≡C near 2200 and no ≡C–H near 3300: an internal alkyne. A symmetrical one may show no C≡C at all.",
+                   highlight: [2190...2260, 3250...3350]),
+        IRSpectrum(id: "alkane",
+                   peaks: [IRPeak(center: 2925, halfWidth: 65, depth: 0.85)] + bends,
+                   hint: "Only C–H just below 3000 and small C–H bends near 1460 and 1375: no functional group at all.",
+                   highlight: [2850...3000, 1350...1480]),
+        IRSpectrum(id: "aromatic ring",                    // like toluene
+                   peaks: [IRPeak(center: 3035, halfWidth: 40, depth: 0.35), IRPeak(center: 2925, halfWidth: 45, depth: 0.42),
+                           IRPeak(center: 1600, halfWidth: 18, depth: 0.45), IRPeak(center: 1495, halfWidth: 18, depth: 0.55)],
+                   soft: overtones,
+                   hint: "sp² C–H just above 3000, overtones below 2000 and ring C=C peaks near 1600 and 1500, with no C=O: an aromatic ring.",
+                   highlight: [3000...3080, 1840...2060, 1470...1620]),
+        // Look-alikes of the Problem 5 spectra
+        IRSpectrum(id: "aliphatic nitrile",
+                   peaks: [ch] + bends + [IRPeak(center: 2250, halfWidth: 40, depth: 0.58)],
+                   hint: "C≡N just above 2200, stronger than a C≡C, with only sp³ C–H and no overtones: no aromatic ring.",
+                   highlight: [2200...2300]),
+        IRSpectrum(id: "aromatic aldehyde",                // like benzaldehyde
+                   peaks: [IRPeak(center: 3065, halfWidth: 40, depth: 0.30), IRPeak(center: 2820, halfWidth: 28, depth: 0.45),
+                           IRPeak(center: 2735, halfWidth: 28, depth: 0.45), IRPeak(center: 1700, halfWidth: 52, depth: 0.97),
+                           IRPeak(center: 1598, halfWidth: 18, depth: 0.45)],
+                   soft: overtones,
+                   hint: "C=O near 1700 (lowered by conjugation with the ring) plus the aldehyde C–H pair near 2700 and 2800; sp² C–H and overtones show the ring.",
+                   highlight: [2700...2850, 1650...1740, 3020...3110, 1840...2060]),
+        IRSpectrum(id: "primary amide (CONH₂)",
+                   peaks: [IRPeak(center: 3350, halfWidth: 90, depth: 0.55, group: "nh2"), IRPeak(center: 3180, halfWidth: 90, depth: 0.52, group: "nh2"),
+                           ch, IRPeak(center: 1665, halfWidth: 55, depth: 0.97)],
+                   hint: "C=O in the 1660s plus two N–H humps near 3300: NH₂ on the C=O.",
+                   highlight: [1610...1720, 3080...3460]),
     ]
 
     /// Height of the curve at a wavenumber: 0 = top of the frame, 1 = bottom. Same math as the prototype that
