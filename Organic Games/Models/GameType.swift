@@ -20,5 +20,6 @@ enum GameType: String {   // raw value: remembering the last game played
     case rxnTiles    // Organic Games Plus: Ch. 11 Reaction Tiles (choose a pile)
     case rxnTilesAlkene, rxnTilesPropyne, rxnTilesButyne
     case rxn9Predict, rxn9Reagents, rxn9Tiles   // Organic Games Plus: Ch. 9–10 reaction summary
+    case mechanism   // Organic Games Plus: Which Mechanism? (Ch. 9, SN1/SN2/E1/E2)
     case synthesis   // Organic Games Plus: Synthesis Steps (multistep routes from Ch. 11 problems)
 }

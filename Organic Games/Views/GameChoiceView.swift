@@ -133,6 +133,8 @@ struct GameChoiceView: View {
                     ReactionTilesMenu()
                 case .synthesis:
                     SynthesisView()
+                case .mechanism:
+                    MechanismView()
                 case .rxn9Predict:
                     ReactionQuizView(mode: .product, chapter: .ch9)
                 case .rxn9Reagents:
