@@ -145,6 +145,8 @@ struct GameChoiceView: View {
                     SpotStereocentersView()
                 case .isomerMatch:
                     IsomerMatchView()
+                case .fischerRS:
+                    FischerRSView()
                 case .rxn9Predict:
                     ReactionQuizView(mode: .product, chapter: .ch9)
                 case .rxn9Reagents:

@@ -28,6 +28,7 @@
 		5B2E517A5D4BF718103EA16D /* TileGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD2A20793F087AF143C6E54 /* TileGameView.swift */; };
 		75B10A6DA98D3D531BD6D01B /* SynthesisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9F45E08A4440F64CFD1ED3 /* SynthesisView.swift */; };
 		7893DAAC0C9FC394BEA51D29 /* ReactionQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1AA80EE3DBC68AE5385E38 /* ReactionQuizView.swift */; };
+		7CF39D7958998F1E8EBB99A3 /* FischerRSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665D503B3E062D10E08B5032 /* FischerRSView.swift */; };
 		A8C0880316DF112FAF504DDB /* StudySet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81360021A864D733CEBC75DA /* StudySet.swift */; };
 		AEA4546DC1C764520E40357E /* MassSpectrumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D04EF7D16C165F80C62E2FE /* MassSpectrumView.swift */; };
 		B25CDFEB89595667651053A0 /* SpectrumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D44CA148FAAA567743129CE /* SpectrumView.swift */; };
@@ -63,6 +64,7 @@
 		2A9F45E08A4440F64CFD1ED3 /* SynthesisView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SynthesisView.swift; sourceTree = "<group>"; };
 		2D04EF7D16C165F80C62E2FE /* MassSpectrumView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MassSpectrumView.swift; sourceTree = "<group>"; };
 		3D44CA148FAAA567743129CE /* SpectrumView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SpectrumView.swift; sourceTree = "<group>"; };
+		665D503B3E062D10E08B5032 /* FischerRSView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FischerRSView.swift; sourceTree = "<group>"; };
 		6C7C5B3D8C21452DFBF675D6 /* StudySets.json */ = {isa = PBXFileReference; includeInIndex = 1; path = StudySets.json; sourceTree = "<group>"; };
 		81360021A864D733CEBC75DA /* StudySet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StudySet.swift; sourceTree = "<group>"; };
 		8C5568F145ECB6545A8A6A67 /* MechanismView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MechanismView.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				AC0C497C4234B45C632A9AFD /* StereoView.swift */,
 				DE8B347FE84D514E86DCEBFA /* StereoCenters.swift */,
 				B7DD8A0D8AC8A96D824C1BF3 /* IsomerMatchView.swift */,
+				665D503B3E062D10E08B5032 /* FischerRSView.swift */,
 			);
 			name = Plus;
 			path = Plus;
@@ -310,6 +313,7 @@
 				F3989430E47ABA451EF9DABB /* StereoView.swift in Sources */,
 				3F14A4FB1E65B8C79570F77F /* StereoCenters.swift in Sources */,
 				D480E1BD18C1F884EF2070AD /* IsomerMatchView.swift in Sources */,
+				7CF39D7958998F1E8EBB99A3 /* FischerRSView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

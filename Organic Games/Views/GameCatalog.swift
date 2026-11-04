@@ -99,8 +99,11 @@ struct GameTopic: Identifiable, Hashable {
                         GameEntry(title: "Isomer Match", type: .isomerMatch, style: .quiz, isPlus: true,
                                   mastery: [(IsomerMatchView.setID, IsomerMatchView.keys)]),
                     ], link: textbook("stereochemistry-introduction")),
-                    Section(title: "Ch. 7 R and S", games: [GameEntry(title: "R & S Stereochemistry", type: .game7, style: .blitz)],
-                            link: textbook("r-and-s-nomenclature")),
+                    Section(title: "Ch. 7 R and S", games: [
+                        GameEntry(title: "R & S Stereochemistry", type: .game7, style: .blitz),
+                        GameEntry(title: "Fischer R and S", type: .fischerRS, style: .quiz, isPlus: true,
+                                  mastery: [(FischerRSView.setID, FischerRSView.keys)]),
+                    ], link: textbook("r-and-s-nomenclature")),
                   ]),
         GameTopic(id: "spectroscopy", title: "Spectroscopy", subtitle: "IR and mass spec",
                   icon: "waveform.path.ecg", tint: .blue, sections: [

@@ -63,6 +63,15 @@ enum StereoCenters {
         "stereo-19x": [CGPoint(x: 0.4868, y: 0.5755), CGPoint(x: 0.4798, y: 0.1661), CGPoint(x: 0.2431, y: 0.7734), CGPoint(x: 0.6765, y: 0.8614), CGPoint(x: 0.7545, y: 0.6810)],
         "stereo-19aa": [CGPoint(x: 0.8369, y: 0.7375), CGPoint(x: 0.6858, y: 0.6633), CGPoint(x: 0.7853, y: 0.1394), CGPoint(x: 0.5789, y: 0.3597), CGPoint(x: 0.4657, y: 0.8886), CGPoint(x: 0.4233, y: 0.2588), CGPoint(x: 0.9702, y: 0.4892), CGPoint(x: 0.2116, y: 0.6680), CGPoint(x: 0.0294, y: 0.0948)],
         "stereo-19dd": [CGPoint(x: 0.0418, y: 0.8383), CGPoint(x: 0.2611, y: 0.7880), CGPoint(x: 0.1194, y: 0.4573), CGPoint(x: 0.4127, y: 0.5964), CGPoint(x: 0.5741, y: 0.9308), CGPoint(x: 0.6340, y: 0.5336), CGPoint(x: 0.6344, y: 0.1782), CGPoint(x: 0.8851, y: 0.6640)],
+        "fischer-16e": [CGPoint(x: 0.4628, y: 0.5788), CGPoint(x: 0.4624, y: 0.8132), CGPoint(x: 0.1764, y: 0.5791), CGPoint(x: 0.7776, y: 0.5791), CGPoint(x: 0.4624, y: 0.3449), CGPoint(x: 0.2225, y: 0.1477), CGPoint(x: 0.3970, y: 0.2308), CGPoint(x: 0.7249, y: 0.1371), CGPoint(x: 0.5582, y: 0.2168)],
+        "fischer-16h": [CGPoint(x: 0.4492, y: 0.4739), CGPoint(x: 0.4488, y: 0.7320), CGPoint(x: 0.2072, y: 0.4743), CGPoint(x: 0.7014, y: 0.4743), CGPoint(x: 0.4488, y: 0.2166)],
+        "isomer-7b1": [CGPoint(x: 0.5049, y: 0.3509), CGPoint(x: 0.5049, y: 0.1083), CGPoint(x: 0.8578, y: 0.3509), CGPoint(x: 0.1481, y: 0.3509), CGPoint(x: 0.5049, y: 0.6443), CGPoint(x: 0.8518, y: 0.6443), CGPoint(x: 0.1746, y: 0.6443), CGPoint(x: 0.5049, y: 0.8869)],
+        "isomer-7d1": [CGPoint(x: 0.5048, y: 0.3516), CGPoint(x: 0.5048, y: 0.1082), CGPoint(x: 0.8577, y: 0.3516), CGPoint(x: 0.1480, y: 0.3516), CGPoint(x: 0.5048, y: 0.6461), CGPoint(x: 0.8517, y: 0.6461), CGPoint(x: 0.1745, y: 0.6461), CGPoint(x: 0.5048, y: 0.8895)],
+        "isomer-7d2": [CGPoint(x: 0.5054, y: 0.3516), CGPoint(x: 0.5054, y: 0.1082), CGPoint(x: 0.8523, y: 0.3516), CGPoint(x: 0.1750, y: 0.3516), CGPoint(x: 0.5054, y: 0.6461), CGPoint(x: 0.8582, y: 0.6461), CGPoint(x: 0.1485, y: 0.6461), CGPoint(x: 0.5054, y: 0.8895)],
+        "isomer-f6a": [CGPoint(x: 0.4638, y: 0.3421), CGPoint(x: 0.4638, y: 0.1028), CGPoint(x: 0.8348, y: 0.3421), CGPoint(x: 0.1191, y: 0.3421), CGPoint(x: 0.4638, y: 0.6321), CGPoint(x: 0.8258, y: 0.6321), CGPoint(x: 0.1191, y: 0.6321), CGPoint(x: 0.4638, y: 0.8718)],
+        "isomer-f6b": [CGPoint(x: 0.5190, y: 0.3421), CGPoint(x: 0.5190, y: 0.1028), CGPoint(x: 0.1627, y: 0.3421), CGPoint(x: 0.8835, y: 0.3421), CGPoint(x: 0.5190, y: 0.6321), CGPoint(x: 0.1504, y: 0.6321), CGPoint(x: 0.8835, y: 0.6321), CGPoint(x: 0.5190, y: 0.8718)],
+        "isomer-f6c": [CGPoint(x: 0.5082, y: 0.3421), CGPoint(x: 0.5082, y: 0.1028), CGPoint(x: 0.1592, y: 0.3421), CGPoint(x: 0.8654, y: 0.3421), CGPoint(x: 0.5082, y: 0.6321), CGPoint(x: 0.1739, y: 0.6321), CGPoint(x: 0.8593, y: 0.6321), CGPoint(x: 0.5082, y: 0.8718)],
+        "isomer-f6d": [CGPoint(x: 0.4904, y: 0.3421), CGPoint(x: 0.4904, y: 0.1028), CGPoint(x: 0.8419, y: 0.3421), CGPoint(x: 0.1637, y: 0.3421), CGPoint(x: 0.4904, y: 0.6321), CGPoint(x: 0.8393, y: 0.6321), CGPoint(x: 0.1375, y: 0.6321), CGPoint(x: 0.4904, y: 0.8718)],
     ]
 
     static let centers: [String: Set<Int>] = [
@@ -118,5 +127,14 @@ enum StereoCenters {
         "stereo-19x": [],
         "stereo-19aa": [],
         "stereo-19dd": [],
+        "fischer-16e": [0],
+        "fischer-16h": [0],
+        "isomer-7b1": [0, 4],
+        "isomer-7d1": [0, 4],
+        "isomer-7d2": [0, 4],
+        "isomer-f6a": [0, 4],
+        "isomer-f6b": [0, 4],
+        "isomer-f6c": [0, 4],
+        "isomer-f6d": [0, 4],
     ]
 }
