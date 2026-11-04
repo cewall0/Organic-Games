@@ -109,7 +109,7 @@ struct GameTopic: Identifiable, Hashable {
                                   mastery: [("ms-tiles", studySetKeys("ms-tiles"))]),
                     ], link: textbook("mass-spectrometry")),
                   ]),
-        GameTopic(id: "reactions", title: "Reactions", subtitle: "Alkyl halides, alkenes and alkynes",
+        GameTopic(id: "reactions", title: "Reactions", subtitle: "Alkyl halides, alkenes, alkynes and aromatics",
                   icon: "arrow.right.circle", tint: .orange, sections: [
                     // No Predict the Product here: the summary's wrong products differ only by halogen or skeleton,
                     // so they were too easy. Product questions for Ch. 9 belong in a mechanism game (SN1/SN2/E1/E2).
@@ -129,6 +129,12 @@ struct GameTopic: Identifiable, Hashable {
                         GameEntry(title: "Reaction Tiles", type: .rxnTiles, style: .tiles, isPlus: true,
                                   mastery: [ReactionGroup.alkene, .propyne, .butyne].map { ("rxn-tiles-\($0.rawValue)", reactionKeys($0)) }),
                     ], link: textbook("electrophilic-attack")),
+                    Section(title: "Ch. 21 Aromatic Reactions", games: [
+                        GameEntry(title: "Benzene Roadmap", type: .aromaticRoadmap, style: .quiz, isPlus: true,
+                                  mastery: [(BenzeneRoadmapView.setID, RoadmapQuestion.all.map(\.id))]),
+                        GameEntry(title: "Director Blitz", type: .aromaticDirectors, style: .blitz, isPlus: true,
+                                  mastery: [(DirectorBlitzView.setID, DirectorQuestion.all.map(\.id))]),
+                    ], link: textbook("aromatic-reactions-introduction")),
                     Section(title: "Synthesis (Ch. 9–11)", games: [
                         GameEntry(title: "Synthesis Steps", type: .synthesis, style: .quiz, isPlus: true,
                                   mastery: [(SynthesisView.setID, SynthesisGap.all.map(\.id))]),

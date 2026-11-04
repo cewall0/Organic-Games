@@ -23,6 +23,7 @@
 		18C47AFFAED020D979BA24E2 /* GameCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85FAFB26F011A8BEB3C4564 /* GameCatalog.swift */; };
 		1A6A74F6A38D8304BADE6DBF /* NameThatPatternView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A96D92106A098CB2E09B35 /* NameThatPatternView.swift */; };
 		21EECB1BA4E5749A75EC8370 /* MechanismView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5568F145ECB6545A8A6A67 /* MechanismView.swift */; };
+		5824388C2C6041413C03022D /* AromaticView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11674F166BF103AF7035BA3F /* AromaticView.swift */; };
 		5B2E517A5D4BF718103EA16D /* TileGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD2A20793F087AF143C6E54 /* TileGameView.swift */; };
 		75B10A6DA98D3D531BD6D01B /* SynthesisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9F45E08A4440F64CFD1ED3 /* SynthesisView.swift */; };
 		7893DAAC0C9FC394BEA51D29 /* ReactionQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1AA80EE3DBC68AE5385E38 /* ReactionQuizView.swift */; };
@@ -54,6 +55,7 @@
 		0B743B5A2C65BFEB0036DF60 /* GameChoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameChoiceView.swift; sourceTree = "<group>"; };
 		0B743B5C2C65BFFD0036DF60 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		0BBF98C52CA39A32003EEF9E /* Organic-Games-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Organic-Games-Info.plist"; sourceTree = "<group>"; };
+		11674F166BF103AF7035BA3F /* AromaticView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AromaticView.swift; sourceTree = "<group>"; };
 		21A96D92106A098CB2E09B35 /* NameThatPatternView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NameThatPatternView.swift; sourceTree = "<group>"; };
 		2A9F45E08A4440F64CFD1ED3 /* SynthesisView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SynthesisView.swift; sourceTree = "<group>"; };
 		2D04EF7D16C165F80C62E2FE /* MassSpectrumView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MassSpectrumView.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 				CD1AA80EE3DBC68AE5385E38 /* ReactionQuizView.swift */,
 				2A9F45E08A4440F64CFD1ED3 /* SynthesisView.swift */,
 				8C5568F145ECB6545A8A6A67 /* MechanismView.swift */,
+				11674F166BF103AF7035BA3F /* AromaticView.swift */,
 			);
 			name = Plus;
 			path = Plus;
@@ -294,6 +297,7 @@
 				18C47AFFAED020D979BA24E2 /* GameCatalog.swift in Sources */,
 				75B10A6DA98D3D531BD6D01B /* SynthesisView.swift in Sources */,
 				21EECB1BA4E5749A75EC8370 /* MechanismView.swift in Sources */,
+				5824388C2C6041413C03022D /* AromaticView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

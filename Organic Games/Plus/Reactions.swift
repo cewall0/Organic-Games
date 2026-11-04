@@ -325,10 +325,13 @@ struct ReagentArrow: View {
     var reversible = false
     var scale: CGFloat = 1
     var label: String = ""
+    var reagentsText: String? = nil // typeset reagents instead of a drawing (Ch. 21 roadmap)
 
     var body: some View {
         VStack(spacing: 3) {
-            if let reagentsImage {
+            if let reagentsText {
+                Text(reagentsText).font(.caption).multilineTextAlignment(.center).foregroundStyle(.black)
+            } else if let reagentsImage {
                 StructureImage(name: reagentsImage, scale: scale, label: label)
             } else {
                 Text("?").font(.title.bold()).foregroundStyle(.orange)
