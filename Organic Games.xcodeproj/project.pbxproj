@@ -34,6 +34,7 @@
 		C1224C811FF1646A7C892BF8 /* PlusStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E13A3A55D1160A0571CB0 /* PlusStore.swift */; };
 		C2FAB0A435FA50F2738587D5 /* StudySets.json in Resources */ = {isa = PBXBuildFile; fileRef = 6C7C5B3D8C21452DFBF675D6 /* StudySets.json */; };
 		D320DDCE596FE3F915127574 /* MassSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = B258028E35DD11F140BE76AB /* MassSpec.swift */; };
+		D480E1BD18C1F884EF2070AD /* IsomerMatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DD8A0D8AC8A96D824C1BF3 /* IsomerMatchView.swift */; };
 		D93E264DE76BB204BCA320A3 /* Reactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BC7499CBF58E2561385D76 /* Reactions.swift */; };
 		DDC6A952F7B31E93B06B6366 /* NameThatSpectrumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB729E658F49B264DE746E15 /* NameThatSpectrumView.swift */; };
 		EC48F11CD11F27D821B1DD0D /* IRSpectra.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76B8B7B48526813B6DCF53B /* IRSpectra.swift */; };
@@ -69,6 +70,7 @@
 		A84E13A3A55D1160A0571CB0 /* PlusStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PlusStore.swift; sourceTree = "<group>"; };
 		AC0C497C4234B45C632A9AFD /* StereoView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StereoView.swift; sourceTree = "<group>"; };
 		B258028E35DD11F140BE76AB /* MassSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MassSpec.swift; sourceTree = "<group>"; };
+		B7DD8A0D8AC8A96D824C1BF3 /* IsomerMatchView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = IsomerMatchView.swift; sourceTree = "<group>"; };
 		C4BC7499CBF58E2561385D76 /* Reactions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Reactions.swift; sourceTree = "<group>"; };
 		C76B8B7B48526813B6DCF53B /* IRSpectra.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = IRSpectra.swift; sourceTree = "<group>"; };
 		CD1AA80EE3DBC68AE5385E38 /* ReactionQuizView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReactionQuizView.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 				11674F166BF103AF7035BA3F /* AromaticView.swift */,
 				AC0C497C4234B45C632A9AFD /* StereoView.swift */,
 				DE8B347FE84D514E86DCEBFA /* StereoCenters.swift */,
+				B7DD8A0D8AC8A96D824C1BF3 /* IsomerMatchView.swift */,
 			);
 			name = Plus;
 			path = Plus;
@@ -306,6 +309,7 @@
 				5824388C2C6041413C03022D /* AromaticView.swift in Sources */,
 				F3989430E47ABA451EF9DABB /* StereoView.swift in Sources */,
 				3F14A4FB1E65B8C79570F77F /* StereoCenters.swift in Sources */,
+				D480E1BD18C1F884EF2070AD /* IsomerMatchView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

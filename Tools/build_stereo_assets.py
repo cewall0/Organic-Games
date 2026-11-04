@@ -5,17 +5,19 @@ drawn as text such as the CH in 7.2's phenylalanine).
 usage: build_stereo_assets.py CUTDIR"""
 import json, os, shutil, sys
 cut = sys.argv[1]; here = os.path.dirname(os.path.abspath(__file__)); root = os.path.dirname(here)
-cat = f"{root}/Organic Games/Assets.xcassets/Stereo"
 atoms = json.load(open(f"{cut}/atoms.json")); picks = json.load(open(f"{here}/stereo_picks.json"))
-os.makedirs(cat, exist_ok=True)
-json.dump({"info": {"author": "xcode", "version": 1}, "properties": {"provides-namespace": False}},
-          open(f"{cat}/Contents.json", "w"), indent=2)
-for f in sorted(os.listdir(cut)):
-    if not f.endswith(".png") or "-" in f or not f.startswith("s"): continue
-    name = "stereo-" + f[1:-4]; d = f"{cat}/{name}.imageset"; os.makedirs(d, exist_ok=True)
-    shutil.copy(f"{cut}/{f}", f"{d}/{name}.png")
-    json.dump({"images": [{"filename": f"{name}.png", "idiom": "universal", "scale": "2x"}],
-               "info": {"author": "xcode", "version": 1}}, open(f"{d}/Contents.json", "w"), indent=2)
+# s… molecules (chirality games) → Stereo/stereo-…; i… isomer pairs (Isomer Match) → Isomers/isomer-…
+for prefix, folder, asset in [("s", "Stereo", "stereo-"), ("i", "Isomers", "isomer-")]:
+    cat = f"{root}/Organic Games/Assets.xcassets/{folder}"
+    os.makedirs(cat, exist_ok=True)
+    json.dump({"info": {"author": "xcode", "version": 1}, "properties": {"provides-namespace": False}},
+              open(f"{cat}/Contents.json", "w"), indent=2)
+    for f in sorted(os.listdir(cut)):
+        if not f.endswith(".png") or "-" in f or not f.startswith(prefix): continue
+        name = asset + f[1:-4]; d = f"{cat}/{name}.imageset"; os.makedirs(d, exist_ok=True)
+        shutil.copy(f"{cut}/{f}", f"{d}/{name}.png")
+        json.dump({"images": [{"filename": f"{name}.png", "idiom": "universal", "scale": "2x"}],
+                   "info": {"author": "xcode", "version": 1}}, open(f"{d}/Contents.json", "w"), indent=2)
 from PIL import Image
 
 

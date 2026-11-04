@@ -143,6 +143,8 @@ struct GameChoiceView: View {
                     ChiralBlitzView()
                 case .spotStereocenters:
                     SpotStereocentersView()
+                case .isomerMatch:
+                    IsomerMatchView()
                 case .rxn9Predict:
                     ReactionQuizView(mode: .product, chapter: .ch9)
                 case .rxn9Reagents:

@@ -24,4 +24,5 @@ enum GameType: String {   // raw value: remembering the last game played
     case mechanism   // Organic Games Plus: Which Mechanism? (Ch. 9, SN1/SN2/E1/E2)
     case synthesis   // Organic Games Plus: Synthesis Steps (multistep routes from Ch. 11 problems)
     case chiralBlitz, spotStereocenters   // Organic Games Plus: Ch. 7 Chiral or Achiral?, Spot the Stereocenters
+    case isomerMatch // Organic Games Plus: Ch. 7 Isomer Match
 }
