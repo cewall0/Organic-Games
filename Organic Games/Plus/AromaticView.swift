@@ -397,9 +397,9 @@ struct DirectorBlitzView: View {
     }
 }
 
-// MARK: Shared pieces for these two games
+// MARK: Shared pieces for the Ch. 21 and Ch. 7 games
 
-private struct PlusWideButton: View {
+struct PlusWideButton: View {
     let title: String
     let action: () -> Void
     var body: some View {
@@ -411,7 +411,7 @@ private struct PlusWideButton: View {
     }
 }
 
-private struct PlusRoundSummary: View {
+struct PlusRoundSummary: View {
     let correct: Int
     let total: Int
     let setID: String
@@ -446,9 +446,10 @@ private struct PlusRoundSummary: View {
     }
 }
 
-private struct PlusLockedCard: View {
+struct PlusLockedCard: View {
     let title: String
     let things: String
+    var chapterLabel = "Review Ch. 21 in the free textbook"
     let chapterURL: URL
     let paywall: () -> Void
 
@@ -459,7 +460,7 @@ private struct PlusLockedCard: View {
             Text("You've used your free round of \(title). Plus unlocks every round, tracks what you've mastered and drills the \(things) you miss.")
                 .multilineTextAlignment(.center).font(.subheadline)
             PlusWideButton(title: "Try Plus free", action: paywall)
-            Link("Review Ch. 21 in the free textbook", destination: chapterURL).font(.subheadline)
+            Link(chapterLabel, destination: chapterURL).font(.subheadline)
         }
         .padding(.top, 40)
     }

@@ -89,8 +89,14 @@ struct GameTopic: Identifiable, Hashable {
                         GameEntry(title: "Alkyl Groups", type: .game5, style: .tiles),
                     ]),
                   ]),
-        GameTopic(id: "stereo", title: "Stereochemistry", subtitle: "R and S",
+        GameTopic(id: "stereo", title: "Stereochemistry", subtitle: "Chirality, stereocenters, R and S",
                   icon: "arrow.triangle.2.circlepath", tint: .purple, sections: [
+                    Section(title: "Ch. 7 Chirality", games: [
+                        GameEntry(title: "Chiral or Achiral?", type: .chiralBlitz, style: .blitz, isPlus: true,
+                                  mastery: [(ChiralBlitzView.setID, ChiralBlitzView.keys)]),
+                        GameEntry(title: "Spot the Stereocenters", type: .spotStereocenters, style: .quiz, isPlus: true,
+                                  mastery: [(SpotStereocentersView.setID, SpotStereocentersView.keys)]),
+                    ], link: textbook("stereochemistry-introduction")),
                     Section(title: "Ch. 7 R and S", games: [GameEntry(title: "R & S Stereochemistry", type: .game7, style: .blitz)],
                             link: textbook("r-and-s-nomenclature")),
                   ]),

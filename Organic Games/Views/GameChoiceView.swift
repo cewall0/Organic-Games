@@ -139,6 +139,10 @@ struct GameChoiceView: View {
                     BenzeneRoadmapView()
                 case .aromaticDirectors:
                     DirectorBlitzView()
+                case .chiralBlitz:
+                    ChiralBlitzView()
+                case .spotStereocenters:
+                    SpotStereocentersView()
                 case .rxn9Predict:
                     ReactionQuizView(mode: .product, chapter: .ch9)
                 case .rxn9Reagents:

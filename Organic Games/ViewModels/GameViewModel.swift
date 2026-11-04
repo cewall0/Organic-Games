@@ -109,6 +109,7 @@ final class GameViewModel {
             
         case .game7, .irSpectra, .irTiles, .msPatterns, .msTiles, .rxnPredict, .rxnReagents,
              .rxnTiles, .rxnTilesAlkene, .rxnTilesPropyne, .rxnTilesButyne, .synthesis, .mechanism, .aromaticRoadmap, .aromaticDirectors,
+             .chiralBlitz, .spotStereocenters,
              .rxn9Predict, .rxn9Reagents, .rxn9Tiles:
             // No tile game: these have their own views.
             break
