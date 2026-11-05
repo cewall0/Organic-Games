@@ -241,7 +241,7 @@ struct TileGameView: View {
             } else {
                 Text("That was your free round. Organic Games Plus keeps the practice going and brings back the pairs you miss.")
                     .multilineTextAlignment(.center).font(.subheadline)
-                wideButton("Try Plus free") { showPaywall = true }
+                wideButton("See Plus plans") { showPaywall = true }
             }
             Link("Review \(pile.chapter) in the free textbook", destination: pile.chapterURL).font(.subheadline)
             Button("Choose different game") { dismiss() }.font(.subheadline)
@@ -256,7 +256,7 @@ struct TileGameView: View {
             Text("Keep practicing with Plus").font(.title2.bold())
             Text("You've used your free round of \(pile.title). Plus unlocks every round, tracks what you've mastered and brings back the pairs you miss.")
                 .multilineTextAlignment(.center).font(.subheadline)
-            wideButton("Try Plus free") { showPaywall = true }
+            wideButton("See Plus plans") { showPaywall = true }
             Link("Review \(pile.chapter) in the free textbook", destination: pile.chapterURL).font(.subheadline)
             Spacer(minLength: 0)
         }

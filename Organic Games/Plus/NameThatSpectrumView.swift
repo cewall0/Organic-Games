@@ -138,7 +138,7 @@ struct NameThatSpectrumView: View {
             } else {
                 Text("That was your free round. Organic Games Plus keeps the practice going and focuses on the spectra you miss.")
                     .multilineTextAlignment(.center).font(.subheadline)
-                wideButton("Try Plus free") { showPaywall = true }
+                wideButton("See Plus plans") { showPaywall = true }
             }
             Link("Review IR (Ch. 3) in the free textbook", destination: Self.chapterURL)
                 .font(.subheadline)
@@ -155,7 +155,7 @@ struct NameThatSpectrumView: View {
             Text("Keep practicing with Plus").font(.title2.bold())
             Text("You've used your free round of Name That Spectrum. Plus unlocks every round, tracks what you've mastered and drills the spectra you miss.")
                 .multilineTextAlignment(.center).font(.subheadline)
-            wideButton("Try Plus free") { showPaywall = true }
+            wideButton("See Plus plans") { showPaywall = true }
             Link("Review IR (Ch. 3) in the free textbook", destination: Self.chapterURL).font(.subheadline)
             Spacer(minLength: 0)
         }

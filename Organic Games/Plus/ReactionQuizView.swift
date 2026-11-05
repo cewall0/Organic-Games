@@ -168,7 +168,7 @@ struct ReactionQuizView: View {
             } else {
                 Text("That was your free round. Organic Games Plus keeps the practice going and focuses on the reactions you miss.")
                     .multilineTextAlignment(.center).font(.subheadline)
-                wideButton("Try Plus free") { showPaywall = true }
+                wideButton("See Plus plans") { showPaywall = true }
             }
             Link("Review the \(chapter == .ch9 ? "Ch. 9–10" : "Ch. 11") summary in the free textbook", destination: chapter.url).font(.subheadline)
             Button("Back to games") { dismiss() }.font(.subheadline)
@@ -182,7 +182,7 @@ struct ReactionQuizView: View {
             Text("Keep practicing with Plus").font(.title2.bold())
             Text("You've used your free round of \(mode.title). Plus unlocks every round, tracks what you've mastered and drills the reactions you miss.")
                 .multilineTextAlignment(.center).font(.subheadline)
-            wideButton("Try Plus free") { showPaywall = true }
+            wideButton("See Plus plans") { showPaywall = true }
             Link("Review the \(chapter == .ch9 ? "Ch. 9–10" : "Ch. 11") summary in the free textbook", destination: chapter.url).font(.subheadline)
         }
         .padding(.top, 40)

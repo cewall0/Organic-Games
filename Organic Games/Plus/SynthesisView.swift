@@ -298,7 +298,7 @@ struct SynthesisView: View {
             } else {
                 Text("That was your free round. Organic Games Plus keeps the practice going and focuses on the steps you miss.")
                     .multilineTextAlignment(.center).font(.subheadline)
-                wideButton("Try Plus free") { showPaywall = true }
+                wideButton("See Plus plans") { showPaywall = true }
             }
             Link("Review the Ch. 11 summary in the free textbook", destination: ReactionChapter.ch11.url).font(.subheadline)
             Button("Back to games") { dismiss() }.font(.subheadline)
@@ -312,7 +312,7 @@ struct SynthesisView: View {
             Text("Keep practicing with Plus").font(.title2.bold())
             Text("You've used your free round of Synthesis Steps. Plus unlocks every round, tracks what you've mastered and drills the steps you miss.")
                 .multilineTextAlignment(.center).font(.subheadline)
-            wideButton("Try Plus free") { showPaywall = true }
+            wideButton("See Plus plans") { showPaywall = true }
             Link("Review the Ch. 11 summary in the free textbook", destination: ReactionChapter.ch11.url).font(.subheadline)
         }
         .padding(.top, 40)
