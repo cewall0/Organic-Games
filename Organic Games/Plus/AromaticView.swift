@@ -437,7 +437,7 @@ struct PlusRoundSummary: View {
             } else {
                 Text("That was your free round. Organic Games Plus keeps the practice going and focuses on the \(things) you miss.")
                     .multilineTextAlignment(.center).font(.subheadline)
-                PlusWideButton(title: "Try Plus free", action: paywall)
+                PlusWideButton(title: "See Plus plans", action: paywall)
             }
             Link(chapterLabel, destination: chapterURL).font(.subheadline)
             Button("Back to games", action: back).font(.subheadline)
@@ -459,7 +459,7 @@ struct PlusLockedCard: View {
             Text("Keep practicing with Plus").font(.title2.bold())
             Text("You've used your free round of \(title). Plus unlocks every round, tracks what you've mastered and drills the \(things) you miss.")
                 .multilineTextAlignment(.center).font(.subheadline)
-            PlusWideButton(title: "Try Plus free", action: paywall)
+            PlusWideButton(title: "See Plus plans", action: paywall)
             Link(chapterLabel, destination: chapterURL).font(.subheadline)
         }
         .padding(.top, 40)
