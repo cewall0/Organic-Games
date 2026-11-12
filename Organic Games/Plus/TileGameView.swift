@@ -150,6 +150,7 @@ struct TileGameView: View {
             }
             if !plus.isPlus {
                 BannerAdView()
+                    .padding(.top, 16) // clear of the buttons above, against accidental taps
             }
         }
         .background(Color(.systemBackground))

@@ -59,6 +59,7 @@ struct AminoAcidChoiceView: View {
 
             if !PlusStore.shared.isPlus {
                 BannerAdView()
+                    .padding(.top, 16) // clear of the buttons above, against accidental taps
             }
                  }
                 .onAppear(perform: {

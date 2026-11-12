@@ -217,6 +217,7 @@ struct RSGameView: View {
                 }
                 if !PlusStore.shared.isPlus {
                     BannerAdView()
+                        .padding(.top, 16) // clear of the buttons above, against accidental taps
                         .padding(.bottom, 10)
                 }
             }
