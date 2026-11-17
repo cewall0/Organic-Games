@@ -98,8 +98,6 @@ struct IsomerPair: Identifiable {
         pair("7.19h", "7.19i", .diastereomers, "Same connections, but the left one is meso and the right one is chiral, so they can't be mirror images."),
         pair("7.8a", "7.8b", .diastereomers, "Both are 2,3-dibromobutane: the meso form vs. a chiral one."),
         pair("7.3g", "7.3h", .diastereomers, "Both are 2,3-dibromo-2,3-dichlorobutane: the meso form vs. a chiral one."),
-        pair("7.19j", "7.5a", .identical, "Both are the same Fischer projection: OH right, left, right, right."),
-        pair("7.19nn", "7.5b", .identical, "Both are the same Fischer projection, with both Cl's on the right."),
         pair("7.19j", "7.19k", .notIsomers, "The left has a CHO end (C₆H₁₂O₆) and the right CH₂OH at both ends (C₆H₁₄O₆)."),
     ]
 }
